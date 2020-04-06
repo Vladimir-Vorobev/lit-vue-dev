@@ -39,16 +39,22 @@ window.onload = function() {
     let fourth = document.querySelector('.fa-cog')
     let background = document.querySelector('.btn-container')
     let home = document.querySelector('.fa-home')
+    let ButtonWidth = 50
+    let MaxButtonWidth = 100
+    if(window.matchMedia('(max-width: 360px)').matches){
+        ButtonWidth = 40
+        MaxButtonWidth = 80
+    }
     first.onclick = function(){
         anime({
             targets: [second, third, fourth, home],
-            width: 50,
+            width: ButtonWidth,
             color: 'rgb(128, 128, 128)',
             backgroundColor: 'rgb(255, 255, 255)'
         })
         anime({
             targets: first,
-            width: 100,
+            width: MaxButtonWidth,
             color: 'rgb(255, 255, 255)',
             backgroundColor: 'rgb(237, 178, 5)'
         })
@@ -60,13 +66,13 @@ window.onload = function() {
     second.onclick = function(){
         anime({
             targets: [first, third, fourth, home],
-            width: 50,
+            width: ButtonWidth,
             color: 'rgb(128, 128, 128)',
             backgroundColor: 'rgb(255, 255, 255)'
         })
         anime({
             targets: second,
-            width: 100,
+            width: MaxButtonWidth,
             color: 'rgb(255, 255, 255)',
             backgroundColor: 'rgb(75, 211, 137)'
         })
@@ -78,13 +84,13 @@ window.onload = function() {
     third.onclick = function(){
         anime({
             targets: [first, second, fourth, home],
-            width: 50,
+            width: ButtonWidth,
             color: 'rgb(128, 128, 128)',
             backgroundColor: 'rgb(255, 255, 255)'
         })
         anime({
             targets: third,
-            width: 100,
+            width: MaxButtonWidth,
             color: 'rgb(255, 255, 255)',
             backgroundColor: 'rgb(230, 23, 83)'
         })
@@ -96,13 +102,13 @@ window.onload = function() {
     fourth.onclick = function(){
         anime({
             targets: [first, second, third, home],
-            width: 50,
+            width: ButtonWidth,
             color: 'rgb(128, 128, 128)',
             backgroundColor: 'rgb(255, 255, 255)'
         })
         anime({
             targets: fourth,
-            width: 100,
+            width: MaxButtonWidth,
             color: 'rgb(255, 255, 255)',
             backgroundColor: 'rgb(179, 45, 210)'
         })
@@ -114,13 +120,13 @@ window.onload = function() {
     home.onclick = function(){
         anime({
             targets: [first, second, third, fourth],
-            width: 50,
+            width: ButtonWidth,
             color: 'rgb(128, 128, 128)',
             backgroundColor: 'rgb(255, 255, 255)'
         })
         anime({
             targets: home,
-            width: 100,
+            width: MaxButtonWidth,
             color: 'rgb(255, 255, 255)',
             backgroundColor: 'rgb(21, 0, 255)'
         })
@@ -138,8 +144,8 @@ window.onload = function() {
 .btn-container {
 display: flex;
 background-color: black;
-padding-top: 150px;
-padding-bottom: 150px;
+padding-top: 100px;
+padding-bottom: 100px;
 justify-content: center;
 }
 
@@ -164,5 +170,35 @@ text-decoration: none; /* отменяем подчеркивание ссылк
 /* для мобильной версии убирается подсветка синим при нажатии Это как??? */
 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
  }
+@media screen and (max-width: 360px) {
+    .btn-container {
+        display: flex;
+        background-color: black;
+        padding-top: 60px;
+        padding-bottom: 60px;
+        justify-content: center;
+    }
+    .btn {
+        display: inline-block;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+        font-size: 20px;
+        color: gray;
+        /* круглые кнопки белого цвета */
+        border-radius: 20px;
+        background-color: white;
+
+        text-align: center;
+        line-height: 40px;
+
+        text-decoration: none; /* отменяем подчеркивание ссылки */
+
+
+        /* для мобильной версии убирается подсветка синим при нажатии Это как??? */
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+}
 
 </style>
