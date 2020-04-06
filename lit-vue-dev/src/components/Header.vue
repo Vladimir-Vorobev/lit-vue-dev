@@ -172,15 +172,10 @@ text-decoration: none; /* отменяем подчеркивание ссылк
  }
 @media screen and (max-width: 360px) {
     .btn-container {
-        display: flex;
-        background-color: black;
         padding-top: 60px;
         padding-bottom: 60px;
-        justify-content: center;
     }
     .btn {
-        display: inline-block;
-        cursor: pointer;
         width: 40px;
         height: 40px;
         margin: 5px;
@@ -188,16 +183,7 @@ text-decoration: none; /* отменяем подчеркивание ссылк
         color: gray;
         /* круглые кнопки белого цвета */
         border-radius: 20px;
-        background-color: white;
-
-        text-align: center;
         line-height: 40px;
-
-        text-decoration: none; /* отменяем подчеркивание ссылки */
-
-
-        /* для мобильной версии убирается подсветка синим при нажатии Это как??? */
-        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     }
 }
 
