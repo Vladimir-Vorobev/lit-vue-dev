@@ -28,6 +28,7 @@
 
 <script>
 import anime from 'animejs'
+
 export default { 
     name: 'Test',
 }
@@ -41,10 +42,81 @@ window.onload = function() {
     let home = document.querySelector('.fa-home')
     let ButtonWidth = 50
     let MaxButtonWidth = 100
-    if(window.matchMedia('(max-width: 360px)').matches){
-        ButtonWidth = 40
-        MaxButtonWidth = 80
+    let k = 0
+    let ButtonChange = function() {
+        if(window.matchMedia('(max-width: 360px)').matches){
+            ButtonWidth = 40
+            MaxButtonWidth = 80
+        }
+        else if(window.matchMedia('(min-width: 800px)').matches){
+            ButtonWidth = 70
+            MaxButtonWidth = 140
+        }
+        else{
+            ButtonWidth = 50
+            MaxButtonWidth = 100
+        }
+        if(k == 0){
+            anime({
+                targets: [second, third, fourth, home],
+                width: ButtonWidth
+            })
+        }
+        if(k == 1){
+            anime({
+                targets: [second, third, fourth, home],
+                width: ButtonWidth
+            })
+            anime({
+                targets: first,
+                width: MaxButtonWidth
+            })
+        }
+        if(k == 2){
+            anime({
+                targets: [first, third, fourth, home],
+                width: ButtonWidth
+            })
+            anime({
+                targets: second,
+                width: MaxButtonWidth
+            })
+        }
+        if(k == 3){
+            anime({
+                targets: [first, second, fourth, home],
+                width: ButtonWidth
+            })
+            anime({
+                targets: third,
+                width: MaxButtonWidth
+            })
+        }
+        if(k == 4){
+            anime({
+                targets: [first, second, third, home],
+                width: ButtonWidth
+            })
+            anime({
+                targets: fourth,
+                width: MaxButtonWidth
+            })
+        }
+        if(k == 5){
+            anime({
+                targets: [first, second, third, fourth],
+                width: ButtonWidth
+            })
+            anime({
+                targets: home,
+                width: MaxButtonWidth
+            })
+        }
     }
+    ButtonChange()
+    window.addEventListener('resize', ButtonChange)
+
+
     first.onclick = function(){
         anime({
             targets: [second, third, fourth, home],
@@ -62,6 +134,7 @@ window.onload = function() {
             targets: background,
             backgroundColor: 'rgb(222, 155, 0)'
         })
+        k = 1
     }
     second.onclick = function(){
         anime({
@@ -80,6 +153,7 @@ window.onload = function() {
             targets: background,
             backgroundColor: 'rgb(62, 175, 111)'
         })
+        k = 2
     }
     third.onclick = function(){
         anime({
@@ -98,6 +172,7 @@ window.onload = function() {
             targets: background,
             backgroundColor: 'rgb(190, 0, 49)'
         })
+        k = 3
     }
     fourth.onclick = function(){
         anime({
@@ -116,6 +191,7 @@ window.onload = function() {
             targets: background,
             backgroundColor: 'rgb(142, 0, 172)'
         })
+        k = 4
     }
     home.onclick = function(){
         anime({
@@ -134,6 +210,7 @@ window.onload = function() {
             targets: background,
             backgroundColor: 'rgb(6, 30, 205)'
         })
+        k = 5
     }
 }
 
@@ -184,6 +261,23 @@ text-decoration: none; /* отменяем подчеркивание ссылк
         /* круглые кнопки белого цвета */
         border-radius: 20px;
         line-height: 40px;
+    }
+}
+
+@media screen and (min-width: 800px) {
+    .btn-container {
+        padding-top: 130px;
+        padding-bottom: 130px;
+    }
+    .btn {
+        width: 70px;
+        height: 70px;
+        margin: 5px;
+        font-size: 35px;
+        color: gray;
+        /* круглые кнопки белого цвета */
+        border-radius: 35px;
+        line-height: 70px;
     }
 }
 
