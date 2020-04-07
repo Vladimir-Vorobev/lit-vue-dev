@@ -43,8 +43,9 @@ window.onload = function() {
     let ButtonWidth = 50
     let MaxButtonWidth = 100
     let k = 0
+
     let ButtonChange = function() {
-        if(window.matchMedia('(max-width: 360px)').matches){
+        if(window.matchMedia('(max-width: 400px)').matches){
             ButtonWidth = 40
             MaxButtonWidth = 80
         }
@@ -62,7 +63,7 @@ window.onload = function() {
                 width: ButtonWidth
             })
         }
-        if(k == 1){
+        else if(k == 1){
             anime({
                 targets: [second, third, fourth, home],
                 width: ButtonWidth
@@ -72,7 +73,7 @@ window.onload = function() {
                 width: MaxButtonWidth
             })
         }
-        if(k == 2){
+        else if(k == 2){
             anime({
                 targets: [first, third, fourth, home],
                 width: ButtonWidth
@@ -82,7 +83,7 @@ window.onload = function() {
                 width: MaxButtonWidth
             })
         }
-        if(k == 3){
+        else if(k == 3){
             anime({
                 targets: [first, second, fourth, home],
                 width: ButtonWidth
@@ -92,7 +93,7 @@ window.onload = function() {
                 width: MaxButtonWidth
             })
         }
-        if(k == 4){
+        else if(k == 4){
             anime({
                 targets: [first, second, third, home],
                 width: ButtonWidth
@@ -102,7 +103,7 @@ window.onload = function() {
                 width: MaxButtonWidth
             })
         }
-        if(k == 5){
+        else{
             anime({
                 targets: [first, second, third, fourth],
                 width: ButtonWidth
@@ -116,102 +117,110 @@ window.onload = function() {
     ButtonChange()
     window.addEventListener('resize', ButtonChange)
 
+    let AnimationChange = function(){
+        let WindowLocation = window.location.pathname
+        if(WindowLocation == '/chat'){
+            anime({
+                targets: [second, third, fourth, home],
+                width: ButtonWidth,
+                color: 'rgb(128, 128, 128)',
+                backgroundColor: 'rgb(255, 255, 255)'
+            })
+            anime({
+                targets: first,
+                width: MaxButtonWidth,
+                color: 'rgb(255, 255, 255)',
+                backgroundColor: 'rgb(237, 178, 5)'
+            })
+            anime({
+                targets: background,
+                backgroundColor: 'rgb(222, 155, 0)'
+            })
+        }
+        else if(WindowLocation == '/ourteam'){
+            anime({
+                targets: [first, third, fourth, home],
+                width: ButtonWidth,
+                color: 'rgb(128, 128, 128)',
+                backgroundColor: 'rgb(255, 255, 255)'
+            })
+            anime({
+                targets: second,
+                width: MaxButtonWidth,
+                color: 'rgb(255, 255, 255)',
+                backgroundColor: 'rgb(75, 211, 137)'
+            })
+            anime({
+                targets: background,
+                backgroundColor: 'rgb(62, 175, 111)'
+            })
+        }
+        else if(WindowLocation == '/howtoget'){
+            anime({
+                targets: [first, second, fourth, home],
+                width: ButtonWidth,
+                color: 'rgb(128, 128, 128)',
+                backgroundColor: 'rgb(255, 255, 255)'
+            })
+            anime({
+                targets: third,
+                width: MaxButtonWidth,
+                color: 'rgb(255, 255, 255)',
+                backgroundColor: 'rgb(230, 23, 83)'
+            })
+            anime({
+                targets: background,
+                backgroundColor: 'rgb(190, 0, 49)'
+            })
+        }
+        else if(WindowLocation == '/settings'){
+            anime({
+                targets: [first, second, third, home],
+                width: ButtonWidth,
+                color: 'rgb(128, 128, 128)',
+                backgroundColor: 'rgb(255, 255, 255)'
+            })
+            anime({
+                targets: fourth,
+                width: MaxButtonWidth,
+                color: 'rgb(255, 255, 255)',
+                backgroundColor: 'rgb(179, 45, 210)'
+            })
+            anime({
+                targets: background,
+                backgroundColor: 'rgb(142, 0, 172)'
+            })
+        }
+        else{
+            anime({
+                targets: [first, second, third, fourth],
+                width: ButtonWidth,
+                color: 'rgb(128, 128, 128)',
+                backgroundColor: 'rgb(255, 255, 255)'
+            })
+            anime({
+                targets: home,
+                width: MaxButtonWidth,
+                color: 'rgb(255, 255, 255)',
+                backgroundColor: 'rgb(21, 0, 255)'
+            })
+            anime({
+                targets: background,
+                backgroundColor: 'rgb(6, 30, 205)'
+            })
+        }
+    }
+    
 
-    first.onclick = function(){
-        anime({
-            targets: [second, third, fourth, home],
-            width: ButtonWidth,
-            color: 'rgb(128, 128, 128)',
-            backgroundColor: 'rgb(255, 255, 255)'
-        })
-        anime({
-            targets: first,
-            width: MaxButtonWidth,
-            color: 'rgb(255, 255, 255)',
-            backgroundColor: 'rgb(237, 178, 5)'
-        })
-        anime({
-            targets: background,
-            backgroundColor: 'rgb(222, 155, 0)'
-        })
-        k = 1
-    }
-    second.onclick = function(){
-        anime({
-            targets: [first, third, fourth, home],
-            width: ButtonWidth,
-            color: 'rgb(128, 128, 128)',
-            backgroundColor: 'rgb(255, 255, 255)'
-        })
-        anime({
-            targets: second,
-            width: MaxButtonWidth,
-            color: 'rgb(255, 255, 255)',
-            backgroundColor: 'rgb(75, 211, 137)'
-        })
-        anime({
-            targets: background,
-            backgroundColor: 'rgb(62, 175, 111)'
-        })
-        k = 2
-    }
-    third.onclick = function(){
-        anime({
-            targets: [first, second, fourth, home],
-            width: ButtonWidth,
-            color: 'rgb(128, 128, 128)',
-            backgroundColor: 'rgb(255, 255, 255)'
-        })
-        anime({
-            targets: third,
-            width: MaxButtonWidth,
-            color: 'rgb(255, 255, 255)',
-            backgroundColor: 'rgb(230, 23, 83)'
-        })
-        anime({
-            targets: background,
-            backgroundColor: 'rgb(190, 0, 49)'
-        })
-        k = 3
-    }
-    fourth.onclick = function(){
-        anime({
-            targets: [first, second, third, home],
-            width: ButtonWidth,
-            color: 'rgb(128, 128, 128)',
-            backgroundColor: 'rgb(255, 255, 255)'
-        })
-        anime({
-            targets: fourth,
-            width: MaxButtonWidth,
-            color: 'rgb(255, 255, 255)',
-            backgroundColor: 'rgb(179, 45, 210)'
-        })
-        anime({
-            targets: background,
-            backgroundColor: 'rgb(142, 0, 172)'
-        })
-        k = 4
-    }
-    home.onclick = function(){
-        anime({
-            targets: [first, second, third, fourth],
-            width: ButtonWidth,
-            color: 'rgb(128, 128, 128)',
-            backgroundColor: 'rgb(255, 255, 255)'
-        })
-        anime({
-            targets: home,
-            width: MaxButtonWidth,
-            color: 'rgb(255, 255, 255)',
-            backgroundColor: 'rgb(21, 0, 255)'
-        })
-        anime({
-            targets: background,
-            backgroundColor: 'rgb(6, 30, 205)'
-        })
-        k = 5
-    }
+    let NewPageURL = window.location.href
+    let PageURL = 0
+    setInterval(function(){
+        NewPageURL = window.location.href
+        if (NewPageURL != PageURL) {
+            PageURL = NewPageURL
+            AnimationChange()
+        }
+    })
 }
 
 
@@ -247,7 +256,7 @@ text-decoration: none; /* отменяем подчеркивание ссылк
 /* для мобильной версии убирается подсветка синим при нажатии Это как??? */
 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
  }
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 400px) {
     .btn-container {
         padding-top: 60px;
         padding-bottom: 60px;
@@ -280,5 +289,6 @@ text-decoration: none; /* отменяем подчеркивание ссылк
         line-height: 70px;
     }
 }
+
 
 </style>
