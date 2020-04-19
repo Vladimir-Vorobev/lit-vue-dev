@@ -2,7 +2,6 @@
 <template>
 <div>
     <div id="app">
-    <!--Вот здесь-->
         <div ref="background" class="btn-container">
             <div>
                 <router-link ref="home" v-on:click.native="ButtonChange()" to="/" class="btn fas fa-home"></router-link>
@@ -24,11 +23,8 @@ export default {
     name: 'Header',
     methods:{
         ButtonChange() {
-            console.log(this.$refs.background)
-            console.log(this.$refs.first)
             let ButtonWidth = 50
             let MaxButtonWidth = 100
-            let WindowLocation = window.location.pathname
 
             if(window.matchMedia('(max-width: 400px)').matches){
                 ButtonWidth = 40
@@ -38,15 +34,15 @@ export default {
                 ButtonWidth = 70
                 MaxButtonWidth = 140
             }
-            if(WindowLocation == '/vuecycle'){
+            if(this.$route.path == '/vuecycle'){
                 anime({
-                    targets: this.$refs.first,
+                    targets: this.$refs.first.$el,
                     width: MaxButtonWidth,
                     color: 'rgb(255, 255, 255)',
                     backgroundColor: 'rgb(237, 178, 5)'
                 })
                 anime({
-                    targets: this.$refs.home,
+                    targets: this.$refs.home.$el,
                     width: ButtonWidth,
                     color: 'rgb(128, 128, 128)',
                     backgroundColor: 'rgb(255, 255, 255)'
@@ -58,13 +54,13 @@ export default {
             }
             else{
                 anime({
-                    targets: this.$refs.home,
+                    targets: this.$refs.home.$el,
                     width: MaxButtonWidth,
                     color: 'rgb(255, 255, 255)',
                     backgroundColor: 'rgb(21, 0, 255)'
                 })
                 anime({
-                    targets: this.$refs.first,
+                    targets: this.$refs.first.$el,
                     width: ButtonWidth,
                     color: 'rgb(128, 128, 128)',
                     backgroundColor: 'rgb(255, 255, 255)'
@@ -75,6 +71,9 @@ export default {
                 })
             }
         }
+    },
+    mounted(){
+        this.ButtonChange()
     }
 }
 </script>
