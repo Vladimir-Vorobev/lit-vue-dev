@@ -10,10 +10,16 @@
   "dependencies": {
     "anime": "^0.1.2",
     "animejs": "^3.2.0",
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
     "core-js": "^3.6.4",
     "firebase": "^7.14.2",
     "firebase-admin": "^8.11.0",
     "firebaseui": "^4.5.0",
+    "fs": "0.0.1-security",
+    "jquery": "^3.5.0",
+    "needle": "^2.4.1",
+    "tress": "^1.1.4",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6",
     "vuefire": "^2.2.0-alpha.0"

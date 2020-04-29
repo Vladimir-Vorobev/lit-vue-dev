@@ -44,6 +44,19 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
+var needle = require("needle");
+var cheerio= require("cheerio");
+
+var url = "http://events.mosedu.ru/";
+
+needle.get(url,function(err,res){
+  if(err) throw(err);
+
+  var $ = cheerio.load(res.body);
+
+  console.log($(".event-block-blocks").text());
+});
+
 new Vue({
   router,
   render: h => h(App),
