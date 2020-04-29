@@ -52,7 +52,6 @@ export default {
 display: flex;
 position: fixed; 
 top: 0;
-margin: 0 0 1000 0px;
 width: 100%;
 background-color: black;
 padding-top: 100px;
