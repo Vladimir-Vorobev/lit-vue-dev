@@ -4,10 +4,19 @@
     <div id="app">
         <div ref="background" class="btn-container">
             <div>
-                <router-link ref="home" v-on:click.native="ButtonChange()" to="/" class="btn fas fa-home"></router-link>
+                <router-link ref="home" to="/" class="btn">{{homeText}}</router-link>
             </div>
             <div>
-                <router-link ref="first" v-on:click.native="ButtonChange()" to="/vuecycle" class="fas fa-cog btn"></router-link>
+                <router-link ref="recommendedEvents" to="/recommended-events" class="btn">{{recommendedEventsText}}</router-link>
+            </div>
+            <div>
+                <router-link ref="allEvents" to="/all-events" class="btn">{{allEventsText}}</router-link>
+            </div>
+            <div>
+                <router-link ref="yourEvents" to="/your-events" class="btn">{{yourEventsText}}</router-link>
+            </div>
+            <div>
+                <router-link ref="registration" to="/registration" class="btn">{{registrationText}}</router-link>
             </div>
         </div>
     </div>
@@ -17,70 +26,34 @@
 
 
 <script>
-import anime from 'animejs'
 
 export default { 
     name: 'Header',
-    methods:{
-        ButtonChange() {
-            let ButtonWidth = 50
-            let MaxButtonWidth = 100
-
-            if(window.matchMedia('(max-width: 400px)').matches){
-                ButtonWidth = 40
-                MaxButtonWidth = 80
-            }
-            else if(window.matchMedia('(min-width: 800px)').matches){
-                ButtonWidth = 70
-                MaxButtonWidth = 140
-            }
-            if(this.$route.path == '/vuecycle'){
-                anime({
-                    targets: this.$refs.first.$el,
-                    width: MaxButtonWidth,
-                    color: 'rgb(255, 255, 255)',
-                    backgroundColor: 'rgb(237, 178, 5)'
-                })
-                anime({
-                    targets: this.$refs.home.$el,
-                    width: ButtonWidth,
-                    color: 'rgb(128, 128, 128)',
-                    backgroundColor: 'rgb(255, 255, 255)'
-                })
-                anime({
-                    targets: this.$refs.background,
-                    backgroundColor: 'rgb(222, 155, 0)'
-                })
-            }
-            else{
-                anime({
-                    targets: this.$refs.home.$el,
-                    width: MaxButtonWidth,
-                    color: 'rgb(255, 255, 255)',
-                    backgroundColor: 'rgb(21, 0, 255)'
-                })
-                anime({
-                    targets: this.$refs.first.$el,
-                    width: ButtonWidth,
-                    color: 'rgb(128, 128, 128)',
-                    backgroundColor: 'rgb(255, 255, 255)'
-                })
-                anime({
-                    targets: this.$refs.background,
-                    backgroundColor: 'rgb(6, 30, 205)'
-                })
-            }
+    data(){
+        let homeText = "Главная"
+        let recommendedEventsText = "Рекомендуемые мероприятия"
+        let allEventsText = "Все мероприятия"
+        let yourEventsText = "Ваши мероприятия"
+        let registrationText = "Войти"
+        return {
+            homeText,
+            recommendedEventsText,
+            allEventsText,
+            yourEventsText,
+            registrationText
         }
     },
-    mounted(){
-        this.ButtonChange()
-    }
+    
 }
 </script>
 
 <style scoped>
 .btn-container {
 display: flex;
+position: fixed; 
+top: 0;
+margin: 0 0 1000 0px;
+width: 100%;
 background-color: black;
 padding-top: 100px;
 padding-bottom: 100px;
@@ -88,56 +61,17 @@ justify-content: center;
 }
 
 .btn {
-display: inline-block;
+display: inline;
 cursor: pointer;
-width: 50px;
-height: 50px;
-margin: 5px;
-font-size: 25px;
-color: gray;
-border-radius: 25px;
-background-color: white;
-
+color: white;
 text-align: center;
 line-height: 50px;
+height: 50px;
+width: 100px;
+margin: 10px;
+border-radius: 50px;
+background-color: black;
 
 text-decoration: none; /* отменяем подчеркивание ссылки */
-
-
-/* для мобильной версии убирается подсветка синим при нажатии Это как??? */
--webkit-tap-highlight-color: rgba(0, 0, 0, 0);
  }
-@media screen and (max-width: 400px) {
-    .btn-container {
-        padding-top: 60px;
-        padding-bottom: 60px;
-    }
-    .btn {
-        width: 40px;
-        height: 40px;
-        margin: 5px;
-        font-size: 20px;
-        color: gray;
-        border-radius: 20px;
-        line-height: 40px;
-    }
-}
-
-@media screen and (min-width: 800px) {
-    .btn-container {
-        padding-top: 130px;
-        padding-bottom: 130px;
-    }
-    .btn {
-        width: 70px;
-        height: 70px;
-        margin: 5px;
-        font-size: 35px;
-        color: gray;
-        border-radius: 35px;
-        line-height: 70px;
-    }
-}
-
-
 </style>
