@@ -44,7 +44,7 @@ needle.get(url,function(err,res){
                 document.getElementById("main").innerHTML += '<b>' + 'Тип: ' + '</b>' + mainArr[i][j] + '</br>'
             }
             else if(j == 2){
-                document.getElementById("main").innerHTML += '<b>' + 'Дата: : ' + '</b>' + mainArr[i][j] + '</br>'
+                document.getElementById("main").innerHTML += '<b>' + 'Дата: ' + '</b>' + mainArr[i][j] + '</br>'
             }
             else if(j == 3){
                 document.getElementById("main").innerHTML += '<b>' + 'Время: ' + '</b>' + mainArr[i][j] + '</br>'
