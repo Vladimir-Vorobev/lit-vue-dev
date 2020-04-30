@@ -17,6 +17,7 @@
     "firebase-admin": "^8.11.0",
     "firebaseui": "^4.5.0",
     "fs": "0.0.1-security",
+    "jQuery": "^1.7.4",
     "jquery": "^3.5.0",
     "needle": "^2.4.1",
     "tress": "^1.1.4",
