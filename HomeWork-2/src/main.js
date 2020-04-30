@@ -30,7 +30,7 @@ const router = new VueRouter({
   routes // сокращённая запись для `routes: routes`
 })
 
-var firebaseConfig = {
+let firebaseConfig = {
   apiKey: "AIzaSyAVwPiz1_SAcOZ82JuFQutmEFtlSnUd7fs",
   authDomain: "hackaton2020-61440.firebaseapp.com",
   databaseURL: "https://hackaton2020-61440.firebaseio.com",
@@ -44,19 +44,8 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-var needle = require("needle");
-var cheerio= require("cheerio");
 
-var url = "http://events.mosedu.ru/";
 
-needle.get(url,function(err,res){
-  if(err) throw(err);
-
-  var $ = cheerio.load(res.body);
-  let string = $('.event-block-blocks').text()
-  let data = string.split(' ')
-  console.log($(data).text());
-});
 
 new Vue({
   router,
