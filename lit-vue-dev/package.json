@@ -11,7 +11,7 @@
     "animejs": "^3.1.0",
     "core-js": "^3.6.4",
     "gsap": "^3.2.6",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "timeline-js": "0.0.2",
     "vue": "^2.6.11",
     "vue-animejs": "^2.1.1",
