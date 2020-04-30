@@ -53,8 +53,9 @@ needle.get(url,function(err,res){
   if(err) throw(err);
 
   var $ = cheerio.load(res.body);
-
-  console.log($(".event-block-blocks").text());
+  let string = $('.event-block-blocks').text()
+  let data = string.split(' ')
+  console.log($(data).text());
 });
 
 new Vue({
