@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="main1">
   <div class="main">
     <h1>{{ msg }}</h1>
   </div>
@@ -96,4 +96,7 @@ line-height: 50px;
 .counter{
   margin-top: 10px
 }
+.main{
+	padding-top: 260px;
+ }
 </style>
