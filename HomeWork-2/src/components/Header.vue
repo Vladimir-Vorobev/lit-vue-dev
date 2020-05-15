@@ -2,121 +2,67 @@
 <template>
 <div>
     <div id="app">
-        <div ref="background" class="btn-container">
-            <div>
-                <router-link to="/" class="router-link">
-                    <div @mouseenter="ButtonEnter1()" @mouseleave="ButtonLeave1()" class="btn button1" ref="home">{{homeText}}</div>
-                </router-link>
-            </div>
-            <div>
-                <router-link to="/recommended-events" class="router-link">
-                    <div @mouseenter="ButtonEnter2()" @mouseleave="ButtonLeave2()" class="btn button2" ref="recommendedEvents">{{recommendedEventsText}}</div>
-                </router-link>
-            </div>
-            <div>
-                <router-link to="/all-events" class="router-link">
-                    <div @mouseenter="ButtonEnter3()" @mouseleave="ButtonLeave3()" class="btn button3" ref="allEvents">{{allEventsText}}</div>
-                </router-link>
-            </div>
-            <div>
-                <router-link to="/your-events" class="router-link">
-                    <div @mouseenter="ButtonEnter4()" @mouseleave="ButtonLeave4()" class="btn button" ref="yourEvents">{{yourEventsText}}</div>
-                </router-link>
-            </div>
-            <div>
-                <router-link to="/registration" class="router-link">
-                    <div @mouseenter="ButtonEnter5()" @mouseleave="ButtonLeave5()" class="btn button" ref="registration">{{registrationText}}</div>
-                </router-link>
-            </div>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <router-link to="/" class="router-link">
+            <a class="navbar-brand" ref="home">Navbar</a>
+        </router-link>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <router-link to="/recommended-events" class="router-link">
+                  <a class="nav-link" ref="recommendedEvents">{{recommendedEventsText}}</a>
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/all-events" class="router-link">
+                  <a class="nav-link" ref="allEvents">{{allEventsText}}</a>
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link to="/your-events" class="router-link">
+                  <a class="nav-link" ref="yourEvents">{{yourEventsText}}</a>
+              </router-link>
+            </li>
+          </ul>
+          <router-link to="/login" class="router-link">
+              <a type="button" class="btn btn-success btn-lg " ref="login">{{loginText}}</a>
+          </router-link>
         </div>
+      </nav>
     </div>
 </div>
-    
+
 </template>
 
 
 <script>
 
-export default { 
+export default {
     name: 'Header',
     data(){
         let homeText = "Главная"
         let recommendedEventsText = "Рекомендуемые мероприятия"
         let allEventsText = "Все мероприятия"
         let yourEventsText = "Ваши мероприятия"
-        let registrationText = "Войти"
+        let loginText = "Войти"
         return {
             homeText,
             recommendedEventsText,
             allEventsText,
             yourEventsText,
-            registrationText
+            loginText
         }
-    },
-    methods:{
-        ButtonEnter1(){
-            this.$refs.home.style.borderBottomColor = "white"
-        },
-        ButtonLeave1(){
-            this.$refs.home.style.borderBottomColor = "black"
-        },
-        ButtonEnter2(){
-            this.$refs.recommendedEvents.style.borderBottomColor = "white"
-        },
-        ButtonLeave2(){
-            this.$refs.recommendedEvents.style.borderBottomColor = "black"
-        },
-        ButtonEnter3(){
-            this.$refs.allEvents.style.borderBottomColor = "white"
-        },
-        ButtonLeave3(){
-            this.$refs.allEvents.style.borderBottomColor = "black"
-        },
-        ButtonEnter4(){
-            this.$refs.yourEvents.style.borderBottomColor = "white"
-        },
-        ButtonLeave4(){
-            this.$refs.yourEvents.style.borderBottomColor = "black"
-        },
-        ButtonEnter5(){
-            this.$refs.registration.style.borderBottomColor = "white"
-        },
-        ButtonLeave5(){
-            this.$refs.registration.style.borderBottomColor = "black"
-        },
     },
 }
 </script>
 
 <style scoped>
-.btn-container {
-display: flex;
-position: fixed; 
-top: 0;
-width: 100%;
-background-color: black;
-padding-top: 100px;
-padding-bottom: 100px;
-justify-content: center;
+.router-link
+{
+  text-decoration: none; /* отменяем подчеркивание ссылки */
+  color: #fff;
 }
-
-.btn {
-display: inline;
-cursor: pointer;
-color: white;
-text-align: center;
-line-height: 50px;
-height: auto;
-width: auto;
-margin: 10px;
-padding-bottom: 10px;
-border: 10px;
-border-width: 1px;
-border-style: solid;
-border-color: black;
- }
-
- .router-link{
-text-decoration: none; /* отменяем подчеркивание ссылки */
- }
 </style>

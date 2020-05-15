@@ -34,6 +34,6 @@ export default {
 
 <style scoped>
 .main{
-    padding-top: 260px;
+    padding-top: 80px;
 }
 </style>

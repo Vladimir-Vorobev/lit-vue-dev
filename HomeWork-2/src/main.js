@@ -15,6 +15,9 @@ import RecommendedEvents from './components/RecommendedEvents.vue'
 import AllEvents from './components/AllEvents.vue'
 import Registration from './components/Registration.vue'
 import YourEvents from './components/YourEvents.vue'
+import LogIn from './components/LogIn.vue'
+import Profile from './components/Profile.vue'
+import Statistics from './components/Statistics.vue'
 
 
 Vue.config.productionTip = false
@@ -28,6 +31,9 @@ const routes = [
   { path: '/all-events', component: AllEvents },
   { path: '/your-events', component: YourEvents },
   { path: '/registration', component: Registration },
+  { path: '/login', component: LogIn },
+  { path: '/profile', component: Profile },
+  { path: '/statistics', component: Statistics },
 ]
 
 const router = new VueRouter({
@@ -47,7 +53,6 @@ let firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
 
 export const db = firebase.firestore()
 

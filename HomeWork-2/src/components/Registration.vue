@@ -1,66 +1,60 @@
 <template>
 
     <div class="main">
+        <h2>Регистрация</h2>
         <form>
-            <input v-model="email" placeholder="Email">
-            <input type="password" v-model="password" placeholder="Пароль">
+            Имя*
+            <input name="name" placeholder="Иван"><br>
+            Фамилия*
+            <input name="surname" placeholder="Иванов"><br>
+            E-mail*
+            <input name="email" placeholder="example@gmail.com"><br>
+            Возраст*
+            <input name="age" placeholder="15"><br>
+            Пароль*
+            <input type="password" name="password" placeholder="1234567"><br>
+            Повторите пароль*
+            <input type="password" name="password2" placeholder="1234567"><br>
             <button @click="addUser()">Зарегистрироваться</button>
-        </form>
-        <form class='form'>
-          <h2>Add name and surname</h2>
-          <input name="one" placeholder="Имя" class="input" required>
-          <input name="two" placeholder="Фамилия" class="input" required>
-          <button @click="addData()">Добавить</button>
         </form>
     </div>
 </template>
 
 <script>
-import * as firebase from 'firebase';
-import 'firebase/auth'
 import 'firebase/database'
-import { db } from '../main'
+//import { db } from '../main'
 export default {
     name: 'Registration',
-    data() {
-      return {
-        email: '',
-        password: '',
-        name: '',
-        surname: '',
-      }
-    },
-    firestore () {
-      return {
-        comics: db.collection('comics').orderBy('createdAt')
-      }
-    },
     methods: {
-      addUser() {
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).catch(function(error) {
-            let errorCode = error.code;
-            let errorMessage = error.message;
-            if (errorCode == 'auth/weak-password') {
-                alert('The password is too weak.');
-            } else {
-                alert(errorMessage);
-            }
-            console.log(error);
-      });
+      addUser(){
+        let form = document.forms[0]
+        let name = form.elements.name.value
+        let surname = form.elements.surname.value
+        let email = form.elements.email.value
+        let age = form.elements.age.value
+        let password = form.elements.password.value
+        let password2 = form.elements.password2.value
+        if(name.trim() == ''){
+          alert("Введите имя")
+        }
+        else if(surname.trim() == ''){
+          alert("Введите фамилию")
+        }
+        else if(email.trim() == ''){
+          alert("Введите email")
+        }
+        else if(age.trim() == ''){
+          alert("введите возраст")
+        }
+        else if(password.trim() == ''){
+          alert("Введите пароль")
+        }
+        else if(password != password2){
+          alert("Пароли не совпадают")
+        }
+        alert(password)
+        
       },
-      addData(){
-        let form = document.forms[1]
-        db.collection("users").add({
-            name: form.elements.one.value,
-            surname: form.elements.two.value
-        })
-        .then(function(docRef) {
-            alert("Document written with ID: ", docRef.id)
-        })
-        .catch(function(error) {
-            alert("Error adding document: ", error)
-        });
-      }
     }
   }
 
@@ -69,6 +63,6 @@ export default {
 
 <style scoped>
 .main{
-    padding-top: 260px;
+    padding-top: 80px;
 }
 </style>

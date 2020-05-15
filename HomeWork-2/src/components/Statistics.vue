@@ -1,16 +1,13 @@
 <template>
-    <div class="main">
-</div>
+    <div></div>
 </template>
 
 <script>
 export default {
-    name: 'MainPage',
+    name: 'Statistics',
 }
 </script>
 
 <style scoped>
-.main{
-	padding-top: 80px;
-}
+
 </style>
