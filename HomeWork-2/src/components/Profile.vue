@@ -45,8 +45,8 @@
 </template>
 
 <script>
-import 'firebase/database'
-import { db } from '../main'
+//import 'firebase/database'
+//import { db } from '../main'
 export default {
     name: 'Profile',
     data() {
@@ -57,37 +57,14 @@ export default {
         surname: '',
       }
     },
-    firestore () {
-      return {
-        comics: db.collection('comics').orderBy('createdAt')
-      }
-    },
     methods: {
       addData(){
-        let form = document.forms[1]
-        db.collection("users").add({
-            name: form.elements.one.value,
-            surname: form.elements.two.value
-        })
+        //let form = document.forms[1]
+        //db.collection("users").add({
+           // name: form.elements.one.value,
+            //surname: form.elements.two.value
+        //})
       },
-      findData(){
-        db.collection("users").where("name", "==", "Владимир").get()
-        .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                let docId = doc.id
-                //let docData = doc.data()
-                return docId
-            });
-        })
-      },
-      deliteData(){
-        let docId = this.findData()
-        alert(docId)
-        db.collection("users").doc(docId).delete()
-      },
-      updateData(){
-        db.collection("users").doc("zujwIPpTGKaY3oqyM0V1")
-      }
     }
   }
 

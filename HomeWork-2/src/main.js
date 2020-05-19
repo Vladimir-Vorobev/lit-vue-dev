@@ -3,12 +3,10 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 
-import firebase from 'firebase/app'
-import 'firebase/firestore'
-import 'firebase/auth'
-import 'firebase/database'
-import 'firebase/messaging'
-import 'firebase/storage'
+//import firebase from 'firebase/app'
+//import 'firebase/firestore'
+//import 'firebase/auth'
+//import 'firebase/database'
 
 import MainPage from './components/MainPage.vue'
 import RecommendedEvents from './components/RecommendedEvents.vue'
@@ -22,7 +20,6 @@ import Statistics from './components/Statistics.vue'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter)
-Vue.use(firebase)
 Vue.use(Vuex)
 
 const routes = [
@@ -35,29 +32,43 @@ const routes = [
   { path: '/profile', component: Profile },
   { path: '/statistics', component: Statistics },
 ]
-
+document.cookie = "SessionID=" + "body"
+document.cookie = "email=" + 'email'
+let data = document.cookie.split(";")
+let name = ''
+let cookie = []
+let b = 0
+for(let i = 0; i < data.length; i++){
+  let value = data[i].toString()
+  for(let j = 0; j < value.length; j++){
+    if(data[i][j] == "="){
+      if(name == 'SessionID'){
+        b = 1
+      }
+      else if(name == 'email'){
+        b = 2
+      }
+      name = ''
+    }
+    else if(data[i][j] != " "){
+      name += data[i][j]
+    }
+  }
+  if(b == 1){
+    cookie.push({'SessionID': name})
+    b = 0
+  }
+  else if(b == 2){
+    cookie.push({'email': name})
+    b = 0
+  }
+  name = ''
+}
+console.log(cookie)
 const router = new VueRouter({
   mode: 'history',
   routes // сокращённая запись для `routes: routes`
 })
-
-let firebaseConfig = {
-  apiKey: "AIzaSyCbytih2cZ9ypxujgKCeCj_4IwjqBURzmY",
-  authDomain: "hackaton-bab84.firebaseapp.com",
-  databaseURL: "https://hackaton-bab84.firebaseio.com",
-  projectId: "hackaton-bab84",
-  storageBucket: "hackaton-bab84.appspot.com",
-  messagingSenderId: "140185280116",
-  appId: "1:140185280116:web:a84616824af912fbecbb21",
-  measurementId: "G-P785PP6WCC"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-export const db = firebase.firestore()
-
-
-
 new Vue({
   router,
   render: h => h(App),

@@ -1,60 +1,90 @@
 <template>
-
-    <div class="main">
-        <h2>Войти</h2>
-        <form>
-            E-mail
-            <input v-model="email" name="email" placeholder="example@gmail.com"><br>
-            Пароль
-            <input name="password" placeholder="1234567"><br>
-            <button @click="addUser()">Войти</button>
+    <div class="main container">
+        <form class="formbox">
+            <h2>Войти</h2>
+            <div class="form-group row">
+              <label for="exampleInputEmail1">Email адресс</label>
+              <input name="email" class="form-control" placeholder="example@gmail.com">
+            </div>
+            <div class="form-group row">
+              <label for="exampleInputPassword1">Пароль</label>
+              <input type="password" class="form-control" name="password" placeholder="Пароль">
+            </div>
+            <div class="row"> 
+              <button class="btn btn-primary btn-lg" @click="loginUser()">Войти</button>
+            </div>
         </form>
-        <p>Еще не зарегистрировались? <router-link to="/registration">Создать аккаунт</router-link></p>
+        <p><router-link to="/registration" class="link">Еще нет аккаунта? Зарегистрируйтесь</router-link></p>
     </div>
 </template>
 
 <script>
-import 'firebase/database'
-import { db } from '../main'
+import needle from "needle"
+
 export default {
     name: 'Login',
-    data() {
-      return {
-        email: '',
-        password: '',
-      }
-    },
-    firestore () {
-      return {
-        comics: db.collection('comics').orderBy('createdAt')
-      }
-    },
     methods: {
-      addData(){
-        let form = document.forms[1]
-        db.collection("users").add({
-            name: form.elements.one.value,
-            surname: form.elements.two.value
-        })
+      loginUser(){
+        event.preventDefault()
+        let form = document.forms[0]
+        let email = form.elements.email.value
+        let password = form.elements.password.value
+        let crypto = require('crypto')
+        let data = {
+          email: email,
+          password: crypto.createHash('md5').update(password).digest("hex"), 
+        }
+        needle.post('http://37.228.118.76:3000/api/login', data, {"json": true}, function(err, res, body){
+            if(body != 'Incorect password' && !err){
+              document.cookie = "SessionID=" + body
+              document.cookie = "email=" + email
+              let data = document.cookie.split(";")
+              let name = ''
+              let cookie = []
+              let b = 0
+              for(let i = 0; i < data.length; i++){
+                let value = data[i].toString()
+                for(let j = 0; j < value.length; j++){
+                  if(data[i][j] == "="){
+                    if(name == 'SessionID'){
+                      b = 1
+                    }
+                    else if(name == 'email'){
+                      b = 2
+                    }
+                    name = ''
+                  }
+                  else if(data[i][j] != " "){
+                    name += data[i][j]
+                  }
+                }
+                if(b == 1){
+                  cookie.push({'SessionID': name})
+                  b = 0
+                }
+                else if(b == 2){
+                  cookie.push({'email': name})
+                  b = 0
+                }
+                name = ''
+              }
+              fetch('http://37.228.118.76:3000/api/getI')
+                .then(response => {
+                  return response.json()
+                })
+                .then(data => {
+                  
+                  console.log(data)
+                })
+                .catch(err => {
+                  console.log(err)
+                })
+            }
+            else{
+              alert("Неверный email или пароль")
+            }
+          })
       },
-      findData(){
-        db.collection("users").where("name", "==", "Владимир").get()
-        .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                let docId = doc.id
-                //let docData = doc.data()
-                return docId
-            });
-        })
-      },
-      deliteData(){
-        let docId = this.findData()
-        alert(docId)
-        db.collection("users").doc(docId).delete()
-      },
-      updateData(){
-        db.collection("users").doc("zujwIPpTGKaY3oqyM0V1")
-      }
     }
   }
 
@@ -63,6 +93,25 @@ export default {
 
 <style scoped>
 .main{
-    padding-top: 80px;
+    background-color: rgb(223, 223, 223);
+    height: 100%;
+    padding: 30px;
+    min-height: 500px;
+    margin-bottom: 0px;
+}
+.main p{
+  position: absolute; bottom: 0;
+  color: #4f4f50;
+}
+.formbox{
+  margin-top: 20%;
+}
+.link{
+  color: #4f4f50;
+  text-decoration: none;
+}
+.link:hover{
+  color: #EF5B65;
+  text-decoration: none;
 }
 </style>
