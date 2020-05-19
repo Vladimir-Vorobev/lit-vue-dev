@@ -19,7 +19,7 @@
     "firebaseui": "^4.5.0",
     "fs": "0.0.1-security",
     "jQuery": "^1.7.4",
-    "jquery": "^3.5.0",
+    "jquery": "^3.5.1",
     "module": "^1.2.5",
     "mongodb": "^3.5.7",
     "mongodb-client-encryption": "^1.0.1",

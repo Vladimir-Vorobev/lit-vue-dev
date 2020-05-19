@@ -10,7 +10,7 @@
               <label for="exampleInputPassword1">Пароль</label>
               <input type="password" class="form-control" name="password" placeholder="Пароль">
             </div>
-            <div class="row"> 
+            <div class="form-group row"> 
               <button class="btn btn-primary btn-lg" @click="loginUser()">Войти</button>
             </div>
         </form>
@@ -93,18 +93,21 @@ export default {
 
 <style scoped>
 .main{
+    padding-top: 210px !important;
+}
+.main{
     background-color: rgb(223, 223, 223);
     height: 100%;
     padding: 30px;
-    min-height: 500px;
+    min-height: 100vh;
     margin-bottom: 0px;
 }
 .main p{
-  position: absolute; bottom: 0;
+  /*position: absolute; bottom: 0;*/
   color: #4f4f50;
-}
-.formbox{
-  margin-top: 20%;
+  text-align: left !important;
+  font-size: 0.86em;
+  margin-left: -10px;
 }
 .link{
   color: #4f4f50;

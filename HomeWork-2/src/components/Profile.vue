@@ -1,70 +1,146 @@
 <template>
-
-    <div class="main">
-        <h2>Профиль</h2>
-        <form>
-            Имя
-            <input name="name" placeholder="Иван"><br>
-            Фамилия
-            <input name="surname" placeholder="Иванов"><br>
-            E-mail
-            <input v-model="email" name="email" placeholder="example@gmail.com"><br>
-            Возраст
-            <input name="age" placeholder="15"><br>
-            Новый пароль
-            <input type="password" v-model="password" name="password" placeholder="1234567"><br>
-            Повторите пароль
-            <input name="password2" placeholder="1234567"><br>
-            Город
-            <input name="city" placeholder="Москва"><br>
-            Номер учебного заведения
-            <input name="school" placeholder="1234"><br>
-            Тип учебного заведения<br>
-            <input type="radio" name="school">Школа<br>
-            <input type="radio" name="college">Колледж<br>
-            <input type="radio" name="university">ВУЗ<br>
-            Роль в учебном заведении<br>
-            <input type="radio" name="student">Ученик<br>
-            <input type="radio" name="teacher">Учитель<br>
-            <input type="radio" name="director">Директор<br>
-            Класс<br>
-            Номер
-            <input name="class_number" placeholder="8"><br>
-            Символ
-            <input name="simvol" placeholder="И"><br>
-            Добавить портфолио<br>
-            <input type="file" name="portfolio" multiple accept="image/*">
-            <button @click="updateUser()">Сохранить</button><br><br><br>
+    <div class="main container">
+        <form class="formbox">
+            <h2>Профиль</h2>
+            <div class="form-group row">
+              <div class="col-12 col-md-6"><input name="name" class="form-control" placeholder="Имя"></div>
+              <div class="col-12 col-md-6"><input name="surname"  class="form-control" placeholder="Фамилия"></div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12"> 
+                <input class="form-control" name="email" placeholder="example@gmail.com">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12"> 
+                <input name="age" class="form-control" placeholder="Возраст">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12"> 
+                <input type="password" class="form-control" name="password" placeholder="Новый пароль">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12"> 
+                <input name="password2" class="form-control" placeholder="Повторите пароль">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12 col-md-7"> 
+                <input name="city" class="form-control" placeholder="Город">
+              </div>
+              <div class="col-12 col-md-5"> 
+                <input name="school" class="form-control" placeholder="Номер учебного заведения">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12 col-md-6"> 
+                <select name="schoolType" class="custom-select custom-select-lg mb-3">
+                  <option selected>Тип учебного заведения</option>
+                  <option value="school">Школа</option>
+                  <option value="college">Колледж</option>
+                  <option value="university">ВУЗ</option>
+                </select>
+              </div>
+              <div class="col-12 col-md-6"> 
+                <select name="role" class="custom-select custom-select-lg mb-3">
+                  <option selected>Роль в учебном заведении</option>
+                  <option value="student">Ученик</option>
+                  <option value="teacher">Учитель</option>
+                  <option value="director">Директор</option>
+              </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12 col-md-6"><input name="class_number" class="form-control" placeholder="Номер класса"></div>
+              <div class="col-12 col-md-6"><input name="simvol" class="form-control" placeholder="Символ класса"></div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12 col-md-6"> 
+                <label for="exampleInputEmail1"><h3>Добавить портфолио</h3></label>
+              </div>
+              <div class="col-12 col-md-6"> 
+                <input type="file" name="portfolio" class="form-control-file" multiple accept="image/*">
+              </div>
+            </div>
+            <div class="form-group row"> 
+                <button class="btn btn-primary btn-lg" @click="updateUser()">Сохранить</button>
+              </div>
         </form>
-        <div>
-            <button @click="addNumber()">Создать уникальный номер</button><br>
-            Этот номер необходим, если Вы хотите делиться своей статистикой с другими пользователями, например, с родителями или друзьями. Внимание: предоставляйте этот номер только тем, кому Вы доверяете<br>
-            <router-link to="/statistics">Посмотреть статистику знакомых</router-link><br>
+        <div class="row num">
+            <div class="col-12 col-md-8"><span>Этот номер необходим, если Вы хотите делиться своей статистикой с другими пользователями, например, с родителями или друзьями. Внимание: предоставляйте этот номер только тем, кому Вы доверяете</span> <br> <router-link to="/statistics">Посмотреть статистику знакомых</router-link></div>
+            <div class="number"></div>
+            <div class="col-12 col-md-4"><button class="btn btn-info btn-lg" @click="addNumber()">Создать уникальный номер</button></div>
         </div>
     </div>
 </template>
-
 <script>
-//import 'firebase/database'
-//import { db } from '../main'
+//import needle from "needle"
 export default {
     name: 'Profile',
-    data() {
-      return {
-        email: '',
-        password: '',
-        name: '',
-        surname: '',
-      }
-    },
     methods: {
-      addData(){
-        //let form = document.forms[1]
-        //db.collection("users").add({
-           // name: form.elements.one.value,
-            //surname: form.elements.two.value
-        //})
+      updateUser(){
+        event.preventDefault()
+        let re = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/
+        let form = document.forms[0]
+        let name = form.elements.name.value
+        let surname = form.elements.surname.value
+        let email = form.elements.email.value.replace(/\s/g, '')
+        let age = form.elements.age.value
+        let password = form.elements.password.value
+        let password2 = form.elements.password2.value
+        let city = form.elements.city.value
+        let school = form.elements.school.value
+        let schoolType = form.elements.schoolType.value
+        let role = form.elements.role.value
+        let class_number = form.elements.class_number.value
+        let simvol = form.elements.simvol.value
+        let portfolio = form.elements.portfolio.value
+        if(password != password2){
+          alert("Пароли не совпадают")
+        }
+        else if(re.test(email) == false && email.trim() != ''){
+          alert("Введен некорректный email")
+        }
+        else if(password.length < 5 && password.trim() != ''){
+          alert("Пароль слишком короткий")
+        }
+        else if(password.length > 15){
+          alert("Пароль слишком длинный")
+        }
+        else{
+            let crypto = require('crypto')
+            let data = {}
+            if(name.trim() != '') data.name = name
+            if(surname.trim() != '') data.surname = surname
+            if(email.trim() != '') data.email = email
+            if(age.trim() != '') data.age = age
+            if(password.trim() != '') data.password = crypto.createHash('md5').update(password).digest("hex")
+            if(city.trim() != '') data.city = city
+            if(school.trim() != '') data.school = school
+            if(schoolType.trim() != '' && schoolType != "Тип учебного заведения") data.schoolType = schoolType
+            if(role.trim() != '' && role != "Роль в учебном заведении") data.role = role
+            if(class_number.trim() != '') data.class_number = class_number
+            if(simvol.trim() != '') data.simvol = simvol
+            if(portfolio != '') data.portfolio = portfolio
+            console.log(data)
+            //if(age.trim() != '') data.age = age
+            
+          //needle.post('http://37.228.118.76:3000/api/registration', data, {"json": true}, function(err, res, body){
+            //if(body == "Reg succsesful"){
+              //alert("Профиль обновлен успешно")
+            //}
+            //else{
+              //alert("Обновить профиль не удалось")
+            //}
+          //})
+        }
       },
+      addNumber(){
+          let number = Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000
+          document.querySelector('.number').innerHTML = number
+      }
     }
   }
 
@@ -73,7 +149,29 @@ export default {
 
 <style scoped>
 .main{
-    display: flex;
-    padding-top: 80px;
+    padding-top: 110px !important;
+}
+.main{
+    background-color: rgb(223, 223, 223);
+    height: 100%;
+    padding: 30px;
+    min-height: 100vh;
+    margin-bottom: 0px;
+}
+.main p{
+  position: absolute; bottom: 0;
+  color: #4f4f50;
+}
+
+.link{
+  color: #4f4f50;
+  text-decoration: none;
+}
+.link:hover{
+  color: #EF5B65;
+  text-decoration: none;
+}
+.num{
+  margin-top: 50px;;
 }
 </style>

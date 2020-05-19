@@ -32,8 +32,7 @@ const routes = [
   { path: '/profile', component: Profile },
   { path: '/statistics', component: Statistics },
 ]
-document.cookie = "SessionID=" + "body"
-document.cookie = "email=" + 'email'
+
 let data = document.cookie.split(";")
 let name = ''
 let cookie = []
@@ -64,7 +63,6 @@ for(let i = 0; i < data.length; i++){
   }
   name = ''
 }
-console.log(cookie)
 const router = new VueRouter({
   mode: 'history',
   routes // сокращённая запись для `routes: routes`

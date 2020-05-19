@@ -66,7 +66,7 @@ export default {
           if(is_b) rating++
           if(is_d) rating++
           if(is_sp) rating++
-          if (password.value.length < 6 && rating < 3) document.password.InnerHTML = " простой"
+          if (password.value.length < 6 && rating < 3) this.passwordText = " простой"
           else if (password.value.length < 6 && rating >= 3) this.passwordText = " средний"
           else if (password.value.length >= 8 && rating >= 2) this.passwordText = " сложный"
           else if (password.value.length >= 9 && rating >= 3) this.passwordText = " средний"
@@ -141,19 +141,13 @@ export default {
 
 <style scoped>
 .main{
-    padding-top: 80px;
+    padding-top: 110px !important;
 }
 .main{
     background-color: rgb(223, 223, 223);
     height: 100%;
     padding: 30px;
-    min-height: 1018px;
+    min-height: 100vh;
     margin-bottom: 0px;
-}
-.main p{
-  position: absolute; bottom: 0;
-}
-.formbox{
-  margin-top: 20%;
 }
 </style>
