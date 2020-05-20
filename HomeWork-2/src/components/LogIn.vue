@@ -35,7 +35,10 @@ export default {
           password: crypto.createHash('md5').update(password).digest("hex"), 
         }
         needle.post('http://37.228.118.76:3000/api/login', data, {"json": true}, function(err, res, body){
-            if(body != 'Incorect password' && !err){
+            if(res.body != 'Incorect password' && res.body != 'Correct password'){
+              alert('Пользователь не найден')
+            }
+            else if(body != 'Incorect password'){
               document.cookie = "SessionID=" + res.body
               console.log(res.body)
               document.cookie = "email=" + email
@@ -69,17 +72,6 @@ export default {
                 }
                 name = ''
               }
-              fetch('http://37.228.118.76:3000/api/getI')
-                .then(response => {
-                  return response.json()
-                })
-                .then(data => {
-                  
-                  console.log(data)
-                })
-                .catch(err => {
-                  console.log(err)
-                })
               document.location.href = "/profile"
             }
             else{

@@ -20,11 +20,15 @@
             </div>
             <div class="form-group row">
               <label for="exampleInputPassword1">Пароль {{passwordText}}</label>
-              <input type="password" class="form-control" name="password" placeholder="1234567" @input="checkPassword()">
+              <input type="password" class="form-control" name="password" placeholder="1234567">
             </div>
             <div class="form-group row">
               <label for="exampleInputPassword1">Повторите пароль</label>
               <input type="password" class="form-control" name="password2" placeholder="1234567">
+            </div>
+            <div class="form-group row code" style="visibility: hidden;">
+              <label for="exampleInputPassword1">Введите код подтверждения из Вашей почты</label>
+              <input type="password" class="form-control" name="code" placeholder="1234567">
             </div>
             <div class="row"> 
               <button class="btn btn-primary btn-lg" @click="addUser()">Зарегистрироваться</button>
@@ -43,51 +47,18 @@ export default {
       }
     },
     methods: {
-      checkPassword(){
-        let form = document.forms[0]
-        let password = form.elements.password
-        let s_letters = "qwertyuiopasdfghjklzxcvbnm"
-        let b_letters = "QWERTYUIOPLKJHGFDSAZXCVBNM"
-        let digits = "0123456789"
-        let specials = "!@#$%^&*()_-+=|/.,:;[]{}"
-        password.oninput = function() {
-          let is_s = false
-          let is_b = false
-          let is_d = false
-          let is_sp = false
-          let rating = 0
-          for (let i = 0; i < password.value.length; i++) {
-            if (!is_s && s_letters.indexOf(password.value[i]) != -1) is_s = true;
-            else if (!is_b && b_letters.indexOf(password.value[i]) != -1) is_b = true;
-            else if (!is_d && digits.indexOf(password.value[i]) != -1) is_d = true;
-            else if (!is_sp && specials.indexOf(password.value[i]) != -1) is_sp = true;
-          }
-          if(is_s) rating++
-          if(is_b) rating++
-          if(is_d) rating++
-          if(is_sp) rating++
-          if (password.value.length < 6 && rating < 3) this.passwordText = " простой"
-          else if (password.value.length < 6 && rating >= 3) this.passwordText = " средний"
-          else if (password.value.length >= 8 && rating >= 2) this.passwordText = " сложный"
-          else if (password.value.length >= 9 && rating >= 3) this.passwordText = " средний"
-          else if (password.value.length >= 8 && rating >= 3) this.passwordText = " сложный"
-          else if (password.value.length >= 6 && rating == 1) this.passwordText = " простой"
-          else if (password.value.length >= 6 && rating > 1 && rating < 4) this.passwordText = " средний"
-          else if (password.value.length >= 6 && rating == 4) this.passwordText = " сложный"
-          console.log(this.passwordText)
-        };
-      },
       addUser(){
         event.preventDefault()
         let re = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/
         let form = document.forms[0]
-        let name = form.elements.name.value
+        let namet = form.elements.name.value
         let surname = form.elements.surname.value
         let email = form.elements.email.value.replace(/\s/g, '')
         let age = form.elements.age.value
         let password = form.elements.password.value
         let password2 = form.elements.password2.value
-        if(name.trim() == ''){
+        let code = form.elements.code.value
+        if(namet.trim() == ''){
           alert("Введите имя")
         }
         else if(surname.trim() == ''){
@@ -115,22 +86,56 @@ export default {
           alert("Пароль слишком длинный")
         }
         else{
-          let crypto = require('crypto')
-          let data = {
-            name: name,
-            surname: surname,
-            email: email,
-            age: age,
-            password: crypto.createHash('md5').update(password).digest("hex"),
+          let data = document.cookie.split(";")
+          let name = ''
+          let b = 0
+          for(let i = 0; i < data.length; i++){
+            let value = data[i].toString()
+            for(let j = 0; j < value.length; j++){
+              if(data[i][j] == "="){
+                if(name == '_relx'){
+                  b = 1
+                }
+                name = ''
+              }
+              else if(data[i][j] != " "){
+                name += data[i][j]
+              }
+            }
+            if(b == 1){
+              this.codeCheck = name
+              break
+            }
+            name = ''
           }
-          needle.post('http://37.228.118.76:3000/api/registration', data, {"json": true}, function(err, res, body){
-            if(body == "Reg succsesful"){
-              document.location.href = "/login"
+          if(document.querySelector('.code').style.visibility == 'hidden'){
+            document.querySelector('.code').style.visibility = 'visible'
+            needle.post('http://37.228.118.76:3000/api/mailCheck', {email: email}, {"json": true}, function(err, res){
+              if (err) throw err
+              document.cookie = "_relx=" + res.body
+            })
+          }
+          else if(code == this.codeCheck){
+            let crypto = require('crypto')
+            let data = {
+              name: namet,
+              surname: surname,
+              email: email,
+              age: age,
+              password: crypto.createHash('md5').update(password).digest("hex"),
             }
-            else{
-              alert("Регистрация не удалась")
-            }
-          })
+            needle.post('http://37.228.118.76:3000/api/registration', data, {"json": true}, function(err, res, body){
+              if(body == "Reg succsesful"){
+                document.location.href = "/login"
+              }
+              else{
+                alert("Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы")
+              }
+            })
+          }
+          else{
+            alert('Проверьте Вашу почту, на нее был выслан код подтверждения')
+          }
         }
       },
     }

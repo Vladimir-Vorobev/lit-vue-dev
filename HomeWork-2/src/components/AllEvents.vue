@@ -52,7 +52,7 @@ export default {
                                     let serverDataq = ''
                                     for(let j = 0; j < serverData.length; j ++){
                                         serverDataq += serverData[j].toString()
-                                        serverDataq += ' '
+                                        serverDataq += "_"
                                     }
                                     document.cookie = "checkbox=" + serverDataq
                                 } 
@@ -80,7 +80,69 @@ export default {
         })
     },
     beforeDestroy(){
-        // отправка мероприятий серверу
+        let dataq = document.cookie.split(";")
+        let name = ''
+        let b = 0
+        let cookie = []
+        for(let i = 0; i < dataq.length; i++){
+            let value = dataq[i].toString()
+            for(let j = 0; j < value.length; j++){
+                if(dataq[i][j] == "="){
+                    if(name == 'checkbox'){
+                        b = 1
+                    }
+                    name = ''
+                }
+                else if(dataq[i][j] != " "){
+                    name += dataq[i][j]
+                }
+            }
+            if(b == 1){
+                cookie = name
+                break
+            }
+            name = ''
+        }
+        cookie = cookie.split("_")
+        cookie.pop()
+        cookie.sort()
+        needle.get('http://37.228.118.76:3000/api/getAllEvents',function(err, res){
+            if (err) throw err
+            let datah = document.cookie.split(";")
+            let name = ''
+            let email
+            let b = 0
+            for(let i = 0; i < datah.length; i++){
+                let value = datah[i].toString()
+                for(let j = 0; j < value.length; j++){
+                    if(datah[i][j] == "="){
+                        if(name == 'email'){
+                            b = 1
+                        }
+                        name = ''
+                    }
+                    else if(datah[i][j] != " "){
+                        name += datah[i][j]
+                    }
+                }
+                if(b == 1){
+                    email = name
+                    b = 0
+                }
+                name = ''
+            }
+            let data = res.body
+            let serverData = []
+            for(let i = 0; i < cookie.length; i++){
+                let datas = data[Number.parseInt(cookie[i])]
+                delete datas.places
+                serverData.push(datas)
+            }
+            needle.post('http://37.228.118.76:3000/api/checkedEventsUpdate', {email: email, events: serverData}, {"json": true}, function(err){
+              if (err) throw err
+
+            })
+        })
     }
 }
 
