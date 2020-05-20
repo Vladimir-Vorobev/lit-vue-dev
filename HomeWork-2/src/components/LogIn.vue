@@ -105,7 +105,6 @@ export default {
     margin-bottom: 0px;
 }
 .main p{
-  /*position: absolute; bottom: 0;*/
   color: #4f4f50;
   text-align: left !important;
   font-size: 0.86em;
