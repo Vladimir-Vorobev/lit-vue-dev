@@ -80,7 +80,7 @@ export default {
         })
     },
     beforeDestroy(){
-        //передаем данные серверу из куки checkbox
+        // отправка мероприятий серверу
     }
 }
 
@@ -91,7 +91,7 @@ export default {
     padding-top: 110px !important;
 }
 .main{
-    background-color: rgb(223, 223, 223);
+    background-color: rgb(231, 231, 231);
     height: 100%;
     padding: 30px;
     min-height: 1018px;

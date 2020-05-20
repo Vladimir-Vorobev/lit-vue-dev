@@ -36,7 +36,8 @@ export default {
         }
         needle.post('http://37.228.118.76:3000/api/login', data, {"json": true}, function(err, res, body){
             if(body != 'Incorect password' && !err){
-              document.cookie = "SessionID=" + body
+              document.cookie = "SessionID=" + res.body
+              console.log(res.body)
               document.cookie = "email=" + email
               let data = document.cookie.split(";")
               let name = ''
@@ -79,6 +80,7 @@ export default {
                 .catch(err => {
                   console.log(err)
                 })
+              document.location.href = "/profile"
             }
             else{
               alert("Неверный email или пароль")

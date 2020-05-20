@@ -12,13 +12,13 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <router-link to="/recommended-events" class="router-link">
-                  <a class="nav-link" ref="recommendedEvents">{{recommendedEventsText}}</a>
+              <router-link to="/all-events" class="router-link">
+                  <a class="nav-link" ref="allEvents">{{allEventsText}}</a>
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/all-events" class="router-link">
-                  <a class="nav-link" ref="allEvents">{{allEventsText}}</a>
+              <router-link to="/recommended-events" class="router-link">
+                  <a class="nav-link" ref="recommendedEvents">{{recommendedEventsText}}</a>
               </router-link>
             </li>
             <li class="nav-item">
@@ -27,8 +27,11 @@
               </router-link>
             </li>
           </ul>
-          <router-link to="/login" class="router-link">
+          <router-link to='/login' class="router-link login">
               <a type="button" class="btn btn-success btn-lg " ref="login">{{loginText}}</a>
+          </router-link>
+          <router-link to='/profile' class="router-link profile">
+              <a type="button" class="btn btn-success btn-lg " ref="profile">{{profileText}}</a>
           </router-link>
         </div>
       </nav>
@@ -48,14 +51,48 @@ export default {
         let allEventsText = "Все мероприятия"
         let yourEventsText = "Ваши мероприятия"
         let loginText = "Войти"
+        let profileText = "Профиль"
         return {
             homeText,
             recommendedEventsText,
             allEventsText,
             yourEventsText,
-            loginText
+            loginText,
+            profileText,
         }
     },
+    mounted(){
+      document.cookie = "checkbox="
+      let dataq = document.cookie.split(";")
+      let name = ''
+      let cookie = false
+      for(let i = 0; i < dataq.length; i++){
+      let value = dataq[i].toString()
+          for(let j = 0; j < value.length; j++){
+              if(dataq[i][j] == "="){
+                  if(name == 'SessionID'){
+                      cookie = true
+                      break
+                  }
+                  name = ''
+              }
+              else if(dataq[i][j] != " "){
+                  name += dataq[i][j]
+              }
+          }
+          name = ''
+      }
+      setInterval(() => {
+        if(cookie){
+          document.querySelector('.login').style.visibility = 'hidden'
+          document.querySelector('.profile').style.visibility = 'visible'
+        }
+        else{
+          document.querySelector('.login').style.visibility = 'visible'
+          document.querySelector('.profile').style.visibility = 'hidden'
+        }
+      }, 500);
+    }
 }
 </script>
 

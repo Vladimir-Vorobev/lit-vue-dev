@@ -125,7 +125,7 @@ export default {
           }
           needle.post('http://37.228.118.76:3000/api/registration', data, {"json": true}, function(err, res, body){
             if(body == "Reg succsesful"){
-              alert("Регистрация успешна")
+              document.location.href = "/login"
             }
             else{
               alert("Регистрация не удалась")
@@ -144,7 +144,7 @@ export default {
     padding-top: 110px !important;
 }
 .main{
-    background-color: rgb(223, 223, 223);
+    background-color: #fff;
     height: 100%;
     padding: 30px;
     min-height: 100vh;
