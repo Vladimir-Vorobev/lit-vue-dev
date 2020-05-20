@@ -98,7 +98,7 @@ export default {
     padding-top: 210px !important;
 }
 .main{
-    background-color: rgb(223, 223, 223);
+    background-color: #fff;
     height: 100%;
     padding: 30px;
     min-height: 100vh;
