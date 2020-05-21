@@ -30,16 +30,29 @@
                 Другое
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/literature">Литература</a>
-                <a class="dropdown-item" href="/404">Трансляция мероприятий</a>
-                <a class="dropdown-item" href="/404">Партнёры</a>
-                <a class="dropdown-item" href="/404">Дни открытых дверей</a>
-                <a class="dropdown-item" href="/404">Баллы в ВУЗы</a>
+                <router-link to="/literature" class="dropdown-item">
+                  <a ref="Literature">Литература</a>
+                </router-link>
+                <router-link to="/404" class="dropdown-item">
+                  <a ref="PageNotFound">Трансляция мероприятий</a>
+                </router-link>
+                <router-link to="/404" class="dropdown-item">
+                  <a ref="PageNotFound">Партнёры</a>
+                </router-link>
+                <router-link to="/404" class="dropdown-item">
+                  <a ref="PageNotFound">Дни открытых дверей</a>
+                </router-link>
+                <router-link to="/404" class="dropdown-item">
+                  <a ref="PageNotFound">Баллы в ВУЗы</a>
+                </router-link>
               </div>
             </li>
           </ul>
           <router-link to='/login' class="router-link login">
               <a type="button" class="btn btn-success btn-lg " ref="login">{{loginText}}</a>
+          </router-link>
+          <router-link to='/profile' class="router-link profile" style='visibility: hidden'>
+              <a type="button" class="btn btn-success btn-lg " ref="profile">{{profileText}}</a>
           </router-link>
         </div>
       </nav>
@@ -58,13 +71,12 @@ export default {
         let recommendedEventsText = "Рекомендуемые мероприятия"
         let allEventsText = "Все мероприятия"
         let yourEventsText = "Ваши мероприятия"
-        let loginText = "Войти"
         return {
             homeText,
             recommendedEventsText,
             allEventsText,
             yourEventsText,
-            loginText,
+            loginText: 'Войти'
         }
     },
     mounted(){

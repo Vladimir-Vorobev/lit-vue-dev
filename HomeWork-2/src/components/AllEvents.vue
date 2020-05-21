@@ -7,9 +7,9 @@
                         <div class="col-md-7 col-12"> 
                         <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
                             <option value="/all-events" selected>Все</option>
-                            <option value="/all-events/programming">Программирование</option>
-                            <option value="/all-events/engineering">Инженерия</option>
-                            <option value="/all-events/medicine">Медицина</option>
+                            <option value="/it-events">Программирование</option>
+                            <option value="/engineering-events">Инженерия</option>
+                            <option value="/medicine-events">Медицина</option>
                         </select>
                     </div>
                 </div>
@@ -24,10 +24,10 @@ import needle from 'needle'
 export default {
     name: 'AllEvents',
     mounted(){
-        needle.post('http://37.228.118.76:3000/api/getAllEvents',function(err, res){
+        needle.get('http://37.228.118.76:3000/api/getAllEvents',function(err, res){
             if(err) alert("Ошибка подключения")
             else{
-                let data = res.body
+                let data = res.body.allE
                 document.querySelector('.main').insertAdjacentHTML(
                     'beforeEnd',
                     '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
@@ -126,7 +126,7 @@ export default {
             }
             name = ''
         }
-        if (email != ''){
+        if (email != '' && cookie != ""){
             cookie = cookie.split("_")
             cookie.pop()
             cookie.sort()

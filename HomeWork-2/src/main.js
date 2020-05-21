@@ -31,48 +31,16 @@ const routes = [
   { path: '/', component: MainPage },
   { path: '/recommended-events', component: RecommendedEvents },
   { path: '/all-events', component: AllEvents },
-  { path: '/all-events/programming', component: AllEventsProgramming },
-  { path: '/all-events/engineering', component: AllEventsEngineering },
-  { path: '/all-events/medicine', component: AllEventsMedicine },
+  { path: '/it-events', component: AllEventsProgramming },
+  { path: '/engineering-events', component: AllEventsEngineering },
+  { path: '/medicine-events', component: AllEventsMedicine },
   { path: '/your-events', component: YourEvents },
   { path: '/registration', component: Registration },
   { path: '/login', component: LogIn },
   { path: '/profile', component: Profile },
   { path: '/statistics', component: Statistics },
   { path: '/literature', component: Literature },
-  { path: '/404', component: PageNotFound }, { path: '*', redirect: '/404' },
-  { path: '/login', redirect: to => {
-      const { hash} = to
-      if(hash) console.log('')
-      let dataq = document.cookie.split(";")
-      let name = ''
-      let cookie = true
-      for(let i = 0; i < dataq.length; i++){
-      let value = dataq[i].toString()
-          for(let j = 0; j < value.length; j++){
-              if(dataq[i][j] == "="){
-                  if(name == 'SessionID'){
-                      cookie = true
-                      break
-                  }
-                  name = ''
-              }
-              else if(dataq[i][j] != " "){
-                  name += dataq[i][j]
-              }
-          }
-          name = ''
-      }
-      if(cookie){
-        alert('Done')
-        return '/profile'
-      }
-      else{
-        alert('login')
-        return '/login'
-      }
-    }
-  }
+  { path: '/404', component: PageNotFound }, { path: '*', redirect: '/404' }
 ]
 
 const router = new VueRouter({
