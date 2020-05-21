@@ -1,73 +1,68 @@
 <template>
     <div class="main container">
         <form class="formbox">
-            <h2>Профиль</h2>
+            <h2>Редактировать профиль</h2>
             <div class="form-group row">
-              <div class="col-12 col-md-6"><input name="name" class="form-control" placeholder="Имя"></div>
-              <div class="col-12 col-md-6"><input name="surname"  class="form-control" placeholder="Фамилия"></div>
+              <div class="col-12 col-md-6"><input name="name" class="form-control name" placeholder="Имя"></div>
+              <div class="col-12 col-md-6"><input name="surname"  class="form-control surname" placeholder="Фамилия"></div>
             </div>
             <div class="form-group row">
               <div class="col-12"> 
-                <input class="form-control" name="email" placeholder="example@gmail.com">
+                <input class="form-control email" name="email" placeholder="example@gmail.com">
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-12">
+                <input type="date" class="form-control age" name="age" min="1900-01-01">
               </div>
             </div>
             <div class="form-group row">
               <div class="col-12"> 
-                <input name="age" class="form-control" placeholder="Возраст">
+                <input type="password" class="form-control pass" name="password" placeholder="Новый пароль">
               </div>
             </div>
             <div class="form-group row">
               <div class="col-12"> 
-                <input type="password" class="form-control" name="password" placeholder="Новый пароль">
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-12"> 
-                <input name="password2" class="form-control" placeholder="Повторите пароль">
+                <input name="password2" class="form-control returnpass" placeholder="Повторите пароль">
               </div>
             </div>
             <div class="form-group row">
               <div class="col-12 col-md-7"> 
-                <input name="city" class="form-control" placeholder="Город">
+                <input name="city" class="form-control city" placeholder="Город">
               </div>
               <div class="col-12 col-md-5"> 
-                <input name="school" class="form-control" placeholder="Номер учебного заведения">
+                <input name="school" class="form-control school" placeholder="Номер учебного заведения">
               </div>
             </div>
             <div class="form-group row">
               <div class="col-12 col-md-6"> 
-                <select name="schoolType" class="custom-select custom-select-lg mb-3">
+                <select name="schoolType" class="custom-select custom-select-lg mb-3 schoolType">
                   <option selected>Тип учебного заведения</option>
-                  <option value="school">Школа</option>
-                  <option value="college">Колледж</option>
-                  <option value="university">ВУЗ</option>
+                  <option value="школа">Школа</option>
+                  <option value="колледж">Колледж</option>
+                  <option value="университет">ВУЗ</option>
                 </select>
               </div>
               <div class="col-12 col-md-6"> 
-                <select name="role" class="custom-select custom-select-lg mb-3">
+                <select name="role" class="custom-select custom-select-lg mb-3 role">
                   <option selected>Роль в учебном заведении</option>
-                  <option value="student">Ученик</option>
-                  <option value="teacher">Учитель</option>
-                  <option value="director">Директор</option>
+                  <option value="ученик">Ученик</option>
+                  <option value="учитель">Учитель</option>
+                  <option value="директор">Директор</option>
               </select>
               </div>
             </div>
             <div class="form-group row">
-              <div class="col-12 col-md-6"><input name="class_number" class="form-control" placeholder="Номер класса"></div>
-              <div class="col-12 col-md-6"><input name="simvol" class="form-control" placeholder="Символ класса"></div>
-            </div>
-            <div class="form-group row">
-              <div class="col-12 col-md-6"> 
-                <label for="exampleInputEmail1"><h3>Добавить портфолио</h3></label>
-              </div>
-              <div class="col-12 col-md-6"> 
-                <input type="file" name="portfolio" class="form-control-file" multiple accept="image/*">
-              </div>
+              <div class="col-12 col-md-6"><input name="class_number" class="form-control class_number" placeholder="Номер класса"></div>
+              <div class="col-12 col-md-6"><input name="simvol" class="form-control simvol" placeholder="Символ класса"></div>
             </div>
             <div class="form-group row"> 
                 <button class="btn btn-primary btn-lg" @click="updateUser()">Сохранить</button>
               </div>
         </form>
+        <div class='row' style="text-align: left;">
+          <h5 class="col-12">Уникальный номер: <span class="statNumber"></span> </h5>
+        </div>
         <div class="row num">
             <div class="col-12 col-md-8"><span>Этот номер необходим, если Вы хотите делиться своей статистикой с другими пользователями, например, с родителями или друзьями. Внимание: предоставляйте этот номер только тем, кому Вы доверяете</span> <br> <router-link to="/statistics">Посмотреть статистику знакомых</router-link></div>
             <div class="number"></div>
@@ -75,60 +70,12 @@
         </div>
     </div>
 </template>
+
 <script>
 import needle from "needle"
 export default {
     name: 'Profile',
     methods: {
-      mounted(){
-        alert('Done')
-        let datah = document.cookie.split(";")
-        let name = ''
-        let email
-        let b = 0
-        for(let i = 0; i < datah.length; i++){
-            let value = datah[i].toString()
-            for(let j = 0; j < value.length; j++){
-                if(datah[i][j] == "="){
-                    if(name == 'email'){
-                        b = 1
-                    }
-                    name = ''
-                }
-                else if(datah[i][j] != " "){
-                    name += datah[i][j]
-                }
-            }
-            if(b == 1){
-                email = name
-                b = 0
-            }
-            name = ''
-        }
-        needle.post('http://37.228.118.76:3000/api/getInformation', {email: email}, {"json": true}, function(err, res){
-            if (err) alert('Ошибка подключения')
-            else{
-              let data = res.body
-              alert(data)
-              document.querySelector('.main').insertAdjacentHTML(
-                  'beforeEnd',
-                  '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
-              )
-              if(data.city == undefined) data.city = '-'
-              if(data.school == undefined) data.school = '-'
-              if(data.schoolType == undefined) data.schoolType = '-'
-              if(data.role == undefined) data.role = '-'
-              if(data.class_number == undefined) data.class_number = '-'
-              if(data.simvol == undefined) data.simvol = '-'
-              if(data.portfolio == undefined) data.portfolio = '-'
-              if(data.statNumber == undefined) data.statNumber = '-'
-              document.querySelector('.main').insertAdjacentHTML(
-                  'beforeEnd',
-                  '<div>'  + 'Ваши текущие данные:' + '<br>' + 'Имя: ' + data.name + '<br>' + 'Фамилия: ' + data.surname + '<br>' + 'Email: ' + data.email + '<br>' + 'Возраст: ' + data.age + '<br>' + 'Пароль: ' + data.password + '<br>' + 'Город: ' + data.city + '<br>' + 'Номер учебного заведения: ' + data.school + '<br>' + 'Тип учебного заведения: ' + data.schoolType + '<br>' + 'Роль в учебном заведении: ' + data.role + '<br>' + 'Номер класса: ' + data.class_number + '<br>' + 'Символ класса: ' + data.simvol + '<br>' + 'Портфолио: ' + data.portfolio + '<br>' + 'Уникальный номер для просмотра Вашей статистики другими: ' + data.statNumber + '</div>',
-              )
-            }
-        })
-      },
       updateUser(){
         event.preventDefault()
         let re = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/
@@ -145,7 +92,6 @@ export default {
         let role = form.elements.role.value
         let class_number = form.elements.class_number.value
         let simvol = form.elements.simvol.value
-        let portfolio = form.elements.portfolio.value
         if(password != password2){
           alert("Пароли не совпадают")
         }
@@ -172,53 +118,38 @@ export default {
             if(role.trim() != '' && role != "Роль в учебном заведении") dataq.role = role
             if(class_number.trim() != '') dataq.class_number = class_number
             if(simvol.trim() != '') dataq.simvol = simvol
-            if(portfolio != '') dataq.portfolio = portfolio
             let datah = document.cookie.split(";")
-            let nameс = ''
-            let emails
+            let namec = ''
+            let emails = ''
             let b = 0
             for(let i = 0; i < datah.length; i++){
                 let value = datah[i].toString()
                 for(let j = 0; j < value.length; j++){
                     if(datah[i][j] == "="){
-                        if(name == 'email'){
+                        if(namec == 'email'){
                             b = 1
                         }
-                        nameс = ''
+                        namec = ''
                     }
                     else if(datah[i][j] != " "){
-                        nameс += datah[i][j]
+                        namec += datah[i][j]
                     }
                 }
                 if(b == 1){
-                    emails = nameс
-                    b = 0
+                    emails = namec
                 }
-                nameс = ''
+                namec = ''
             }
-            needle.post('http://37.228.118.76:3000/api/updateInformation', {email: emails, update: dataq}, {"json": true}, function(err, res){
-                if (err) throw err
-                else {
-                  document.querySelector('.main').insertAdjacentHTML(
-                      'beforeEnd',
-                      '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
-                  )
-                  let data = res.body
-                  for(let i = 0; i < data.length; i++){
-                      document.querySelector('.main').insertAdjacentHTML(
-                          'beforeEnd',
-                          '<div>'  + 'Ваши текущие данные:' + '<br>' + 'Имя: ' + data.name + '<br>' + 'Фамилия: ' + data.surname + '<br>' + 'Email: ' + data.email + '<br>' + 'Возраст: ' + data.age + '<br>' + 'Пароль: ' + data.password + '<br>' + 'Город: ' + data.city + '<br>' + 'Номер учебного заведения: ' + data.school + '<br>' + 'Тип учебного заведения: ' + data.schoolType + '<br>' + 'Роль в учебном заведении: ' + data.role + '<br>' + 'Номер класса: ' + data.class_number + '<br>' + 'Символ класса: ' + data.simvol + '<br>' + 'Портфолио: ' + data.portfolio + '<br>' + 'Уникальный номер для просмотра Вашей статистики другими: ' + data.statNumber + '</div>',
-                      )
-                  }
-                }
+            needle.post('http://37.228.118.76:3000/api/updateInformation', {email: emails, update: dataq}, {"json": true}, function(err){
+                if (err) alert('Ошибка подключения')
             })
         }
       },
       addNumber(){
-          let statNumber = Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000
+          let statNumber = {statNumber: Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000}
           let datah = document.cookie.split(";")
           let name = ''
-          let email
+          let email = ''
           let b = 0
           for(let i = 0; i < datah.length; i++){
               let value = datah[i].toString()
@@ -239,13 +170,67 @@ export default {
               }
               name = ''
           }
-          needle.post('http://37.228.118.76:3000/api/checkedEventsUpdate', {email: email, statNumber: statNumber}, {"json": true}, function(err){
+          needle.post('http://37.228.118.76:3000/api/updateInformation', {email: email, update: statNumber}, {"json": true}, function(err){
             if(err) alert("Ошибка подключения")
           })
       }
     }
   }
 
+let datah = document.cookie.split(";")
+let name = ''
+let email
+let b = 0
+for(let i = 0; i < datah.length; i++){
+    let value = datah[i].toString()
+    for(let j = 0; j < value.length; j++){
+        if(datah[i][j] == "="){
+            if(name == 'email'){
+                b = 1
+            }
+            name = ''
+        }
+        else if(datah[i][j] != " "){
+            name += datah[i][j]
+        }
+    }
+    if(b == 1){
+        email = name
+        b = 0
+    }
+    name = ''
+}
+fetch('http://37.228.118.76:3000/api/getInformation', {
+        method: 'get',
+        headers: {email: email},
+})
+.then(response => {
+    console.log("res", response)
+    return response.json()
+})
+.then(data => {
+    if(data.city == undefined) data.city = '-'
+    if(data.school == undefined) data.school = '-'
+    if(data.schoolType == undefined) data.schoolType = '-'
+    if(data.role == undefined) data.role = '-'
+    if(data.class_number == undefined) data.class_number = '-'
+    if(data.simvol == undefined) data.simvol = '-'
+    if(data.portfolio == undefined) data.portfolio = '-'
+    if(data.statNumber == undefined) data.statNumber = '-'
+
+    document.querySelector(".name").value = data.name;
+    document.querySelector(".surname").value = data.surname;
+    document.querySelector(".email").value = data.email;
+    document.querySelector(".age").value = data.age;
+    document.querySelector(".city").value = data.city;
+    document.querySelector(".school").value = data.school;
+    document.querySelector(".schoolType").value = data.schoolType;
+    document.querySelector(".role").value = data.role;
+    document.querySelector(".class_number").value = data.class_number;
+    document.querySelector(".simvol").value = data.simvol;
+    document.querySelector(".statNumber").value = data.statNumber;
+
+})
 
 </script>
 

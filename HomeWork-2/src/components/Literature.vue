@@ -50,7 +50,7 @@ export default {
     background-color: #fff;
     height: 100%;
     padding: 30px;
-    min-height: 1018px;
+    min-height: 100vh;
     margin-bottom: 0px;
 }
 .name{

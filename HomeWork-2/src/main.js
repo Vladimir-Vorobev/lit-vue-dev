@@ -3,11 +3,6 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 
-//import firebase from 'firebase/app'
-//import 'firebase/firestore'
-//import 'firebase/auth'
-//import 'firebase/database'
-
 import MainPage from './components/MainPage.vue'
 import RecommendedEvents from './components/RecommendedEvents.vue'
 import AllEvents from './components/AllEvents.vue'
@@ -42,6 +37,7 @@ const routes = [
   { path: '/literature', component: Literature },
   { path: '/404', component: PageNotFound }, { path: '*', redirect: '/404' }
 ]
+
 
 const router = new VueRouter({
   mode: 'history',
