@@ -182,7 +182,7 @@ export default {
             if(portfolio != '') data.portfolio = portfolio
             console.log(data)
             let datah = document.cookie.split(";")
-            let name = ''
+            let nameс = ''
             let emails
             let b = 0
             for(let i = 0; i < datah.length; i++){
@@ -192,17 +192,17 @@ export default {
                         if(name == 'email'){
                             b = 1
                         }
-                        name = ''
+                        nameс = ''
                     }
                     else if(datah[i][j] != " "){
-                        name += datah[i][j]
+                        nameс += datah[i][j]
                     }
                 }
                 if(b == 1){
-                    emails = name
+                    emails = nameс
                     b = 0
                 }
-                name = ''
+                nameс = ''
             }
             fetch('http://37.228.118.76:3000/api/getCheckedEvents', {
                 method: 'get',
