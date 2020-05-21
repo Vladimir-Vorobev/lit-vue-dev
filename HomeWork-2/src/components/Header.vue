@@ -41,7 +41,7 @@
           <router-link to='/login' class="router-link login">
               <a type="button" class="btn btn-success btn-lg " ref="login">{{loginText}}</a>
           </router-link>
-          <router-link to='/profile' class="router-link profile">
+          <router-link to='/profile' class="router-link profile" style='visibility: hidden'>
               <a type="button" class="btn btn-success btn-lg " ref="profile">{{profileText}}</a>
           </router-link>
         </div>
@@ -72,38 +72,6 @@ export default {
             profileText,
         }
     },
-    mounted(){
-      document.cookie = "checkbox="
-      let dataq = document.cookie.split(";")
-      let name = ''
-      let cookie = false
-      for(let i = 0; i < dataq.length; i++){
-      let value = dataq[i].toString()
-          for(let j = 0; j < value.length; j++){
-              if(dataq[i][j] == "="){
-                  if(name == 'SessionID'){
-                      cookie = true
-                      break
-                  }
-                  name = ''
-              }
-              else if(dataq[i][j] != " "){
-                  name += dataq[i][j]
-              }
-          }
-          name = ''
-      }
-      setInterval(() => {
-        if(cookie){
-          document.querySelector('.login').style.visibility = 'hidden'
-          document.querySelector('.profile').style.visibility = 'visible'
-        }
-        else{
-          document.querySelector('.login').style.visibility = 'visible'
-          document.querySelector('.profile').style.visibility = 'hidden'
-        }
-      }, 500);
-    }
 }
 </script>
 

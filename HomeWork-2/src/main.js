@@ -11,6 +11,9 @@ import App from './App.vue'
 import MainPage from './components/MainPage.vue'
 import RecommendedEvents from './components/RecommendedEvents.vue'
 import AllEvents from './components/AllEvents.vue'
+import AllEventsProgramming from './components/AllEventsProgramming.vue'
+import AllEventsEngineering from './components/AllEventsEngineering.vue'
+import AllEventsMedicine from './components/AllEventsMedicine.vue'
 import Registration from './components/Registration.vue'
 import YourEvents from './components/YourEvents.vue'
 import LogIn from './components/LogIn.vue'
@@ -28,6 +31,9 @@ const routes = [
   { path: '/', component: MainPage },
   { path: '/recommended-events', component: RecommendedEvents },
   { path: '/all-events', component: AllEvents },
+  { path: '/all-events/programming', component: AllEventsProgramming },
+  { path: '/all-events/engineering', component: AllEventsEngineering },
+  { path: '/all-events/medicine', component: AllEventsMedicine },
   { path: '/your-events', component: YourEvents },
   { path: '/registration', component: Registration },
   { path: '/login', component: LogIn },
@@ -36,6 +42,35 @@ const routes = [
   { path: '/literature', component: Literature },
   { path: '/404', component: PageNotFound }, { path: '*', redirect: '/404' }
 ]
+setInterval(() => {
+  let dataq = document.cookie.split(";")
+  let name = ''
+  let cookie = false
+  for(let i = 0; i < dataq.length; i++){
+  let value = dataq[i].toString()
+      for(let j = 0; j < value.length; j++){
+          if(dataq[i][j] == "="){
+              if(name == 'SessionID'){
+                  cookie = true
+                  break
+              }
+              name = ''
+          }
+          else if(dataq[i][j] != " "){
+              name += dataq[i][j]
+          }
+      }
+      name = ''
+  }
+  if(cookie){
+    document.querySelector('.login').style.visibility = 'hidden'
+    document.querySelector('.profile').style.visibility = 'visible'
+  }
+  else{
+    document.querySelector('.login').style.visibility = 'visible'
+    document.querySelector('.profile').style.visibility = 'hidden'
+  }
+}, 500);
 
 
 const router = new VueRouter({

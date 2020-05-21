@@ -6,10 +6,10 @@
                     <div class="col-md-5 col-12"> <p class="card-text" style="font-weight: bold; font-size: 1.3em">Сортировка мероприятий: </p> </div> 
                         <div class="col-md-7 col-12"> 
                         <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
-                            <option value="/all-events" selected>Все</option>
+                            <option value="/all-events">Все</option>
                             <option value="/all-events/programming">Программирование</option>
                             <option value="/all-events/engineering">Инженерия</option>
-                            <option value="/all-events/medicine">Медицина</option>
+                            <option value="/all-events/medicine" selected>Медицина</option>
                         </select>
                     </div>
                 </div>
@@ -22,7 +22,7 @@
 <script>
 import needle from 'needle'
 export default {
-    name: 'AllEvents',
+    name: 'AllEventsMedicine',
     mounted(){
         needle.post('http://37.228.118.76:3000/api/getAllEvents',function(err, res){
             if (err) throw err
