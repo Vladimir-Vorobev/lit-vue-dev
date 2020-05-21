@@ -16,6 +16,8 @@ import YourEvents from './components/YourEvents.vue'
 import LogIn from './components/LogIn.vue'
 import Profile from './components/Profile.vue'
 import Statistics from './components/Statistics.vue'
+import Literature from './components/Literature.vue'
+import PageNotFound from './components/PageNotFound.vue'
 
 
 Vue.config.productionTip = false
@@ -31,7 +33,10 @@ const routes = [
   { path: '/login', component: LogIn },
   { path: '/profile', component: Profile },
   { path: '/statistics', component: Statistics },
+  { path: '/literature', component: Literature },
+  { path: '/404', component: PageNotFound }, { path: '*', redirect: '/404' }
 ]
+
 
 const router = new VueRouter({
   mode: 'history',

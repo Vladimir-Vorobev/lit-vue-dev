@@ -1,4 +1,3 @@
-
 <template>
 <div>
     <div id="app">
@@ -25,6 +24,18 @@
               <router-link to="/your-events" class="router-link">
                   <a class="nav-link" ref="yourEvents">{{yourEventsText}}</a>
               </router-link>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Другое
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/literature">Литература</a>
+                <a class="dropdown-item" href="/404">Трансляция мероприятий</a>
+                <a class="dropdown-item" href="/404">Партнёры</a>
+                <a class="dropdown-item" href="/404">Дни открытых дверей</a>
+                <a class="dropdown-item" href="/404">Баллы в ВУЗы</a>
+              </div>
             </li>
           </ul>
           <router-link to='/login' class="router-link login">
