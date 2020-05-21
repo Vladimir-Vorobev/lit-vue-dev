@@ -94,7 +94,7 @@ export default {
         if(cookie){
           this.loginText = 'Профиль' 
         }
-      }, 500);
+      }, 200);
     }
 
 }
