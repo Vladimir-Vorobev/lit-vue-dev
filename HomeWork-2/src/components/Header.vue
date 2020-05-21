@@ -51,9 +51,6 @@
           <router-link to='/login' class="router-link login">
               <a type="button" class="btn btn-success btn-lg " ref="login">{{loginText}}</a>
           </router-link>
-          <router-link to='/profile' class="router-link profile" style='visibility: hidden'>
-              <a type="button" class="btn btn-success btn-lg " ref="profile">{{profileText}}</a>
-          </router-link>
         </div>
       </nav>
     </div>

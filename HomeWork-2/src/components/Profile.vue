@@ -81,6 +81,7 @@ export default {
     name: 'Profile',
     methods: {
       mounted(){
+        alert('Done')
         let datah = document.cookie.split(";")
         let name = ''
         let email
@@ -104,37 +105,28 @@ export default {
             }
             name = ''
         }
-        fetch('http://37.228.118.76:3000/api/getCheckedEvents', {
-            method: 'get',
-            headers: {email: email},
-        })
-        .then(response => {
-            console.log("res", response)
-            return response.json()
-        })
-        .then(data => {
-            document.querySelector('.main').insertAdjacentHTML(
-                'beforeEnd',
-                '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
-            )
-            if(data.city == undefined) data.city = '-'
-            if(data.school == undefined) data.school = '-'
-            if(data.schoolType == undefined) data.schoolType = '-'
-            if(data.role == undefined) data.role = '-'
-            if(data.class_number == undefined) data.class_number = '-'
-            if(data.simvol == undefined) data.simvol = '-'
-            if(data.portfolio == undefined) data.portfolio = '-'
-            if(data.statNumber == undefined) data.statNumber = '-'
-            for(let i = 0; i < data.length; i++){
-                document.querySelector('.main').insertAdjacentHTML(
-                    'beforeEnd',
-                    '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <a href=' + data[i].link +  'class="btn btn-primary">Перейти к мероприятию</a> </div> <div class="card-footer text-muted">' + data[i].date + '</div> </div>',
-                )
+        needle.post('http://37.228.118.76:3000/api/getInformation', {email: email}, {"json": true}, function(err, res){
+            if (err) alert('Ошибка подключения')
+            else{
+              let data = res.body
+              alert(data)
+              document.querySelector('.main').insertAdjacentHTML(
+                  'beforeEnd',
+                  '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
+              )
+              if(data.city == undefined) data.city = '-'
+              if(data.school == undefined) data.school = '-'
+              if(data.schoolType == undefined) data.schoolType = '-'
+              if(data.role == undefined) data.role = '-'
+              if(data.class_number == undefined) data.class_number = '-'
+              if(data.simvol == undefined) data.simvol = '-'
+              if(data.portfolio == undefined) data.portfolio = '-'
+              if(data.statNumber == undefined) data.statNumber = '-'
+              document.querySelector('.main').insertAdjacentHTML(
+                  'beforeEnd',
+                  '<div>'  + 'Ваши текущие данные:' + '<br>' + 'Имя: ' + data.name + '<br>' + 'Фамилия: ' + data.surname + '<br>' + 'Email: ' + data.email + '<br>' + 'Возраст: ' + data.age + '<br>' + 'Пароль: ' + data.password + '<br>' + 'Город: ' + data.city + '<br>' + 'Номер учебного заведения: ' + data.school + '<br>' + 'Тип учебного заведения: ' + data.schoolType + '<br>' + 'Роль в учебном заведении: ' + data.role + '<br>' + 'Номер класса: ' + data.class_number + '<br>' + 'Символ класса: ' + data.simvol + '<br>' + 'Портфолио: ' + data.portfolio + '<br>' + 'Уникальный номер для просмотра Вашей статистики другими: ' + data.statNumber + '</div>',
+              )
             }
-        })
-        .catch(err => {
-            alert("Ошибка подключения")
-            console.log(err)
         })
       },
       updateUser(){
@@ -168,20 +160,19 @@ export default {
         }
         else{
             let crypto = require('crypto')
-            let data = {}
-            if(name.trim() != '') data.name = name
-            if(surname.trim() != '') data.surname = surname
-            if(email.trim() != '') data.email = email
-            if(age.trim() != '') data.age = age
-            if(password.trim() != '') data.password = crypto.createHash('md5').update(password).digest("hex")
-            if(city.trim() != '') data.city = city
-            if(school.trim() != '') data.school = school
-            if(schoolType.trim() != '' && schoolType != "Тип учебного заведения") data.schoolType = schoolType
-            if(role.trim() != '' && role != "Роль в учебном заведении") data.role = role
-            if(class_number.trim() != '') data.class_number = class_number
-            if(simvol.trim() != '') data.simvol = simvol
-            if(portfolio != '') data.portfolio = portfolio
-            console.log(data)
+            let dataq = {}
+            if(name.trim() != '') dataq.name = name
+            if(surname.trim() != '') dataq.surname = surname
+            if(email.trim() != '') dataq.email = email
+            if(age.trim() != '') dataq.age = age
+            if(password.trim() != '') dataq.password = crypto.createHash('md5').update(password).digest("hex")
+            if(city.trim() != '') dataq.city = city
+            if(school.trim() != '') dataq.school = school
+            if(schoolType.trim() != '' && schoolType != "Тип учебного заведения") dataq.schoolType = schoolType
+            if(role.trim() != '' && role != "Роль в учебном заведении") dataq.role = role
+            if(class_number.trim() != '') dataq.class_number = class_number
+            if(simvol.trim() != '') dataq.simvol = simvol
+            if(portfolio != '') dataq.portfolio = portfolio
             let datah = document.cookie.split(";")
             let nameс = ''
             let emails
@@ -205,29 +196,21 @@ export default {
                 }
                 nameс = ''
             }
-            fetch('http://37.228.118.76:3000/api/getCheckedEvents', {
-                method: 'get',
-                headers: {email: emails},
-            })
-            .then(response => {
-                console.log("res", response)
-                return response.json()
-            })
-            .then(data => {
-                document.querySelector('.main').insertAdjacentHTML(
-                    'beforeEnd',
-                    '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
-                )
-                for(let i = 0; i < data.length; i++){
-                    document.querySelector('.main').insertAdjacentHTML(
-                        'beforeEnd',
-                        '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <a href=' + data[i].link +  'class="btn btn-primary">Перейти к мероприятию</a> </div> <div class="card-footer text-muted">' + data[i].date + '</div> </div>',
-                    )
+            needle.post('http://37.228.118.76:3000/api/updateInformation', {email: emails, update: dataq}, {"json": true}, function(err, res){
+                if (err) throw err
+                else {
+                  document.querySelector('.main').insertAdjacentHTML(
+                      'beforeEnd',
+                      '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
+                  )
+                  let data = res.body
+                  for(let i = 0; i < data.length; i++){
+                      document.querySelector('.main').insertAdjacentHTML(
+                          'beforeEnd',
+                          '<div>'  + 'Ваши текущие данные:' + '<br>' + 'Имя: ' + data.name + '<br>' + 'Фамилия: ' + data.surname + '<br>' + 'Email: ' + data.email + '<br>' + 'Возраст: ' + data.age + '<br>' + 'Пароль: ' + data.password + '<br>' + 'Город: ' + data.city + '<br>' + 'Номер учебного заведения: ' + data.school + '<br>' + 'Тип учебного заведения: ' + data.schoolType + '<br>' + 'Роль в учебном заведении: ' + data.role + '<br>' + 'Номер класса: ' + data.class_number + '<br>' + 'Символ класса: ' + data.simvol + '<br>' + 'Портфолио: ' + data.portfolio + '<br>' + 'Уникальный номер для просмотра Вашей статистики другими: ' + data.statNumber + '</div>',
+                      )
+                  }
                 }
-            })
-            .catch(err => {
-                alert("Ошибка подключения")
-                console.log(err)
             })
         }
       },
