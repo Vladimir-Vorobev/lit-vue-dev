@@ -25,7 +25,7 @@ export default {
     name: 'AllEvents',
     mounted(){
         needle.post('http://37.228.118.76:3000/api/getAllEvents',function(err, res){
-            if (err) throw err
+            if(err) alert("Ошибка подключения")
             else{
                 let data = res.body
                 document.querySelector('.main').insertAdjacentHTML(
@@ -100,6 +100,7 @@ export default {
         let dataq = document.cookie.split(";")
         let name = ''
         let b = 0
+        let email = ''
         let cookie = []
         for(let i = 0; i < dataq.length; i++){
             let value = dataq[i].toString()
@@ -107,6 +108,9 @@ export default {
                 if(dataq[i][j] == "="){
                     if(name == 'checkbox'){
                         b = 1
+                    }
+                    else if(name == 'email'){
+                        b = 2
                     }
                     name = ''
                 }
@@ -116,50 +120,31 @@ export default {
             }
             if(b == 1){
                 cookie = name
-                break
+            }
+            else if (b == 2){
+                email = name
             }
             name = ''
         }
-        cookie = cookie.split("_")
-        cookie.pop()
-        cookie.sort()
-        needle.get('http://37.228.118.76:3000/api/getAllEvents',function(err, res){
-            if (err) throw err
-            let datah = document.cookie.split(";")
-            let name = ''
-            let email
-            let b = 0
-            for(let i = 0; i < datah.length; i++){
-                let value = datah[i].toString()
-                for(let j = 0; j < value.length; j++){
-                    if(datah[i][j] == "="){
-                        if(name == 'email'){
-                            b = 1
-                        }
-                        name = ''
-                    }
-                    else if(datah[i][j] != " "){
-                        name += datah[i][j]
-                    }
+        if (email != ''){
+            cookie = cookie.split("_")
+            cookie.pop()
+            cookie.sort()
+            needle.get('http://37.228.118.76:3000/api/getAllEvents',function(err, res){
+                if (err) throw err
+                let data = res.body
+                let serverData = []
+                for(let i = 0; i < cookie.length; i++){
+                    let datas = data[Number.parseInt(cookie[i])]
+                    delete datas.places
+                    serverData.push(datas)
                 }
-                if(b == 1){
-                    email = name
-                    b = 0
-                }
-                name = ''
-            }
-            let data = res.body
-            let serverData = []
-            for(let i = 0; i < cookie.length; i++){
-                let datas = data[Number.parseInt(cookie[i])]
-                delete datas.places
-                serverData.push(datas)
-            }
-            needle.post('http://37.228.118.76:3000/api/checkedEventsUpdate', {email: email, events: serverData}, {"json": true}, function(err){
-              if (err) throw err
+                needle.post('http://37.228.118.76:3000/api/checkedEventsUpdate', {email: email, events: serverData}, {"json": true}, function(err){
+                if (err) throw err
 
-            })
-        })
+                })
+            })   
+        }
     }
 }
 

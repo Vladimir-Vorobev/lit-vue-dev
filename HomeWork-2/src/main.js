@@ -40,38 +40,40 @@ const routes = [
   { path: '/profile', component: Profile },
   { path: '/statistics', component: Statistics },
   { path: '/literature', component: Literature },
-  { path: '/404', component: PageNotFound }, { path: '*', redirect: '/404' }
-]
-setInterval(() => {
-  let dataq = document.cookie.split(";")
-  let name = ''
-  let cookie = false
-  for(let i = 0; i < dataq.length; i++){
-  let value = dataq[i].toString()
-      for(let j = 0; j < value.length; j++){
-          if(dataq[i][j] == "="){
-              if(name == 'SessionID'){
-                  cookie = true
-                  break
+  { path: '/404', component: PageNotFound }, { path: '*', redirect: '/404' },
+  { path: '/login', redirect: to => {
+      const { hash} = to
+      if(hash) console.log('')
+      let dataq = document.cookie.split(";")
+      let name = ''
+      let cookie = true
+      for(let i = 0; i < dataq.length; i++){
+      let value = dataq[i].toString()
+          for(let j = 0; j < value.length; j++){
+              if(dataq[i][j] == "="){
+                  if(name == 'SessionID'){
+                      cookie = true
+                      break
+                  }
+                  name = ''
               }
-              name = ''
+              else if(dataq[i][j] != " "){
+                  name += dataq[i][j]
+              }
           }
-          else if(dataq[i][j] != " "){
-              name += dataq[i][j]
-          }
+          name = ''
       }
-      name = ''
+      if(cookie){
+        alert('Done')
+        return '/profile'
+      }
+      else{
+        alert('login')
+        return '/login'
+      }
+    }
   }
-  if(cookie){
-    document.querySelector('.login').style.visibility = 'hidden'
-    document.querySelector('.profile').style.visibility = 'visible'
-  }
-  else{
-    document.querySelector('.login').style.visibility = 'visible'
-    document.querySelector('.profile').style.visibility = 'hidden'
-  }
-}, 500);
-
+]
 
 const router = new VueRouter({
   mode: 'history',

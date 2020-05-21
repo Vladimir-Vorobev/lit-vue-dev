@@ -41,9 +41,6 @@
           <router-link to='/login' class="router-link login">
               <a type="button" class="btn btn-success btn-lg " ref="login">{{loginText}}</a>
           </router-link>
-          <router-link to='/profile' class="router-link profile" style='visibility: hidden'>
-              <a type="button" class="btn btn-success btn-lg " ref="profile">{{profileText}}</a>
-          </router-link>
         </div>
       </nav>
     </div>
@@ -62,16 +59,44 @@ export default {
         let allEventsText = "Все мероприятия"
         let yourEventsText = "Ваши мероприятия"
         let loginText = "Войти"
-        let profileText = "Профиль"
         return {
             homeText,
             recommendedEventsText,
             allEventsText,
             yourEventsText,
             loginText,
-            profileText,
         }
     },
+    mounted(){
+      setInterval(() => {
+        let dataq = document.cookie.split(";")
+        let name = ''
+        let cookie = false
+        for(let i = 0; i < dataq.length; i++){
+        let value = dataq[i].toString()
+            for(let j = 0; j < value.length; j++){
+                if(dataq[i][j] == "="){
+                    if(name == 'SessionID'){
+                        cookie = true
+                        break
+                    }
+                    name = ''
+                }
+                else if(dataq[i][j] != " "){
+                    name += dataq[i][j]
+                }
+            }
+            name = ''
+        }
+        if(cookie && window.location.pathname.toString() == '/login'){
+          this.$router.push("/profile")
+        }
+        if(cookie){
+          this.loginText = 'Профиль' 
+        }
+      }, 500);
+    }
+
 }
 </script>
 

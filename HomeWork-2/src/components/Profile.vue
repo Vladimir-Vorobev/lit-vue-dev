@@ -133,6 +133,7 @@ export default {
             }
         })
         .catch(err => {
+            alert("Ошибка подключения")
             console.log(err)
         })
       },
@@ -225,6 +226,7 @@ export default {
                 }
             })
             .catch(err => {
+                alert("Ошибка подключения")
                 console.log(err)
             })
         }
@@ -255,7 +257,7 @@ export default {
               name = ''
           }
           needle.post('http://37.228.118.76:3000/api/checkedEventsUpdate', {email: email, statNumber: statNumber}, {"json": true}, function(err){
-            if (err) throw err
+            if(err) alert("Ошибка подключения")
           })
       }
     }

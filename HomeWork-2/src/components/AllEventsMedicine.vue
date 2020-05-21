@@ -25,7 +25,7 @@ export default {
     name: 'AllEventsMedicine',
     mounted(){
         needle.post('http://37.228.118.76:3000/api/getAllEvents',function(err, res){
-            if (err) throw err
+            if(err) alert("Ошибка подключения")
             else{
                 let data = res.body
                 document.querySelector('.main').insertAdjacentHTML(
