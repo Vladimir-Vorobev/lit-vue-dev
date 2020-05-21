@@ -13,7 +13,7 @@
                 
                 <div class="contant_box_404">
                 <h3 class="h2">
-                Похоже, вы заблудились
+                Похоже, Вы заблудились
                 </h3>
                 
                 <p>страница, которую Вы ищете, недоступна или находится в разработке!</p>
@@ -46,7 +46,7 @@ export default {
     background-color: rgb(231, 231, 231);
     height: 100%;
     padding: 30px;
-    min-height: 1018px;
+    min-height: 100vh;
     margin-bottom: 0px;
 }
 
