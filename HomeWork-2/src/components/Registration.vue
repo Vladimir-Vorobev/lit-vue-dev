@@ -112,6 +112,7 @@ export default {
             document.querySelector('.code').style.visibility = 'visible'
             needle.post('http://37.228.118.76:3000/api/mailCheck', {email: email}, {"json": true}, function(err, res){
               if (err) throw err
+              alert(res.body)
               document.cookie = "_relx=" + res.body
             })
           }
@@ -127,6 +128,9 @@ export default {
             needle.post('http://37.228.118.76:3000/api/registration', data, {"json": true}, function(err, res, body){
               if(body == "Reg succsesful"){
                 document.location.href = "/login"
+              }
+              else if(body == "Reg Fail"){
+                alert('Пользователь с таким email существует')
               }
               else{
                 alert("Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы")

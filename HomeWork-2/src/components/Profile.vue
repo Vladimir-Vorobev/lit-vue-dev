@@ -209,27 +209,32 @@ fetch('http://37.228.118.76:3000/api/getInformation', {
     return response.json()
 })
 .then(data => {
-    if(data.city == undefined) data.city = '-'
-    if(data.school == undefined) data.school = '-'
-    if(data.schoolType == undefined) data.schoolType = '-'
-    if(data.role == undefined) data.role = '-'
-    if(data.class_number == undefined) data.class_number = '-'
-    if(data.simvol == undefined) data.simvol = '-'
-    if(data.portfolio == undefined) data.portfolio = '-'
-    if(data.statNumber == undefined) data.statNumber = '-'
+    if(data.city != undefined){
+      document.querySelector(".city").value = data.city;
+    }
+    if(data.school != undefined){
+      document.querySelector(".school").value = data.school;
+    }
+    if(data.schoolType != undefined){
+      document.querySelector(".schoolType").value = data.schoolType;
+    }
+    if(data.role != undefined) {
+      document.querySelector(".role").value = data.role;
+    }
+    if(data.class_number != undefined){
+      document.querySelector(".class_number").value = data.class_number;
+    }
+    if(data.simvol != undefined){
+      document.querySelector(".simvol").value = data.simvol;
+    }
+    if(data.statNumber != undefined){
+      document.querySelector(".statNumber").value = data.statNumber;
+    }
 
     document.querySelector(".name").value = data.name;
     document.querySelector(".surname").value = data.surname;
     document.querySelector(".email").value = data.email;
     document.querySelector(".age").value = data.age;
-    document.querySelector(".city").value = data.city;
-    document.querySelector(".school").value = data.school;
-    document.querySelector(".schoolType").value = data.schoolType;
-    document.querySelector(".role").value = data.role;
-    document.querySelector(".class_number").value = data.class_number;
-    document.querySelector(".simvol").value = data.simvol;
-    document.querySelector(".statNumber").value = data.statNumber;
-
 })
 
 </script>
