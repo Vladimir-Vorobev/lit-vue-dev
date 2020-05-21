@@ -1,5 +1,22 @@
 <template>
-    <div class="main main container" id="main"></div>
+    <div>
+        <div class="main main container">
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col-md-5 col-12"> <p class="card-text" style="font-weight: bold; font-size: 1.3em">Сортировка мероприятий: </p> </div> 
+                    <div class="col-md-7 col-12"> 
+                    <select class="custom-select custom-select-sm mb-3">
+                    <option selected>Все</option>
+                    <option value="Web_conference">Программирование</option>
+                    <option value="Excursion">Инженерия</option>
+                    <option value="Saturday_of_the_Moscow_schoolboy">Медицина</option>
+                </select>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="main main container" id="main"></div>
+    </div>
 </template>
 
 <script>
@@ -7,7 +24,7 @@ import needle from 'needle'
 export default {
     name: 'AllEvents',
     mounted(){
-        needle.get('http://37.228.118.76:3000/api/getAllEvents',function(err, res){
+        needle.post('http://37.228.118.76:3000/api/getAllEvents',function(err, res){
             if (err) throw err
             else{
                 let data = res.body
@@ -18,7 +35,7 @@ export default {
                 for(let i = 0; i < data.length; i++){
                     document.querySelector('.main').insertAdjacentHTML(
                         'beforeEnd',
-                        '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text"><i class="far fa-user"></i>' + ' ' + data[i].places + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <div class="form-check"> <input class="form-check-input" type="checkbox" focus="checkbox()" id=' + i + '> <label class="form-check-label" for="defaultCheck1"> <small> Собираюсь посетить </small> </label> </div> <br> <a href=' + data[i].link +  'class="btn btn-primary">Перейти к мероприятию</a> </div> <div class="card-footer text-muted">' + data[i].date + '</div> </div>',
+                        '<div class="card"> <div class="card-header " style="font-weight: bold;">' + data[i].date + '</div>  <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text"><i class="far fa-user"></i>' + ' ' + data[i].places + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <div class="form-check"> <input class="form-check-input" type="checkbox" focus="checkbox()" id=' + i + '> <label class="form-check-label" for="defaultCheck1"> <small> Собираюсь посетить </small> </label> </div> <br> <a href=' + data[i].link +  'class="btn btn-primary">Перейти к мероприятию</a> </div> </div>',
                     )
                 }
                 let serverData = []

@@ -76,10 +76,66 @@
     </div>
 </template>
 <script>
-//import needle from "needle"
+import needle from "needle"
 export default {
     name: 'Profile',
     methods: {
+      mounted(){
+        let datah = document.cookie.split(";")
+        let name = ''
+        let email
+        let b = 0
+        for(let i = 0; i < datah.length; i++){
+            let value = datah[i].toString()
+            for(let j = 0; j < value.length; j++){
+                if(datah[i][j] == "="){
+                    if(name == 'email'){
+                        b = 1
+                    }
+                    name = ''
+                }
+                else if(datah[i][j] != " "){
+                    name += datah[i][j]
+                }
+            }
+            if(b == 1){
+                email = name
+                b = 0
+            }
+            name = ''
+        }
+        fetch('http://37.228.118.76:3000/api/getCheckedEvents', {
+            method: 'get',
+            headers: {email: email},
+        })
+        .then(response => {
+            console.log("res", response)
+            return response.json()
+        })
+        .then(data => {
+            document.querySelector('.main').insertAdjacentHTML(
+                'beforeEnd',
+                '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
+            )
+            if(data.city == undefined) data.city = '-'
+            if(data.school == undefined) data.school = '-'
+            if(data.schoolType == undefined) data.schoolType = '-'
+            if(data.role == undefined) data.role = '-'
+            if(data.class_number == undefined) data.class_number = '-'
+            if(data.simvol == undefined) data.simvol = '-'
+            if(data.portfolio == undefined) data.portfolio = '-'
+            if(data.statNumber == undefined) data.statNumber = '-'
+            for(let i = 0; i < data.length; i++){
+                document.querySelector('.main').insertAdjacentHTML(
+                    'beforeEnd',
+                    '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <a href=' + data[i].link +  'class="btn btn-primary">Перейти к мероприятию</a> </div> <div class="card-footer text-muted">' + data[i].date + '</div> </div>',
+                )
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
+      },
       updateUser(){
         event.preventDefault()
         let re = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/
@@ -125,21 +181,82 @@ export default {
             if(simvol.trim() != '') data.simvol = simvol
             if(portfolio != '') data.portfolio = portfolio
             console.log(data)
-            //if(age.trim() != '') data.age = age
-            
-          //needle.post('http://37.228.118.76:3000/api/registration', data, {"json": true}, function(err, res, body){
-            //if(body == "Reg succsesful"){
-              //alert("Профиль обновлен успешно")
-            //}
-            //else{
-              //alert("Обновить профиль не удалось")
-            //}
-          //})
+            let datah = document.cookie.split(";")
+            let name = ''
+            let emails
+            let b = 0
+            for(let i = 0; i < datah.length; i++){
+                let value = datah[i].toString()
+                for(let j = 0; j < value.length; j++){
+                    if(datah[i][j] == "="){
+                        if(name == 'email'){
+                            b = 1
+                        }
+                        name = ''
+                    }
+                    else if(datah[i][j] != " "){
+                        name += datah[i][j]
+                    }
+                }
+                if(b == 1){
+                    emails = name
+                    b = 0
+                }
+                name = ''
+            }
+            fetch('http://37.228.118.76:3000/api/getCheckedEvents', {
+                method: 'get',
+                headers: {email: emails},
+            })
+            .then(response => {
+                console.log("res", response)
+                return response.json()
+            })
+            .then(data => {
+                document.querySelector('.main').insertAdjacentHTML(
+                    'beforeEnd',
+                    '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
+                )
+                for(let i = 0; i < data.length; i++){
+                    document.querySelector('.main').insertAdjacentHTML(
+                        'beforeEnd',
+                        '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <a href=' + data[i].link +  'class="btn btn-primary">Перейти к мероприятию</a> </div> <div class="card-footer text-muted">' + data[i].date + '</div> </div>',
+                    )
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
         }
       },
       addNumber(){
-          let number = Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000
-          document.querySelector('.number').innerHTML = number
+          let statNumber = Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000
+          let datah = document.cookie.split(";")
+          let name = ''
+          let email
+          let b = 0
+          for(let i = 0; i < datah.length; i++){
+              let value = datah[i].toString()
+              for(let j = 0; j < value.length; j++){
+                  if(datah[i][j] == "="){
+                      if(name == 'email'){
+                          b = 1
+                      }
+                      name = ''
+                  }
+                  else if(datah[i][j] != " "){
+                      name += datah[i][j]
+                  }
+              }
+              if(b == 1){
+                  email = name
+                  b = 0
+              }
+              name = ''
+          }
+          needle.post('http://37.228.118.76:3000/api/checkedEventsUpdate', {email: email, statNumber: statNumber}, {"json": true}, function(err){
+            if (err) throw err
+          })
       }
     }
   }
