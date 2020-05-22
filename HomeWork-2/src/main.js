@@ -18,6 +18,7 @@ import OpenDays from './components/OpenDays.vue'
 import Partners from './components/Partners.vue'
 import Universities from './components/Universities.vue'
 import FullStatistics from './components/FullStatistics.vue'
+import FriendStatistics from './components/FriendStatistics.vue'
 import Literature from './components/Literature.vue'
 import PageNotFound from './components/PageNotFound.vue'
 
@@ -37,8 +38,9 @@ const routes = [
   { path: '/registration', component: Registration },
   { path: '/login', component: LogIn },
   { path: '/profile', component: Profile },
-  { path: '/statistics', component: Statistics },
-  { path: '/full-statistics', component: FullStatistics },
+  { path: '/friend-statistics', component: FriendStatistics },
+  { path: '/school-statistics', component: Statistics },
+  { path: '/full-school-statistics', component: FullStatistics },
   { path: '/literature', component: Literature },
   { path: '/open-days', component: OpenDays },
   { path: '/universities', component: Universities },

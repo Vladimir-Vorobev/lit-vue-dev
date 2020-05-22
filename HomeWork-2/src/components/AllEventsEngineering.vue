@@ -7,7 +7,7 @@
                         <div class="col-md-7 col-12"> 
                         <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
                             <option value="/all-events">Все</option>
-                            <option value="/it-events">Программирование</option>
+                            <option value="/it-events">IT</option>
                             <option value="/engineering-events" selected>Инженерия</option>
                             <option value="/medicine-events">Медицина</option>
                         </select>

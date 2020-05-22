@@ -78,30 +78,40 @@ export default {
     },
     mounted(){
       setInterval(() => {
-        let dataq = document.cookie.split(";")
+        let datah = document.cookie.split(";")
         let name = ''
-        let cookie = false
-        for(let i = 0; i < dataq.length; i++){
-        let value = dataq[i].toString()
+        let email
+        let b = 0
+        for(let i = 0; i < datah.length; i++){
+            let value = datah[i].toString()
             for(let j = 0; j < value.length; j++){
-                if(dataq[i][j] == "="){
-                    if(name == 'SessionID'){
-                        cookie = true
-                        break
+                if(datah[i][j] == "="){
+                    if(name == 'email'){
+                        b = 1
                     }
                     name = ''
                 }
-                else if(dataq[i][j] != " "){
-                    name += dataq[i][j]
+                else if(datah[i][j] != " "){
+                    name += datah[i][j]
                 }
+            }
+            if(b == 1){
+                email = name
+                b = 0
             }
             name = ''
         }
-        if(cookie && window.location.pathname.toString() == '/login'){
+        if(email != '' && window.location.pathname.toString() == '/login'){
           this.$router.push("/profile")
         }
-        if(cookie){
+        else if(email == '' && window.location.pathname.toString() == '/profile'){
+          this.$router.push("/login")
+        }
+        if(email != ''){
           this.loginText = 'Профиль' 
+        }
+        else{
+          this.loginText = 'Войти' 
         }
       }, 200);
     }

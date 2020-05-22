@@ -1,7 +1,10 @@
 <template>
     <div class="main container">
         <form class="formbox">
-            <h2>Редактировать профиль</h2>
+            <div class="row" style="margin-bottom: 1em;">
+              <h2 class="col-11">Редактировать профиль</h2>
+              <div class="col-1"><button class='btn btn-danger' @click="exit()"><i class="fas fa-sign-out-alt"></i></button></div>
+            </div>
             <div class="form-group row">
               <div class="col-12 col-md-6"><input name="name" class="form-control name" placeholder="Имя"></div>
               <div class="col-12 col-md-6"><input name="surname"  class="form-control surname" placeholder="Фамилия"></div>
@@ -64,7 +67,7 @@
           <h5 class="col-12">Уникальный номер: <span class="statNumber"></span> </h5>
         </div>
         <div class="row num">
-            <div class="col-12 col-md-8"><span>Этот номер необходим, если Вы хотите делиться своей статистикой с другими пользователями, например, с родителями или друзьями. Внимание: предоставляйте этот номер только тем, кому Вы доверяете</span> <br> <router-link to="/statistics">Посмотреть статистику знакомых</router-link></div>
+            <div class="col-12 col-md-8"><span>Этот номер необходим, если Вы хотите делиться своей статистикой с другими пользователями, например, с родителями или друзьями. Внимание: предоставляйте этот номер только тем, кому Вы доверяете</span> <br> <router-link to="/friend-statistics">Посмотреть статистику знакомых</router-link></div>
             <div class="number"></div>
             <div class="col-12 col-md-4"><button class="btn btn-info btn-lg" @click="addNumber()">Создать уникальный номер</button></div>
         </div>
@@ -175,6 +178,9 @@ export default {
             if(err) alert("Ошибка подключения")
           })
           window.location.reload()
+      },
+      exit(){
+        document.cookie = "email="
       }
     }
   }
