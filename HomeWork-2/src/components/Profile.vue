@@ -210,7 +210,7 @@ export default {
                 namec = ''
             }
             needle.post('https://makual.ru/api/updateInformation', {email: emails, update: dataq}, {"json": true}, function(err){
-                if (err) alert('Ошибка подключения')
+                if (err) console.log(err)
             })
             window.location.reload()
         }
@@ -241,7 +241,7 @@ export default {
               name = ''
           }
           needle.post('https://makual.ru/api/updateInformation', {email: email, update: statNumber}, {"json": true}, function(err){
-            if(err) alert("Ошибка подключения")
+            if(err) console.log(err)
           })
           window.location.reload()
       },

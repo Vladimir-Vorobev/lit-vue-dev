@@ -137,7 +137,6 @@ export default {
             
         })
         .catch(err => {
-            alert("Ошибка подключения")
             console.log(err)
         })
     },

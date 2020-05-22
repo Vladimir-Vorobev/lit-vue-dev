@@ -10,7 +10,7 @@ export default {
     name: 'Universities',
     mounted(){
         needle.get('https://makual.ru/api/getAllEvents',function(err, res){
-            if(err) alert("Ошибка подключения")
+            if(err) console.log(err)
             else{
                 let data = res.body.points
                 document.querySelector('.main').insertAdjacentHTML(

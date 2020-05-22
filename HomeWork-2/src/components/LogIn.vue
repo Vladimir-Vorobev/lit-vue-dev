@@ -35,7 +35,7 @@ export default {
           password: crypto.createHash('md5').update(password).digest("hex"), 
         }
         needle.post('https://makual.ru/api/login', data, {"json": true}, function(err, res, body){
-            if(err) alert("Ошибка подключения")
+            if(err) console.log(err)
             if(res.body != 'Incorect password' && res.body != 'Correct password'){
               alert('Пользователь не найден')
             }

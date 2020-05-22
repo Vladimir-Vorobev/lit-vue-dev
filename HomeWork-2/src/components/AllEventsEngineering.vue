@@ -22,7 +22,7 @@ export default {
     name: 'AllEventsEngineering',
     mounted(){
         needle.get('https://makual.ru/api/getAllEvents',function(err, res){
-            if(err) alert("Ошибка подключения")
+            if(err) console.log(err)
             else{
                 let data = res.body.engeniring
                 document.querySelector('.main').insertAdjacentHTML(

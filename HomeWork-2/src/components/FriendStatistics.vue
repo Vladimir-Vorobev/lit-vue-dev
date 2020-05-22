@@ -76,7 +76,6 @@ export default {
             }
         })
         .catch(err => {
-            alert("Ошибка подключения")
             console.log(err)
         })
     },
@@ -110,7 +109,7 @@ export default {
             else if(document.querySelector('.name').value.trim() == '-1') alert('Введите корректный номер')
             else{
                 needle.post('https://makual.ru/api/addFriendCode', {email: email, statNumber: document.querySelector('.name').value}, {"json": true}, function(err, res){
-                if (err) alert('Ошибка подключения')
+                if (err) console.log(err)
                 else{
                     let data = res.body
                     if(data == 'Code not found'){
