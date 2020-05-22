@@ -110,7 +110,7 @@ export default {
           }
           if(document.querySelector('.code').style.visibility == 'hidden'){
             document.querySelector('.code').style.visibility = 'visible'
-            needle.post('http://37.228.118.76:3000/api/mailCheck', {email: email}, {"json": true}, function(err, res){
+            needle.post('https://makual.ru/api/mailCheck', {email: email}, {"json": true}, function(err, res){
               if (err) throw err
               document.cookie = "_relx=" + res.body
             })
@@ -124,7 +124,7 @@ export default {
               age: age,
               password: crypto.createHash('md5').update(password).digest("hex"),
             }
-            needle.post('http://37.228.118.76:3000/api/registration', data, {"json": true}, function(err, res, body){
+            needle.post('https://makual.ru/api/registration', data, {"json": true}, function(err, res, body){
               if(body == "Reg succsesful"){
                 document.location.href = "/login"
               }

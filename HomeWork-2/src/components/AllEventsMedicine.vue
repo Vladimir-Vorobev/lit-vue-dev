@@ -21,7 +21,7 @@ import needle from 'needle'
 export default {
     name: 'AllEventsMedicine',
     mounted(){
-        needle.get('http://37.228.118.76:3000/api/getAllEvents',function(err, res){
+        needle.get('https://makual.ru/api/getAllEvents',function(err, res){
             if(err) alert("Ошибка подключения")
             else{
                 let data = res.body.medicine
@@ -68,7 +68,7 @@ export default {
                                     box.checked = false
                                     let datas = data[i]
                                     delete datas.places
-                                    needle.post('http://37.228.118.76:3000/api/checkedEventsUpdate', {email: email, events: datas}, {"json": true}, function(err){
+                                    needle.post('https://makual.ru/api/checkedEventsUpdate', {email: email, events: datas}, {"json": true}, function(err){
                                         if (err) throw err
 
                                     })

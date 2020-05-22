@@ -36,7 +36,7 @@ export default {
             }
             name = ''
         }
-        fetch('http://37.228.118.76:3000/api/getOtherInformation', {
+        fetch('https://makual.ru/api/getOtherInformation', {
         method: 'get',
         headers: {email: email},
         })

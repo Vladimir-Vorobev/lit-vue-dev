@@ -34,14 +34,13 @@ export default {
           email: email,
           password: crypto.createHash('md5').update(password).digest("hex"), 
         }
-        needle.post('http://37.228.118.76:3000/api/login', data, {"json": true}, function(err, res, body){
+        needle.post('https://makual.ru/api/login', data, {"json": true}, function(err, res, body){
             if(err) alert("Ошибка подключения")
             if(res.body != 'Incorect password' && res.body != 'Correct password'){
               alert('Пользователь не найден')
             }
             else if(body != 'Incorect password'){
               document.cookie = "SessionID=" + res.body
-              console.log(res.body)
               document.cookie = "email=" + email
               let data = document.cookie.split(";")
               let name = ''

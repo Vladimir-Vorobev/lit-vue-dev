@@ -29,7 +29,7 @@ export default {
             }
             name = ''
         }
-        fetch('http://37.228.118.76:3000/api/getCheckedEvents', {
+        fetch('https://makual.ru/api/getCheckedEvents', {
             method: 'get',
             headers: {email: email},
 		})

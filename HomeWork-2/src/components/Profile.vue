@@ -102,7 +102,7 @@ export default {
           }
           name = ''
       }
-      fetch('http://37.228.118.76:3000/api/getInformation', {
+      fetch('https://makual.ru/api/getInformation', {
               method: 'get',
               headers: {email: email},
       })
@@ -209,7 +209,7 @@ export default {
                 }
                 namec = ''
             }
-            needle.post('http://37.228.118.76:3000/api/updateInformation', {email: emails, update: dataq}, {"json": true}, function(err){
+            needle.post('https://makual.ru/api/updateInformation', {email: emails, update: dataq}, {"json": true}, function(err){
                 if (err) alert('Ошибка подключения')
             })
             window.location.reload()
@@ -240,7 +240,7 @@ export default {
               }
               name = ''
           }
-          needle.post('http://37.228.118.76:3000/api/updateInformation', {email: email, update: statNumber}, {"json": true}, function(err){
+          needle.post('https://makual.ru/api/updateInformation', {email: email, update: statNumber}, {"json": true}, function(err){
             if(err) alert("Ошибка подключения")
           })
           window.location.reload()

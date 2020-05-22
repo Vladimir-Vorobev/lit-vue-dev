@@ -43,7 +43,7 @@ export default {
             }
             name = ''
         }
-        fetch('http://37.228.118.76:3000/api/getCodeInformation', {
+        fetch('https://makual.ru/api/getCodeInformation', {
             method: 'get',
             headers: {email: email},
         })
@@ -109,7 +109,7 @@ export default {
             if(document.querySelector('.name').value.trim() == '') alert('Введите номер')
             else if(document.querySelector('.name').value.trim() == '-1') alert('Введите корректный номер')
             else{
-                needle.post('http://37.228.118.76:3000/api/addFriendCode', {email: email, statNumber: document.querySelector('.name').value}, {"json": true}, function(err, res){
+                needle.post('https://makual.ru/api/addFriendCode', {email: email, statNumber: document.querySelector('.name').value}, {"json": true}, function(err, res){
                 if (err) alert('Ошибка подключения')
                 else{
                     let data = res.body

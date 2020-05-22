@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import needle from 'needle'
 export default {
     name: 'Statistics',
     mounted(){
@@ -37,7 +36,7 @@ export default {
             }
             name = ''
         }
-        fetch('http://37.228.118.76:3000/api/getOtherInformation', {
+        fetch('https://makual.ru/api/getOtherInformation', {
         method: 'get',
         headers: {email: email},
         })
@@ -142,51 +141,6 @@ export default {
             console.log(err)
         })
     },
-    methods:{
-        addFriend(){
-            event.preventDefault()
-            let datah = document.cookie.split(";")
-            let name = ''
-            let email
-            let b = 0
-            for(let i = 0; i < datah.length; i++){
-                let value = datah[i].toString()
-                for(let j = 0; j < value.length; j++){
-                    if(datah[i][j] == "="){
-                        if(name == 'email'){
-                            b = 1
-                        }
-                        name = ''
-                    }
-                    else if(datah[i][j] != " "){
-                        name += datah[i][j]
-                    }
-                }
-                if(b == 1){
-                    email = name
-                    b = 0
-                }
-                name = ''
-            }
-            if(document.querySelector('.name').value.trim() == '') alert('Введите номер')
-            else if(document.querySelector('.name').value.trim() == '-1') alert('Введите корректный номер')
-            else{
-                needle.post('http://37.228.118.76:3000/api/addFriendCode', {email: email, statNumber: document.querySelector('.name').value}, {"json": true}, function(err, res){
-                if (err) alert('Ошибка подключения')
-                else{
-                    let data = res.body
-                    if(data == 'Code not found'){
-                        alert('Пользователь не найден')
-                    }
-                    else{
-                        alert('Пользователь успешно добавлен')
-                        document.location.reload()
-                    }
-                }
-                })
-            }
-        }
-    }
 }
 </script>
 
