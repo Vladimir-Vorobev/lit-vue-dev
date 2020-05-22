@@ -80,7 +80,7 @@ export default {
       setInterval(() => {
         let datah = document.cookie.split(";")
         let name = ''
-        let email
+        let email = ''
         let b = 0
         for(let i = 0; i < datah.length; i++){
             let value = datah[i].toString()
