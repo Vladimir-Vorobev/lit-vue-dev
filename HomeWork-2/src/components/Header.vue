@@ -33,17 +33,17 @@
                 <router-link to="/literature" class="dropdown-item">
                   <a ref="Literature">Литература</a>
                 </router-link>
+                <router-link to="/open-days" class="dropdown-item">
+                  <a ref="OpenDays">Дни открытых дверей</a>
+                </router-link>
+                <router-link to="/universities" class="dropdown-item">
+                  <a ref="Universities">Баллы в ВУЗы</a>
+                </router-link>
+                <router-link to="/partners" class="dropdown-item">
+                  <a ref="Partners">Партнёры</a>
+                </router-link>
                 <router-link to="/404" class="dropdown-item">
                   <a ref="PageNotFound">Трансляция мероприятий</a>
-                </router-link>
-                <router-link to="/404" class="dropdown-item">
-                  <a ref="PageNotFound">Партнёры</a>
-                </router-link>
-                <router-link to="/404" class="dropdown-item">
-                  <a ref="PageNotFound">Дни открытых дверей</a>
-                </router-link>
-                <router-link to="/404" class="dropdown-item">
-                  <a ref="PageNotFound">Баллы в ВУЗы</a>
                 </router-link>
               </div>
             </li>

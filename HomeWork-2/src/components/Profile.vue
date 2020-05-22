@@ -143,6 +143,7 @@ export default {
             needle.post('http://37.228.118.76:3000/api/updateInformation', {email: emails, update: dataq}, {"json": true}, function(err){
                 if (err) alert('Ошибка подключения')
             })
+            window.location.reload()
         }
       },
       addNumber(){
@@ -173,6 +174,7 @@ export default {
           needle.post('http://37.228.118.76:3000/api/updateInformation', {email: email, update: statNumber}, {"json": true}, function(err){
             if(err) alert("Ошибка подключения")
           })
+          window.location.reload()
       }
     }
   }
@@ -228,7 +230,13 @@ fetch('http://37.228.118.76:3000/api/getInformation', {
       document.querySelector(".simvol").value = data.simvol;
     }
     if(data.statNumber != undefined){
-      document.querySelector(".statNumber").value = data.statNumber;
+      var span = document.querySelector(".statNumber");
+      if ('textContent' in span) {
+        span.textContent = data.statNumber;
+      } else {
+        span.innerText = data.statNumber;
+      }
+      //document.querySelector(".statNumber").value = data.statNumber;
     }
 
     document.querySelector(".name").value = data.name;
@@ -250,10 +258,7 @@ fetch('http://37.228.118.76:3000/api/getInformation', {
     min-height: 100vh;
     margin-bottom: 0px;
 }
-.main p{
-  position: absolute; bottom: 0;
-  color: #4f4f50;
-}
+
 
 .link{
   color: #4f4f50;
