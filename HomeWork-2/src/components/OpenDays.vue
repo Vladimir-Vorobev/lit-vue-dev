@@ -1,5 +1,5 @@
 <template>
-    <div class="main"></div>
+    <div class="main container"></div>
 </template>
 
 <script>
@@ -18,7 +18,7 @@ export default {
                 for(let i = 0; i < data.length; i++){
                     document.querySelector('.main').insertAdjacentHTML(
                         'beforeEnd',
-                        '<div class="card"> <div class="card-header " style="font-weight: bold;">' + data[i].date + '</div>  <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <div class="form-check"> <input class="form-check-input" type="checkbox" focus="checkbox()" id=' + i + '> <label class="form-check-label" for="defaultCheck1"> <small> Собираюсь посетить </small> </label> </div> <br> <a href=' + data[i].link +  'class="btn btn-primary">Перейти к мероприятию</a> </div> </div>',
+                        '<div class="card"> <div class="card-header " style="font-weight: bold;">' + data[i].date + '</div>  <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <div class="form-check"> <input class="form-check-input" type="checkbox" focus="checkbox()" id=' + i + '> <label class="form-check-label" for="defaultCheck1"> <small> Собираюсь посетить </small> </label> </div> <br> <a href=' + data[i].link +  ' class="btn btn-primary">Перейти к мероприятию</a> </div> </div>',
                     )
                 }
                 let dataq = document.cookie.split(";")
@@ -75,6 +75,13 @@ export default {
 
 <style scoped>
 .main{
-    padding-top: 80px;
+    padding-top: 110px !important;
+}
+.main{
+    background-color: rgb(231, 231, 231);
+    height: 100%;
+    padding: 30px;
+    min-height: 100vh;
+    margin-bottom: 0px;
 }
 </style>

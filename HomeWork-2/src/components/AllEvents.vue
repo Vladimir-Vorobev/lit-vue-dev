@@ -76,6 +76,7 @@ export default {
 
                                     })
                                 }
+                                else{box.checked = false}
                             }
                             else{
                                 document.location.href = "/login"

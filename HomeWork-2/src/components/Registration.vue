@@ -112,7 +112,6 @@ export default {
             document.querySelector('.code').style.visibility = 'visible'
             needle.post('http://37.228.118.76:3000/api/mailCheck', {email: email}, {"json": true}, function(err, res){
               if (err) throw err
-              alert(res.body)
               document.cookie = "_relx=" + res.body
             })
           }

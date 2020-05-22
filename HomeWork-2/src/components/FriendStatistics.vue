@@ -59,16 +59,16 @@ export default {
             for(let i = 0; i < data.length; i++){
                 document.querySelector('.main').insertAdjacentHTML(
                     'beforeEnd',
-                    '<div class="student"> <div class="si row"> <div class="col-12 col-md-6"><span class="ns">' + data[i].name + ' ' + data[i].surname + '</span></div> <div class="col-6 col-md-3">Класс: <span class="numc">' + data[i].class_number + '</span></div> <div class="col-6 col-md-3">Сивол: <span class="simvol">' + data[i].simvol + '</span></div> </div>',
+                    '<div class="student ' + data[i].name+data[i].surname+ ' "> <div class="si row"> <div class="col-12 col-md-6"><span class="ns">' + data[i].name + ' ' + data[i].surname + '</span></div> <div class="col-6 col-md-3">Класс: <span class="numc">' + data[i].class_number + '</span></div> <div class="col-6 col-md-3">Символ: <span class="simvol">' + data[i].simvol + '</span></div> </div>',
                 )
                 if(data[i].checkedEvents.length == 0){
-                    document.querySelector('.main').insertAdjacentHTML(
+                    document.querySelector('.student').insertAdjacentHTML(
                         'beforeEnd',
                         'Нигде не участвует <br>'
                     )
                 }
                 for(let m = 0; m < data[i].checkedEvents.length; m++){
-                    document.querySelector('.main').insertAdjacentHTML(
+                    document.querySelector('.'+data[i].name+data[i].surname+'').insertAdjacentHTML(
                         'beforeEnd',
                         '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i].checkedEvents[m].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].checkedEvents[m].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].checkedEvents[m].type + '</p> <a href=' + data[i].checkedEvents[m].link +  'class="btn btn-primary">Перейти к мероприятию</a> </div> <div class="card-footer text-muted">' + data[i].checkedEvents[m].date + '</div> </div>',
                     )

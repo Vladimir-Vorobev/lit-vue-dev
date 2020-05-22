@@ -78,6 +78,72 @@
 import needle from "needle"
 export default {
     name: 'Profile',
+    mounted(){
+      let datah = document.cookie.split(";")
+      let name = ''
+      let email
+      let b = 0
+      for(let i = 0; i < datah.length; i++){
+          let value = datah[i].toString()
+          for(let j = 0; j < value.length; j++){
+              if(datah[i][j] == "="){
+                  if(name == 'email'){
+                      b = 1
+                  }
+                  name = ''
+              }
+              else if(datah[i][j] != " "){
+                  name += datah[i][j]
+              }
+          }
+          if(b == 1){
+              email = name
+              b = 0
+          }
+          name = ''
+      }
+      fetch('http://37.228.118.76:3000/api/getInformation', {
+              method: 'get',
+              headers: {email: email},
+      })
+      .then(response => {
+          console.log("res", response)
+          return response.json()
+      })
+      .then(data => {
+          if(data.city != undefined){
+            document.querySelector(".city").value = data.city;
+          }
+          if(data.school != undefined){
+            document.querySelector(".school").value = data.school;
+          }
+          if(data.schoolType != undefined){
+            document.querySelector(".schoolType").value = data.schoolType;
+          }
+          if(data.role != undefined) {
+            document.querySelector(".role").value = data.role;
+          }
+          if(data.class_number != undefined){
+            document.querySelector(".class_number").value = data.class_number;
+          }
+          if(data.simvol != undefined){
+            document.querySelector(".simvol").value = data.simvol;
+          }
+          if(data.statNumber != undefined){
+            var span = document.querySelector(".statNumber");
+            if ('textContent' in span) {
+              span.textContent = data.statNumber;
+            } else {
+              span.innerText = data.statNumber;
+            }
+          }
+
+          document.querySelector(".name").value = data.name;
+          document.querySelector(".surname").value = data.surname;
+          document.querySelector(".email").value = data.email;
+          document.querySelector(".age").value = data.age;
+      })
+    },
     methods: {
       updateUser(){
         event.preventDefault()
@@ -184,72 +250,6 @@ export default {
       }
     }
   }
-
-let datah = document.cookie.split(";")
-let name = ''
-let email
-let b = 0
-for(let i = 0; i < datah.length; i++){
-    let value = datah[i].toString()
-    for(let j = 0; j < value.length; j++){
-        if(datah[i][j] == "="){
-            if(name == 'email'){
-                b = 1
-            }
-            name = ''
-        }
-        else if(datah[i][j] != " "){
-            name += datah[i][j]
-        }
-    }
-    if(b == 1){
-        email = name
-        b = 0
-    }
-    name = ''
-}
-fetch('http://37.228.118.76:3000/api/getInformation', {
-        method: 'get',
-        headers: {email: email},
-})
-.then(response => {
-    console.log("res", response)
-    return response.json()
-})
-.then(data => {
-    if(data.city != undefined){
-      document.querySelector(".city").value = data.city;
-    }
-    if(data.school != undefined){
-      document.querySelector(".school").value = data.school;
-    }
-    if(data.schoolType != undefined){
-      document.querySelector(".schoolType").value = data.schoolType;
-    }
-    if(data.role != undefined) {
-      document.querySelector(".role").value = data.role;
-    }
-    if(data.class_number != undefined){
-      document.querySelector(".class_number").value = data.class_number;
-    }
-    if(data.simvol != undefined){
-      document.querySelector(".simvol").value = data.simvol;
-    }
-    if(data.statNumber != undefined){
-      var span = document.querySelector(".statNumber");
-      if ('textContent' in span) {
-        span.textContent = data.statNumber;
-      } else {
-        span.innerText = data.statNumber;
-      }
-      //document.querySelector(".statNumber").value = data.statNumber;
-    }
-
-    document.querySelector(".name").value = data.name;
-    document.querySelector(".surname").value = data.surname;
-    document.querySelector(".email").value = data.email;
-    document.querySelector(".age").value = data.age;
-})
 
 </script>
 

@@ -22,7 +22,7 @@
                 <br>
                 <div class="custom-control custom-radio">
                     <input type="radio" name="second" id="4" class="custom-control-input" value="engineering">
-                    <label class="custom-control-label" for="4">Или Разбираться в чертежах и что-то изготавливать по ним</label>
+                    <label class="custom-control-label" for="4">Или разбираться в чертежах и что-то изготавливать по ним</label>
                 </div>
             </div>
 
@@ -70,7 +70,7 @@
                 <br>
                 <div class="custom-control custom-radio">
                     <input type="radio" name="sixth" id="12" class="custom-control-input" value="medicine">
-                    <label class="custom-control-label" for="12">Или рабоать хирургом</label>
+                    <label class="custom-control-label" for="12">Или работать хирургом</label>
                 </div>
             </div>
 
@@ -118,7 +118,7 @@
                 <br>
                 <div class="custom-control custom-radio">
                     <input type="radio" name="tenth" id="20" class="custom-control-input" value="it">
-                    <label class="custom-control-label" for="20">Или обеспечивать защиту информации в компьютере</label>
+                    <label class="custom-control-label" for="20">Или обеспечивать защиту компьютерной информации</label>
                 </div>
             </div>
 

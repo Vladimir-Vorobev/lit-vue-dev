@@ -1,5 +1,7 @@
 <template>
-    <div class="main"></div>
+    <div class="main container">
+
+    </div>
 </template>
 
 <script>
@@ -18,7 +20,7 @@ export default {
                 for(let i = 0; i < data.length; i++){
                     document.querySelector('.main').insertAdjacentHTML(
                         'beforeEnd',
-                        '</div>  <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"> Минимальный проходной балл на бюджетную основу: '  + data[i].min + '</p> <p class="card-text"> Минимальный проходной балл на платную основу: '  + data[i].max + '</p> <p class="card-text">' + 'Минимальная цена обучения. Тыс/год: ' + data[i].price + '</p> </div>',
+                        '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"> Минимальный проходной балл на бюджетную основу: '  + data[i].min + '</p> <p class="card-text"> Минимальный проходной балл на платную основу: '  + data[i].max + '</p> <p class="card-text">' + 'Минимальная цена обучения. Тыс/год: ' + data[i].price + '</p> </div>',
                     )
                 }
                 let dataq = document.cookie.split(";")
@@ -75,6 +77,13 @@ export default {
 
 <style scoped>
 .main{
-    padding-top: 80px;
+    padding-top: 110px !important;
+}
+.main{
+    background-color: #fff;
+    height: 100%;
+    padding: 30px;
+    min-height: 1018px;
+    margin-bottom: 0px;
 }
 </style>
