@@ -77,7 +77,7 @@ export default {
                         for(let m = 0; m < data[i][j].checkedEvents.length; m++){
                             document.querySelector('.main').insertAdjacentHTML(
                                 'beforeEnd',
-                                '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i][j].checkedEvents[m].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i][j].checkedEvents[m].time + '</p> <p class="card-text">' + 'Тип: ' + data[i][j].checkedEvents[m].type + '</p> <a href=' + data[i][j].checkedEvents[m].link +  'class="btn btn-primary">Перейти к мероприятию</a> </div> <div class="card-footer text-muted">' + data[i][j].checkedEvents[m].date + '</div> </div>',
+                                '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i][j].checkedEvents[m].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i][j].checkedEvents[m].time + '</p> <p class="card-text">' + 'Тип: ' + data[i][j].checkedEvents[m].type + '</p> <a href=' + data[i][j].checkedEvents[m].link +  ' class="btn btn-primary">Перейти к мероприятию</a> </div> <div class="card-footer text-muted">' + data[i][j].checkedEvents[m].date + '</div> </div>',
                             )
                         }
                     }
