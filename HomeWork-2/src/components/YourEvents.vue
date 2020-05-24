@@ -45,7 +45,7 @@ export default {
             for(let i = 0; i < data.length; i++){
                 document.querySelector('.main').insertAdjacentHTML(
                     'beforeEnd',
-                    '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <a href=' + data[i].link +  ' class="btn btn-primary">Перейти к мероприятию</a> </div> <div class="card-footer text-muted">' + data[i].date + '</div> </div>',
+                    '<div class="card"> <div class="card-header " style="font-weight: bold;">' + data[i].date + '</div> <div class="card-body"> <div class="row"> <h5 class="card-title col-11" style="text-align: center;">' + data[i].name + '</h5> <h5><button class="btn btn-danger" @click="delete()"> <i class="fas fa-trash-alt"></i> </button></h5> </div> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <a href=' + data[i].link +  ' class="btn btn-primary">Перейти к мероприятию</a> </div> </div>',
                 )
             }
         })
