@@ -11,7 +11,7 @@ import PageHeader from './components/Header.vue'
 export default {
   name: 'App',
   components: { PageHeader  },
-  computed: { ...mapGetters(['cookie', 'email']) },
+  computed: { ...mapGetters(['email']) },
   beforeMount(){
     let dataq = document.cookie.split(";")
     let name = ''
@@ -21,7 +21,6 @@ export default {
         for(let j = 0; j < value.length; j++){
             if(dataq[i][j] == "="){
                 if(name == 'email'){
-                    this.$store.commit('CHECK_COOKIE')
                     b = 1
                 }
                 name = ''
@@ -36,7 +35,6 @@ export default {
         }
         name = ''
     }
-    console.log(this.$store.getters.cookie)
     console.log(this.$store.getters.email)
   }
 }
