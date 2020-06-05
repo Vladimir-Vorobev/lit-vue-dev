@@ -35,7 +35,6 @@ export default {
         }
         name = ''
     }
-    console.log(this.$store.getters.email)
   }
 }
 </script>
