@@ -20,32 +20,9 @@ import needle from 'needle'
 export default {
     name: 'Statistics',
     mounted(){
-        let datah = document.cookie.split(";")
-        let name = ''
-        let email
-        let b = 0
-        for(let i = 0; i < datah.length; i++){
-            let value = datah[i].toString()
-            for(let j = 0; j < value.length; j++){
-                if(datah[i][j] == "="){
-                    if(name == 'email'){
-                        b = 1
-                    }
-                    name = ''
-                }
-                else if(datah[i][j] != " "){
-                    name += datah[i][j]
-                }
-            }
-            if(b == 1){
-                email = name
-                b = 0
-            }
-            name = ''
-        }
         fetch('https://makual.ru/api/getCodeInformation', {
             method: 'get',
-            headers: {email: email},
+            headers: {email: this.$store.getters.email},
         })
         .then(response => {
             console.log("res", response)
@@ -82,32 +59,10 @@ export default {
     methods:{
         addFriend(){
             event.preventDefault()
-            let datah = document.cookie.split(";")
-            let name = ''
-            let email
-            let b = 0
-            for(let i = 0; i < datah.length; i++){
-                let value = datah[i].toString()
-                for(let j = 0; j < value.length; j++){
-                    if(datah[i][j] == "="){
-                        if(name == 'email'){
-                            b = 1
-                        }
-                        name = ''
-                    }
-                    else if(datah[i][j] != " "){
-                        name += datah[i][j]
-                    }
-                }
-                if(b == 1){
-                    email = name
-                    b = 0
-                }
-                name = ''
-            }
             if(document.querySelector('.name').value.trim() == '') alert('Введите номер')
             else if(document.querySelector('.name').value.trim() == '-1') alert('Введите корректный номер')
             else{
+                let email = this.$store.getters.email
                 needle.post('https://makual.ru/api/addFriendCode', {email: email, statNumber: document.querySelector('.name').value}, {"json": true}, function(err, res){
                 if (err) console.log(err)
                 else{

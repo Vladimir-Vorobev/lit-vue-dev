@@ -78,36 +78,13 @@ export default {
     },
     mounted(){
       setInterval(() => {
-        let datah = document.cookie.split(";")
-        let name = ''
-        let email = ''
-        let b = 0
-        for(let i = 0; i < datah.length; i++){
-            let value = datah[i].toString()
-            for(let j = 0; j < value.length; j++){
-                if(datah[i][j] == "="){
-                    if(name == 'email'){
-                        b = 1
-                    }
-                    name = ''
-                }
-                else if(datah[i][j] != " "){
-                    name += datah[i][j]
-                }
-            }
-            if(b == 1){
-                email = name
-                b = 0
-            }
-            name = ''
-        }
-        if(email != '' && window.location.pathname.toString() == '/login'){
+        if(this.$store.getters.email != '' && window.location.pathname.toString() == '/login'){
           this.$router.push("/profile")
         }
-        else if(email == '' && window.location.pathname.toString() == '/profile'){
+        else if(this.$store.getters.email == '' && window.location.pathname.toString() == '/profile'){
           this.$router.push("/login")
         }
-        if(email != ''){
+        if(this.$store.getters.email != ''){
           this.loginText = 'Профиль' 
         }
         else{

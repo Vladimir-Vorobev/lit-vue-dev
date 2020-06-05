@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import Vuex from 'vuex'
+import Vuex from 'vuex';
+import { APP_STORE } from '../store';
 import VueRouter from 'vue-router'
 import App from './App.vue'
 
@@ -53,7 +54,11 @@ const router = new VueRouter({
   mode: 'history',
   routes // сокращённая запись для `routes: routes`
 })
+
+const store = new Vuex.Store(APP_STORE);
+
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

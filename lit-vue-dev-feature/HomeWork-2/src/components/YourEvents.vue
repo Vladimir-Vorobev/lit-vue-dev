@@ -6,29 +6,7 @@
 export default {
     name: 'YourEvents',
      mounted(){
-        let datah = document.cookie.split(";")
-        let name = ''
-        let email
-        let b = 0
-        for(let i = 0; i < datah.length; i++){
-            let value = datah[i].toString()
-            for(let j = 0; j < value.length; j++){
-                if(datah[i][j] == "="){
-                    if(name == 'email'){
-                        b = 1
-                    }
-                    name = ''
-                }
-                else if(datah[i][j] != " "){
-                    name += datah[i][j]
-                }
-            }
-            if(b == 1){
-                email = name
-                b = 0
-            }
-            name = ''
-        }
+         let email = this.$store.getters.email
         fetch('https://makual.ru/api/getCheckedEvents', {
             method: 'get',
             headers: {email: email},

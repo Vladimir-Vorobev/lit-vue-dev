@@ -9,6 +9,7 @@ import needle from 'needle'
 export default {
     name: 'Universities',
     mounted(){
+        let email = this.$store.getters.email
         needle.get('https://makual.ru/api/getAllEvents',function(err, res){
             if(err) console.log(err)
             else{
@@ -23,35 +24,11 @@ export default {
                         '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i].name + '</h5> <p class="card-text"> Минимальный проходной балл на бюджетную основу: '  + data[i].min + '</p> <p class="card-text"> Минимальный проходной балл на платную основу: '  + data[i].max + '</p> <p class="card-text">' + 'Минимальная цена обучения. Тыс/год: ' + data[i].price + '</p> </div>',
                     )
                 }
-                let dataq = document.cookie.split(";")
-                let name = ''
-                let b = 0
-                let email = ''
-                let cookie = false
-                for(let i = 0; i < dataq.length; i++){
-                let value = dataq[i].toString()
-                    for(let j = 0; j < value.length; j++){
-                        if(dataq[i][j] == "="){
-                            if(name == 'email'){
-                                cookie = true
-                                b = 1
-                            }
-                            name = ''
-                        }
-                        else if(dataq[i][j] != " "){
-                            name += dataq[i][j]
-                        }
-                    }
-                    if(b == 1){
-                        email = name
-                    }
-                    name = ''
-                }
                 setInterval(() => {
                     for(let i = 0; i < data.length; i++){
                         let box = document.getElementById(i)
                         if(box.checked){
-                            if(cookie){
+                            if(this.$store.getters.cookie){
                                 if(confirm('Вы уверены, что хотите посетить данное мероприятие?')){
                                     box.checked = false
                                     let datas = data[i]

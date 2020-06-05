@@ -6,10 +6,39 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import PageHeader from './components/Header.vue'
 export default {
   name: 'App',
   components: { PageHeader  },
+  computed: { ...mapGetters(['cookie', 'email']) },
+  beforeMount(){
+    let dataq = document.cookie.split(";")
+    let name = ''
+    let b = 0
+    for(let i = 0; i < dataq.length; i++){
+    let value = dataq[i].toString()
+        for(let j = 0; j < value.length; j++){
+            if(dataq[i][j] == "="){
+                if(name == 'email'){
+                    this.$store.commit('CHECK_COOKIE')
+                    b = 1
+                }
+                name = ''
+            }
+            else if(dataq[i][j] != " "){
+                name += dataq[i][j]
+            }
+        }
+        if(b == 1){
+            this.$store.commit('GET_USER_EMAIL', name)
+            b = 0
+        }
+        name = ''
+    }
+    console.log(this.$store.getters.cookie)
+    console.log(this.$store.getters.email)
+  }
 }
 </script>
 
