@@ -21,7 +21,6 @@ import needle from 'needle'
 export default {
     name: 'AllEvents',
     mounted(){
-        let cookie = this.$store.getters.cookie
         let email = this.$store.getters.email
         needle.get('https://makual.ru/api/getAllEvents',function(err, res){
             if(err) console.log(err)
@@ -41,7 +40,7 @@ export default {
                     for(let i = 0; i < data.length; i++){
                         let box = document.getElementById(i)
                         if(box.checked){
-                            if(cookie){
+                            if(email != ''){
                                 if(confirm('Вы уверены, что хотите посетить данное мероприятие?')){
                                     box.checked = false
                                     let datas = data[i]

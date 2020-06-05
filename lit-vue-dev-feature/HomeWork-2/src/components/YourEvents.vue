@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import needle from 'needle'
 export default {
     name: 'YourEvents',
      mounted(){
@@ -23,7 +24,7 @@ export default {
             for(let i = 0; i < data.length; i++){
                 document.querySelector('.main').insertAdjacentHTML(
                     'beforeEnd',
-                    '<div class="card"> <div class="card-header " style="font-weight: bold;">' + data[i].date + '</div> <div class="card-body"> <div class="row"> <h5 class="card-title col-11" style="text-align: center;">' + data[i].name + '</h5> <h5><button class="btn btn-danger" @click="delete()"> <i class="fas fa-trash-alt"></i> </button></h5> </div> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <a href=' + data[i].link +  ' class="btn btn-primary">Перейти к мероприятию</a> </div> </div>',
+                    '<div class="card"> <div class="card-header " style="font-weight: bold;">' + data[i].date + '</div> <div class="card-body"> <div class="row"> <h5 class="card-title col-11" style="text-align: center;">' + data[i].name + '</h5> <h5><button class="btn btn-danger" @click="deleteEvent(' + data[i].name + ')"> <i class="fas fa-trash-alt"></i> </button></h5> </div> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <a href=' + data[i].link +  ' class="btn btn-primary">Перейти к мероприятию</a> </div> </div>',
                 )
             }
         })
@@ -31,6 +32,17 @@ export default {
             alert("Возможно, Вы еще не добавили ни одного мероприятия, посмотрите страницу всех мероприятий")
             console.log(err)
         })
+     },
+     methods:{
+         deleteEvent(event){
+            let email = this.$store.getters.email
+            alert('Done')
+            alert(event)
+            needle.post('https://makual.ru/api/deleteEvent', {email: email, event: event}, {"json": true}, function(err){
+                if(err) console.log(err)
+            })
+            window.location.reload()
+        }
      }
 }
 </script>

@@ -20,9 +20,10 @@ import needle from 'needle'
 export default {
     name: 'Statistics',
     mounted(){
+        let email = this.$store.getters.email
         fetch('https://makual.ru/api/getCodeInformation', {
             method: 'get',
-            headers: {email: this.$store.getters.email},
+            headers: {email: email},
         })
         .then(response => {
             console.log("res", response)

@@ -40,7 +40,6 @@ export default {
               alert('Пользователь не найден')
             }
             else if(body != 'Incorect password'){
-              document.cookie = "SessionID=" + res.body
               document.cookie = "email=" + email
               document.location.href = "/profile"
             }
