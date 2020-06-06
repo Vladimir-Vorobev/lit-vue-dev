@@ -58,19 +58,28 @@ import needle from 'needle'
 export default {
     name: 'AllEvents',
     data(){
-        let data
-        needle.get('https://makual.ru/api/getAllEvents',function(err, res){
-            if(err) console.log(err)
-            else{
-                if(this.$route.path == '/all-events') data = res.body.allE
-                else if(this.$route.path == '/it-events') data = res.body.programming
-                else if(this.$route.path == '/medicine-events') data = res.body.medicine
-                else data = res.body.engeniring
-            }
-        })
+        let data = []
         return{
             data
         }
+    },
+    beforeMount(){
+        fetch('https://makual.ru/api/getAllEvents', {
+            method: 'get',
+        })
+        .then(response => {
+            console.log("res", response)
+            return response.json()
+        })
+        .then(datan => {
+            console.log(datan)
+            console.log(this.$route.path)
+            if(this.$route.path == '/all-events') this.data = datan.allE
+            else if(this.$route.path == '/it-events') this.data = datan.programming
+            else if(this.$route.path == '/medicine-events') this.data = datan.medicine
+            else this.data = datan.engeniring
+        })
+        console.log(this.data)
     },
     mounted(){
         let email = this.$store.getters.email
