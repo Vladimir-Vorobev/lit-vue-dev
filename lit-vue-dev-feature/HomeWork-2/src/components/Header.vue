@@ -73,7 +73,8 @@ export default {
             recommendedEventsText,
             allEventsText,
             yourEventsText,
-            loginText: 'Войти'
+            loginText: 'Войти',
+            email: this.$store.getters.email
         }
     },
     mounted(){
@@ -85,7 +86,19 @@ export default {
           this.$router.push("/login")
         }
         if(this.$store.getters.email != ''){
-          this.loginText = 'Профиль' 
+          if(this.loginText == 'Войти'){
+            fetch('https://makual.ru/api/getInformation', {
+                    method: 'get',
+                    headers: {email: this.email},
+            })
+            .then(response => {
+                console.log("res", response)
+                return response.json()
+            })
+            .then(data => {
+              this.loginText = data.name + ' ' + data.surname
+            })
+          }
         }
         else{
           this.loginText = 'Войти' 
