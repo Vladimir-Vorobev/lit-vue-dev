@@ -169,10 +169,11 @@ export default {
             if(role.trim() != '' && role != "Роль в учебном заведении") dataq.role = role
             if(class_number.trim() != '') dataq.class_number = class_number
             if(simvol.trim() != '') dataq.simvol = simvol
-            needle.post('https://makual.ru/api/updateInformation', {email: this.email, update: dataq}, {"json": true}, function(err){
-                if (err) console.log(err)
-            })
-            window.location.reload()
+            setTimeout(
+              needle.post('https://makual.ru/api/updateInformation', {email: this.email, update: dataq}, {"json": true}, function(err){
+                  if (err) console.log(err)
+                  window.location.reload()
+              }),1000)
         }
       },
       addNumber(){
