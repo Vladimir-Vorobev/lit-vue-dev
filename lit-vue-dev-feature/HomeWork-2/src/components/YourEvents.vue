@@ -1,13 +1,32 @@
 <template>
-    <div class="main main container" id="main"></div>
+    <div class="main main container" id="main">
+        <div class="card" v-for="item in data" :key="item.value">
+            <div class="card-header">{{item.date}}</div>
+            <div class="card-body">
+                <div class="row">
+                    <h5 class="card-title col-11">{{item.name}}</h5>
+                    <h5><button class="btn btn-danger" @click="deleteEvent(item)"> <i class="fas fa-trash-alt"></i> </button></h5>
+                </div>
+                <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
+                <p class="card-text">Тип: {{item.type}}</p>
+                <a :href="item.link" class="btn btn-primary">Перейти к мероприятию</a>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 import needle from 'needle'
 export default {
     name: 'YourEvents',
-     mounted(){
-         let email = this.$store.getters.email
+    data(){
+        let data = []
+        return{
+            data
+        }
+    },
+     beforeMount(){
+        let email = this.$store.getters.email
         fetch('https://makual.ru/api/getCheckedEvents', {
             method: 'get',
             headers: {email: email},
@@ -17,16 +36,7 @@ export default {
             return response.json()
         })
         .then(data => {
-            document.querySelector('.main').insertAdjacentHTML(
-                'beforeEnd',
-                '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
-            )
-            for(let i = 0; i < data.length; i++){
-                document.querySelector('.main').insertAdjacentHTML(
-                    'beforeEnd',
-                    '<div class="card"> <div class="card-header " style="font-weight: bold;">' + data[i].date + '</div> <div class="card-body"> <div class="row"> <h5 class="card-title col-11" style="text-align: center;">' + data[i].name + '</h5> <h5><button class="btn btn-danger" @click="deleteEvent(' + data[i].name + ')"> <i class="fas fa-trash-alt"></i> </button></h5> </div> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i].time + '</p> <p class="card-text">' + 'Тип: ' + data[i].type + '</p> <a href=' + data[i].link +  ' class="btn btn-primary">Перейти к мероприятию</a> </div> </div>',
-                )
-            }
+            this.data = data
         })
         .catch(err => {
             alert("Возможно, Вы еще не добавили ни одного мероприятия, посмотрите страницу всех мероприятий")
@@ -36,8 +46,6 @@ export default {
      methods:{
          deleteEvent(event){
             let email = this.$store.getters.email
-            alert('Done')
-            alert(event)
             needle.post('https://makual.ru/api/deleteEvent', {email: email, event: event}, {"json": true}, function(err){
                 if(err) console.log(err)
             })
@@ -57,5 +65,20 @@ export default {
     padding: 30px;
     min-height: 1018px;
     margin-bottom: 0px;
+}
+.card{ 
+    margin-top: 10px !important;
+}
+.card-body{ 
+    text-align: left !important;
+}
+.card-header{
+    font-weight: bold;
+}
+.card-body h5{ 
+    font-weight: bold;
+}
+.card-title{
+    text-align: center;
 }
 </style>
