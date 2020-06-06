@@ -44,7 +44,7 @@
                             <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
                             <p class="card-text"><i class="far fa-user"></i> {{item.places}}</p>
                             <p class="card-text">Тип: {{item.type}}</p>
-                            <div class="form-check"> <input class="form-check-input" type="checkbox">
+                            <div class="form-check"> <input class="form-check-input" type="checkbox" @click="add(item)">
                             <label class="form-check-label" for="defaultCheck1"> <small> Собираюсь посетить </small> </label>
                         </div> <br>
                         <a :href="item.link" class="btn btn-primary">Перейти к мероприятию</a>
@@ -78,32 +78,20 @@ export default {
             else this.data = datan.engeniring
         })
     },
-    mounted(){
-        let email = this.$store.getters.email
-        setInterval(() => {
-            for(let i = 0; i < this.data.length; i++){
-                let box = document.querySelector('.form-check-input')
-                if(box.checked){
-                    if(email != ''){
-                        if(confirm('Вы уверены, что хотите посетить данное мероприятие?')){
-                            box.checked = false
-                            let datas = this.data[i]
-                            delete datas.places
-                            needle.post('https://makual.ru/api/checkedEventsUpdate', {email: email, events: datas}, {"json": true}, function(err){
-                                if (err) throw err
-
-                            })
-                        }
-                        else{box.checked = false}
-                    }
-                    else{
-                        this.$route.path = "/login"
-                    }
-                }
-                
+    methods:{
+        add(event){
+            let email = this.$store.getters.email
+            if(email != ''){
+                delete event.places
+                needle.post('https://makual.ru/api/checkedEventsUpdate', {email: email, events: event}, {"json": true}, function(err){
+                    if (err) throw err
+                })
             }
-        }, 500);
-    },
+            else{
+                this.$route.path = "/login"
+            }
+        }
+    }
 }
 
 </script>
