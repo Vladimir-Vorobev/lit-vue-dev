@@ -47,7 +47,7 @@
                             <div class="form-check"> <input class="form-check-input" type="checkbox">
                             <label class="form-check-label" for="defaultCheck1"> <small> Собираюсь посетить </small> </label>
                         </div> <br>
-                        <a href: item.link class="btn btn-primary">Перейти к мероприятию</a>
+                        <a :href="item.link" class="btn btn-primary">Перейти к мероприятию</a>
                     </div>
                 </div>
             </div>
