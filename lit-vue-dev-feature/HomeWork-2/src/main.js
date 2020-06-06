@@ -7,9 +7,6 @@ import App from './App.vue'
 import MainPage from './components/MainPage.vue'
 import RecommendedEvents from './components/RecommendedEvents.vue'
 import AllEvents from './components/AllEvents.vue'
-import AllEventsProgramming from './components/AllEventsProgramming.vue'
-import AllEventsEngineering from './components/AllEventsEngineering.vue'
-import AllEventsMedicine from './components/AllEventsMedicine.vue'
 import Registration from './components/Registration.vue'
 import YourEvents from './components/YourEvents.vue'
 import LogIn from './components/LogIn.vue'
@@ -32,9 +29,9 @@ const routes = [
   { path: '/', component: MainPage },
   { path: '/recommended-events', component: RecommendedEvents },
   { path: '/all-events', component: AllEvents },
-  { path: '/it-events', component: AllEventsProgramming },
-  { path: '/engineering-events', component: AllEventsEngineering },
-  { path: '/medicine-events', component: AllEventsMedicine },
+  { path: '/it-events', component: AllEvents },
+  { path: '/engineering-events', component: AllEvents },
+  { path: '/medicine-events', component: AllEvents },
   { path: '/your-events', component: YourEvents },
   { path: '/registration', component: Registration },
   { path: '/login', component: LogIn },

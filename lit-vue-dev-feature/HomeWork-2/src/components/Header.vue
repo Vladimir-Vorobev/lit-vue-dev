@@ -78,10 +78,10 @@ export default {
     },
     mounted(){
       setInterval(() => {
-        if(this.$store.getters.email != '' && window.location.pathname.toString() == '/login'){
+        if(this.$store.getters.email != '' && this.$route.path == '/login'){
           this.$router.push("/profile")
         }
-        else if(this.$store.getters.email == '' && window.location.pathname.toString() == '/profile'){
+        else if(this.$store.getters.email == '' && this.$route.path == '/profile'){
           this.$router.push("/login")
         }
         if(this.$store.getters.email != ''){
@@ -89,6 +89,15 @@ export default {
         }
         else{
           this.loginText = 'Войти' 
+        }
+        if(this.$store.getters.email == '' && this.$route.path == '/friend-statistics'){
+          this.$router.push("/login")
+        }
+        if(this.$store.getters.email == '' && this.$route.path == '/school-statistics'){
+          this.$router.push("/login")
+        }
+        if(this.$store.getters.email == '' && this.$route.path == '/full-school-statistics'){
+          this.$router.push("/login")
         }
       }, 200);
     }
