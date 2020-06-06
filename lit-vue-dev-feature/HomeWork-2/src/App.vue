@@ -12,7 +12,7 @@ export default {
   name: 'App',
   components: { PageHeader  },
   computed: { ...mapGetters(['email']) },
-  beforeMount(){
+  beforeCreate(){
     let dataq = document.cookie.split(";")
     let name = ''
     let b = 0
