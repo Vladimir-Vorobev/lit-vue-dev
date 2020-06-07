@@ -1,5 +1,6 @@
 <template>
     <div class="main main container" id="main">
+        <div v-if="data.length == 0"><h3>Возможно, Вы еще не добавили ни одного мероприятия, посмотрите страницу всех мероприятий</h3></div>
         <div class="card" v-for="item in data" :key="item.value">
             <div class="card-header">{{item.date}}</div>
             <div class="card-body">
@@ -39,7 +40,6 @@ export default {
             this.data = data
         })
         .catch(err => {
-            alert("Возможно, Вы еще не добавили ни одного мероприятия, посмотрите страницу всех мероприятий")
             console.log(err)
         })
      },
