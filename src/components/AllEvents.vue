@@ -45,7 +45,7 @@
                             <p class="card-text"><i class="far fa-user"></i> {{item.places}}</p>
                             <p class="card-text">Тип: {{item.type}}</p>
                             <p><button class="btn btn-primary"  @click="add(item)">Собираюсь посетить</button></p>
-                        <a :href="item.link" class="btn btn-primary">Перейти к мероприятию</a>
+                        <a :href="item.link" class="btn btn-primary" @click="setScroll()">Перейти к мероприятию</a>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@ export default {
     data(){
         let data = []
         return{
-            data
+            data,
         }
     },
     beforeMount(){
@@ -76,6 +76,14 @@ export default {
             else this.data = datan.engeniring
         })
     },
+    mounted(){
+        setTimeout(() => {
+            window.scrollTo({
+                top: this.$store.getters.allEventsScroll,
+                behavior: 'auto'
+            });
+        }, 200);
+    },
     methods:{
         add(event){
             let email = this.$store.getters.email
@@ -83,11 +91,24 @@ export default {
                 delete event.places
                 needle.post('https://makual.ru/api/checkedEventsUpdate', {email: email, events: event}, {"json": true}, function(err){
                     if (err) throw err
+                    else{
+                        alert('d')
+                        let notif = document.createElement('div');
+                        notif.style.top = '150px';
+                        notif.style.right = '150px';
+                        notif.innerHTML = 'Мероприятие успешно добавлено';
+                        document.body.append(notif);
+                        console.log(notif)
+                        setTimeout(() => notif.remove(), 1500);
+                    }
                 })
             }
             else{
                 this.$route.path = "/login"
             }
+        },
+        setScroll(){
+            document.cookie = "allEventsScroll=" + window.pageYOffset
         }
     }
 }

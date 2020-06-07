@@ -7,7 +7,7 @@
                 <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
                 <p class="card-text">Тип: {{item.type}}</p>
                 <p><button class="btn btn-primary"  @click="add(item)">Собираюсь посетить</button></p>
-                <a :href="item.link" class="btn btn-primary">Перейти к мероприятию</a>
+                <a :href="item.link" class="btn btn-primary" @click="setScroll()">Перейти к мероприятию</a>
             </div>
         </div>
     </div>
@@ -35,6 +35,14 @@ export default {
             this.data = data.open
         })
     },
+    mounted(){
+        setTimeout(() => {
+            window.scrollTo({
+                top: this.$store.getters.openDaysScroll,
+                behavior: 'auto'
+            });
+        }, 200);
+    },
     methods:{
         add(event){
             let email = this.$store.getters.email
@@ -47,6 +55,9 @@ export default {
             else{
                 this.$route.path = "/login"
             }
+        },
+        setScroll(){
+            document.cookie = "openDaysScroll=" + window.pageYOffset
         }
     }
 }            

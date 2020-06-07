@@ -23,6 +23,12 @@ export default {
                 if(name == 'email'){
                     b = 1
                 }
+                else if(name == 'allEventsScroll'){
+                    b = 2
+                }
+                else if(name == 'openDaysScroll'){
+                    b = 3
+                }
                 name = ''
             }
             else if(dataq[i][j] != " "){
@@ -31,6 +37,14 @@ export default {
         }
         if(b == 1){
             this.$store.commit('GET_USER_EMAIL', name)
+            b = 0
+        }
+        else if(b == 2){
+            this.$store.commit('SET_ALL_EVENTS_SCROLL', name)
+            b = 0
+        }
+        else if(b == 3){
+            this.$store.commit('SET_OPEN_DAYS_SCROLL', name)
             b = 0
         }
         name = ''
