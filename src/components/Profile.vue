@@ -78,33 +78,15 @@
 import needle from "needle"
 export default {
     name: 'Profile',
-    mounted(){
-      let datah = document.cookie.split(";")
-      let name = ''
-      let email
-      let b = 0
-      for(let i = 0; i < datah.length; i++){
-          let value = datah[i].toString()
-          for(let j = 0; j < value.length; j++){
-              if(datah[i][j] == "="){
-                  if(name == 'email'){
-                      b = 1
-                  }
-                  name = ''
-              }
-              else if(datah[i][j] != " "){
-                  name += datah[i][j]
-              }
-          }
-          if(b == 1){
-              email = name
-              b = 0
-          }
-          name = ''
+    data(){
+      return{
+        email: this.$store.getters.email
       }
+    },
+    mounted(){
       fetch('https://makual.ru/api/getInformation', {
               method: 'get',
-              headers: {email: email},
+              headers: {email: this.email},
       })
       .then(response => {
           console.log("res", response)
@@ -187,66 +169,23 @@ export default {
             if(role.trim() != '' && role != "Роль в учебном заведении") dataq.role = role
             if(class_number.trim() != '') dataq.class_number = class_number
             if(simvol.trim() != '') dataq.simvol = simvol
-            let datah = document.cookie.split(";")
-            let namec = ''
-            let emails = ''
-            let b = 0
-            for(let i = 0; i < datah.length; i++){
-                let value = datah[i].toString()
-                for(let j = 0; j < value.length; j++){
-                    if(datah[i][j] == "="){
-                        if(namec == 'email'){
-                            b = 1
-                        }
-                        namec = ''
-                    }
-                    else if(datah[i][j] != " "){
-                        namec += datah[i][j]
-                    }
-                }
-                if(b == 1){
-                    emails = namec
-                }
-                namec = ''
-            }
-            needle.post('https://makual.ru/api/updateInformation', {email: emails, update: dataq}, {"json": true}, function(err){
-                if (err) console.log(err)
-            })
-            window.location.reload()
+            setTimeout(
+              needle.post('https://makual.ru/api/updateInformation', {email: this.email, update: dataq}, {"json": true}, function(err){
+                  if (err) console.log(err)
+                  window.location.reload()
+              }),1000)
         }
       },
       addNumber(){
           let statNumber = {statNumber: Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000}
-          let datah = document.cookie.split(";")
-          let name = ''
-          let email = ''
-          let b = 0
-          for(let i = 0; i < datah.length; i++){
-              let value = datah[i].toString()
-              for(let j = 0; j < value.length; j++){
-                  if(datah[i][j] == "="){
-                      if(name == 'email'){
-                          b = 1
-                      }
-                      name = ''
-                  }
-                  else if(datah[i][j] != " "){
-                      name += datah[i][j]
-                  }
-              }
-              if(b == 1){
-                  email = name
-                  b = 0
-              }
-              name = ''
-          }
-          needle.post('https://makual.ru/api/updateInformation', {email: email, update: statNumber}, {"json": true}, function(err){
+          needle.post('https://makual.ru/api/updateInformation', {email: this.email, update: statNumber}, {"json": true}, function(err){
             if(err) console.log(err)
           })
           window.location.reload()
       },
       exit(){
         document.cookie = "email="
+        window.location.reload()
       }
     }
   }

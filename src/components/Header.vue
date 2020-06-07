@@ -73,45 +73,44 @@ export default {
             recommendedEventsText,
             allEventsText,
             yourEventsText,
-            loginText: 'Войти'
+            loginText: 'Войти',
+            email: this.$store.getters.email
         }
     },
     mounted(){
       setInterval(() => {
-        let datah = document.cookie.split(";")
-        let name = ''
-        let email = ''
-        let b = 0
-        for(let i = 0; i < datah.length; i++){
-            let value = datah[i].toString()
-            for(let j = 0; j < value.length; j++){
-                if(datah[i][j] == "="){
-                    if(name == 'email'){
-                        b = 1
-                    }
-                    name = ''
-                }
-                else if(datah[i][j] != " "){
-                    name += datah[i][j]
-                }
-            }
-            if(b == 1){
-                email = name
-                b = 0
-            }
-            name = ''
-        }
-        if(email != '' && window.location.pathname.toString() == '/login'){
+        if(this.$store.getters.email != '' && this.$route.path == '/login'){
           this.$router.push("/profile")
         }
-        else if(email == '' && window.location.pathname.toString() == '/profile'){
+        else if(this.$store.getters.email == '' && this.$route.path == '/profile'){
           this.$router.push("/login")
         }
-        if(email != ''){
-          this.loginText = 'Профиль' 
+        if(this.$store.getters.email != ''){
+          if(this.loginText == 'Войти'){
+            fetch('https://makual.ru/api/getInformation', {
+                    method: 'get',
+                    headers: {email: this.email},
+            })
+            .then(response => {
+                console.log("res", response)
+                return response.json()
+            })
+            .then(data => {
+              this.loginText = data.name + ' ' + data.surname
+            })
+          }
         }
         else{
           this.loginText = 'Войти' 
+        }
+        if(this.$store.getters.email == '' && this.$route.path == '/friend-statistics'){
+          this.$router.push("/login")
+        }
+        if(this.$store.getters.email == '' && this.$route.path == '/school-statistics'){
+          this.$router.push("/login")
+        }
+        if(this.$store.getters.email == '' && this.$route.path == '/full-school-statistics'){
+          this.$router.push("/login")
         }
       }, 200);
     }

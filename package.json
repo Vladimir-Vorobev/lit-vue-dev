@@ -1,5 +1,5 @@
 {
-  "name": "ProfEvents",
+  "name": "profevents",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -55,5 +55,9 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "description": "## Project setup ``` npm install ```",
+  "main": "babel.config.js",
+  "author": "",
+  "license": "ISC"
 }
