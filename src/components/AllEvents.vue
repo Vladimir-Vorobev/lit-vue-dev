@@ -44,9 +44,7 @@
                             <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
                             <p class="card-text"><i class="far fa-user"></i> {{item.places}}</p>
                             <p class="card-text">Тип: {{item.type}}</p>
-                            <div class="form-check"> <input class="form-check-input" type="checkbox" @click="add(item)">
-                            <label class="form-check-label" for="defaultCheck1"> <small> Собираюсь посетить </small> </label>
-                        </div> <br>
+                            <p><button class="btn btn-primary"  onclick="add(item)">Собираюсь посетить</button></p>
                         <a :href="item.link" class="btn btn-primary">Перейти к мероприятию</a>
                     </div>
                 </div>
