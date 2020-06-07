@@ -44,7 +44,7 @@
                             <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
                             <p class="card-text"><i class="far fa-user"></i> {{item.places}}</p>
                             <p class="card-text">Тип: {{item.type}}</p>
-                            <p><button class="btn btn-primary"  onclick="add(item)">Собираюсь посетить</button></p>
+                            <p><button class="btn btn-primary"  @click="add(item)">Собираюсь посетить</button></p>
                         <a :href="item.link" class="btn btn-primary">Перейти к мероприятию</a>
                     </div>
                 </div>

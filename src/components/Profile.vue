@@ -169,19 +169,19 @@ export default {
             if(role.trim() != '' && role != "Роль в учебном заведении") dataq.role = role
             if(class_number.trim() != '') dataq.class_number = class_number
             if(simvol.trim() != '') dataq.simvol = simvol
-            setTimeout(
-              needle.post('https://makual.ru/api/updateInformation', {email: this.email, update: dataq}, {"json": true}, function(err){
-                  if (err) console.log(err)
-                  window.location.reload()
-              }),1000)
+            needle.post('https://makual.ru/api/updateInformation', {email: this.email, update: dataq}, {"json": true}, function(err){
+                if (err) console.log(err)
+                window.location.reload()
+            })
         }
       },
       addNumber(){
-          let statNumber = {statNumber: Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000}
-          needle.post('https://makual.ru/api/updateInformation', {email: this.email, update: statNumber}, {"json": true}, function(err){
-            if(err) console.log(err)
-          })
+        event.preventDefault()
+        let statNumber = {statNumber: Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000}
+        needle.post('https://makual.ru/api/updateInformation', {email: this.email, update: statNumber}, {"json": true}, function(err){
+          if(err) console.log(err)
           window.location.reload()
+        })
       },
       exit(){
         document.cookie = "email="

@@ -44,12 +44,13 @@ export default {
         })
      },
      methods:{
-         deleteEvent(event){
+         deleteEvent(events){
+            event.preventDefault()
             let email = this.$store.getters.email
-            needle.post('https://makual.ru/api/deleteEvent', {email: email, event: event}, {"json": true}, function(err){
+            needle.post('https://makual.ru/api/deleteEvent', {email: email, event: events}, {"json": true}, function(err){
                 if(err) console.log(err)
+                window.location.reload()
             })
-            window.location.reload()
         }
      }
 }
