@@ -87,7 +87,7 @@ export default {
         }
         if(this.$store.getters.email != ''){
           if(this.loginText == 'Войти'){
-            fetch('https://makual.ru/api/getInformation', {
+            setTimeout(fetch('https://makual.ru/api/getInformation', {
                     method: 'get',
                     headers: {email: this.email},
             })
@@ -97,7 +97,7 @@ export default {
             })
             .then(data => {
               this.loginText = data.name + ' ' + data.surname
-            })
+            }),500)
           }
         }
         else{

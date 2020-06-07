@@ -1,18 +1,48 @@
 <template>
     <div class='main'>
-            <h2>Статистика</h2>
-            <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
-                <option value="/friend-statistics">Статистика друзей</option>
-                <option value="/school-statistics" selected>Обобщенная статистика школы (только для сотрудников учебных заведений)</option>
-                <option value="/full-school-statistics">Полная статистика школы (только для сотрудников учебных заведений)</option>
-            </select>
+        <h2>Статистика</h2>
+        <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
+            <option value="/friend-statistics">Статистика друзей</option>
+            <option value="/school-statistics" selected>Обобщенная статистика школы (только для сотрудников учебных заведений)</option>
+            <option value="/full-school-statistics">Полная статистика школы (только для сотрудников учебных заведений)</option>
+        </select>
+        <div v-if="director">
+            <div class="rate" v-for="(item, index) in data" :key="item.value">
+                <span class="numr row">{{index + 1}} класс</span>
+                <span class="row colv">Учеников зарегистрировано: {{item.length}}</span>
+                <span class="row colv">Учеников, посетивших 0 мероприятий: {{a[index]}}</span>
+                <span class="row colv">Учеников, посетивших от 1 до 5 мероприятий: {{c[index]}}</span>
+                <span class="row colv">Учеников, посетивших от 5 до 10 мероприятий: {{d[index]}}</span>
+                <span class="row colv">Учеников, посетивших более 10 мероприятий: {{e[index]}}</span>
+            </div>
+        </div>
+        <div class="rate" v-else>
+            <span class="row colv">Учеников зарегистрировано: {{data.length}}</span>
+            <span class="row colv">Учеников, посетивших 0 мероприятий: {{a[s]}}</span>
+            <span class="row colv">Учеников, посетивших от 1 до 5 мероприятий: {{c[s]}}</span>
+            <span class="row colv">Учеников, посетивших от 5 до 10 мероприятий: {{d[s]}}</span>
+            <span class="row colv">Учеников, посетивших более 10 мероприятий: {{e[s]}}</span>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     name: 'Statistics',
-    mounted(){
+    data(){
+        let data = []
+        let director = false
+        return{
+            data,
+            director,
+            s: 0,
+            a: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            c: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            d: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+            e: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
+        }
+    },
+    beforeMount(){
         let email = this.$store.getters.email
         fetch('https://makual.ru/api/getOtherInformation', {
         method: 'get',
@@ -24,93 +54,50 @@ export default {
         })
         .then(datan => {
             if(datan.role == 'директор'){
-                let data = datan.data
-                console.log(data)
-                document.querySelector('.main').insertAdjacentHTML(
-                    'beforeEnd',
-                    '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
-                )
-                let a = 0
-                let c = 0
-                let d = 0
-                let e = 0
-                for(let i = 0; i < data.length; i++){
-                    let b = i + 1
-                    for(let j = 0; j < data[i].length; j++){
-                    if(data[i][j].checkedEvents.length == 0){
-                        a += 1
+                this.data = datan.data
+                this.director = true
+                for(let i = 0; i < this.data.length; i++){
+                    for(let j = 0; j < this.data[i].length; j++){
+                        if(this.data[i][j].checkedEvents.length == 0){
+                            this.a[i] += 1
+                        }
+                        else if(this.data[i][j].checkedEvents.length > 0 && this.data[i][j].checkedEvents.length <= 5){
+                            this.c[i] += 1
+                        }
+                        else if(this.data[i][j].checkedEvents.length > 5 && this.data[i][j].checkedEvents.length <= 10){
+                            this.d[i] += 1
+                        }
+                        else{
+                            this.e[i] += 1
+                        }
                     }
-                    else if(data[i][j].checkedEvents.length > 0 && data[i][j].checkedEvents.length <= 5){
-                        c += 1
-                    }
-                    else if(data[i][j].checkedEvents.length > 5 && data[i][j].checkedEvents.length <= 10){
-                        d += 1
-                    }
-                    else{
-                        e += 1
-                    }
-                }
-                    document.querySelector('.main').insertAdjacentHTML(
-                            'beforeEnd',
-                            '<div class="rate"><span class="numr row">Класс: ' + b + '</span> <span class="row colv">Учеников зарегистрировано: ' + data[i].length + '</span><span class="row colv">Учеников, посетивших 0 мероприятий: ' + a + '</span><span class="row colv">Учеников, посетивших от 1 до 5 мероприятий: ' + c +'</span><span class="row colv">Учеников, посетивших от 5 до 10 мероприятий: ' + d + '</span><span class="row colv">Учеников, посетивших более 10 мероприятий: ' + e + '</span></div>',
-                    )
                 }
             }
             else if(datan.role == 'учитель'){
-                let data = datan.data
-                let s = 0
-                for (let j = 0; j < data.length; j ++){
-                    if (data[j].length != 0){
-                        s = j
+                this.data = datan.data
+                for (let j = 0; j < this.data.length; j ++){
+                    if (this.data[j].length != 0){
+                        this.s = j
+                        this.data = datan.data[this.s]
                         break
                     }
                 }
-                document.querySelector('.main').insertAdjacentHTML(
-                    'beforeEnd',
-                    '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
-                )
-                document.querySelector('.main').insertAdjacentHTML(
-                    'beforeEnd',
-                    '<h2>Статистика Вашей школы</h2> <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value"><option value="/statistics" selected>Обобщенная статистика</option> <option value="/full-statistics">Полная статистика</option> </select>',
-                )
-                let a = 0
-                let c = 0
-                let d = 0
-                let e = 0
-                for(let i = 0; i < data[s].length; i++){
-                    document.querySelector('.main').insertAdjacentHTML(
-                            'beforeEnd',
-                            'Учеников зарегистрировано: ' + data[s].length + '<br>'
-                    )
-                    if(data[s][i].checkedEvents.length == 0){
-                        a += 1
+                console.log(this.data)
+                for(let i = 0; i < this.data.length; i++){
+                    if(this.data[i].checkedEvents.length == 0){
+                        this.a[this.s] += 1
                     }
-                    else if(data[s][i].checkedEvents.length > 0 && data[s][i].checkedEvents.length <= 5){
-                        c += 1
+                    else if(this.data[i].checkedEvents.length > 0 && this.data[i].checkedEvents.length <= 5){
+                        this.c[this.s] += 1
                     }
-                    else if(data[s][i].checkedEvents.length > 5 && data[s][i].checkedEvents.length <= 10){
-                        d += 1
+                    else if(this.data[i].checkedEvents.length > 5 && this.data[i].checkedEvents.length <= 10){
+                        this.d[this.s] += 1
                     }
                     else{
-                        e += 1
+                        this.e[this.s] += 1
                     }
                 }
-                document.querySelector('.main').insertAdjacentHTML(
-                        'beforeEnd',
-                        'Учеников, посетивших 0 мероприятий: ' + a + '<br>'
-                )
-                document.querySelector('.main').insertAdjacentHTML(
-                        'beforeEnd',
-                        'Учеников, посетивших от 1 до 5 мероприятий: ' + c + '<br>'
-                )
-                document.querySelector('.main').insertAdjacentHTML(
-                        'beforeEnd',
-                        'Учеников, посетивших от 5 до 10 мероприятий: ' + d + '<br>'
-                )
-                document.querySelector('.main').insertAdjacentHTML(
-                        'beforeEnd',
-                        'Учеников, посетивших более 10 мероприятий: ' + e + '<br>'
-                )
+                console.log(this.c)
             }
             
         })
@@ -131,5 +118,14 @@ export default {
     padding: 30px;
     min-height: 100vh;
     margin-bottom: 0px;
+}
+.card{ 
+    margin-top: 10px !important;
+}
+.card-body{ 
+    text-align: left !important;
+}
+.card-body h5{ 
+    font-weight: bold;
 }
 </style>

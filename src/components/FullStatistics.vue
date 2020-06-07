@@ -1,18 +1,46 @@
 <template>
     <div class='main'>
         <h2>Статистика</h2>
-            <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
-                <option value="/friend-statistics">Статистика друзей</option>
-                <option value="/school-statistics">Обобщенная статистика школы (только для сотрудников учебных заведений)</option>
-                <option value="/full-school-statistics" selected>Полная статистика школы (только для сотрудников учебных заведений)</option>
-            </select>
+        <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
+            <option value="/friend-statistics">Статистика друзей</option>
+            <option value="/school-statistics">Обобщенная статистика школы (только для сотрудников учебных заведений)</option>
+            <option value="/full-school-statistics" selected>Полная статистика школы (только для сотрудников учебных заведений)</option>
+        </select>
+        <div v-for="(item, index) in data" :key="item.value">
+            <div v-if="director">{{index + 1}} класс</div> <br>
+            <div v-if="item.length == 0">Никого не зарегистрировано</div> <br>
+            <div v-for="item2 in item" :key="item2.value">
+                <div>{{item2.name}} {{item2.surname}} {{item2.class_number}} {{item2.simvol}} </div> <br>
+                <div v-if="item2.checkedEvents.length == 0">Нигде не участвует</div> <br>
+                <div v-for="item3 in item2.checkedEvents" :key="item3.value">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{item3.name}}</h5>
+                            <p class="card-text"><i class="far fa-clock"></i> {{item3.time}}</p>
+                            <p class="card-text">Тип: {{item3.type}}</p>
+                            <a :href="item3.link" class="btn btn-primary">Перейти к мероприятию</a>
+                        </div>
+                        <div class="card-footer text-muted">{{item3.date}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
     name: 'FullStatistics',
-    mounted(){
+    data(){
+        let director = false
+        let data = []
+        return{
+            s: 0,
+            director,
+            data,
+        }
+    },
+    beforeMount(){
         let email = this.$store.getters.email
         fetch('https://makual.ru/api/getOtherInformation', {
             method: 'get',
@@ -24,84 +52,18 @@ export default {
         })
         .then(datan => {
             if(datan.role == 'директор'){
-                let data = datan.data
-                document.querySelector('.main').insertAdjacentHTML(
-                    'beforeEnd',
-                    '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
-                )
-                for(let i = 0; i < data.length; i++){
-                    let b = i + 1
-                    document.querySelector('.main').insertAdjacentHTML(
-                            'beforeEnd',
-                            'Класс ' + b + '<br>'
-                    )
-                    if(data[i].length == 0){
-                        document.querySelector('.main').insertAdjacentHTML(
-                            'beforeEnd',
-                            'Никого не зарегистрировано <br>'
-                        )
-                    }
-                    for(let j = 0; j < data[i].length; j++){
-                        document.querySelector('.main').insertAdjacentHTML(
-                            'beforeEnd',
-                            data[i][j].name + ' ' + data[i][j].surname + ' ' + data[i][j].class_number + ' ' + data[i][j].simvol + '<br>'
-                        )
-                        if(data[i][j].checkedEvents.length == 0){
-                            document.querySelector('.main').insertAdjacentHTML(
-                                'beforeEnd',
-                                'Нигде не участвует <br>'
-                            )
-                        }
-                        for(let m = 0; m < data[i][j].checkedEvents.length; m++){
-                            document.querySelector('.main').insertAdjacentHTML(
-                                'beforeEnd',
-                                '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[i][j].checkedEvents[m].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[i][j].checkedEvents[m].time + '</p> <p class="card-text">' + 'Тип: ' + data[i][j].checkedEvents[m].type + '</p> <a href=' + data[i][j].checkedEvents[m].link +  ' class="btn btn-primary">Перейти к мероприятию</a> </div> <div class="card-footer text-muted">' + data[i][j].checkedEvents[m].date + '</div> </div>',
-                            )
-                        }
-                    }
-                }
+                this.data = datan.data
+                this.director = true
             }
             else if(datan.role == 'учитель'){
-                let data = datan.data
-                let s = 0
-                for (let j = 0; j < data.length; j ++){
-                    if (data[j].length != 0){
-                        s = j
+                this.data = datan.data
+                for (let j = 0; j < this.data.length; j ++){
+                    if (this.data[j].length != 0){
+                        this.data = [datan.data[j]]
                         break
                     }
                 }
-                document.querySelector('.main').insertAdjacentHTML(
-                    'beforeEnd',
-                    '<style> .card{ margin-top: 10px !important; } .card-body { text-align: left !important; } .card-body h5{ font-weight: bold; } </style>',
-                )
-                document.querySelector('.main').insertAdjacentHTML(
-                    'beforeEnd',
-                    '<h2>Статистика Вашей школы</h2> <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value"><option value="/statistics">Обобщенная статистика</option> <option value="/full-statistics" selected>Полная статистика</option> </select>',
-                )
-                if(s == 0){
-                    document.querySelector('.main').insertAdjacentHTML(
-                        'beforeEnd',
-                        'Никого не зарегистрировано <br>'
-                    )
-                }
-                for(let i = 0; i < data[s].length; i++){
-                    document.querySelector('.main').insertAdjacentHTML(
-                        'beforeEnd',
-                        data[s][i].name + ' ' + data[s][i].surname + ' ' + data[s][i].class_number + ' ' + data[s][i].simvol + '<br>'
-                    )
-                    if(data[s][i].checkedEvents.length == 0){
-                        document.querySelector('.main').insertAdjacentHTML(
-                            'beforeEnd',
-                            'Нигде не участвует <br>'
-                        )
-                    }
-                    for(let m = 0; m < data[s][i].checkedEvents.length; m++){
-                        document.querySelector('.main').insertAdjacentHTML(
-                            'beforeEnd',
-                            '<div class="card"> <div class="card-body"> <h5 class="card-title">' + data[s][i].checkedEvents[m].name + '</h5> <p class="card-text"><i class="far fa-clock"></i>' + ' ' + data[s][i].checkedEvents[m].time + '</p> <p class="card-text">' + 'Тип: ' + data[s][i].checkedEvents[m].type + '</p> <a href=' + data[s][i].checkedEvents[m].link +  'class="btn btn-primary">Перейти к мероприятию</a> </div> <div class="card-footer text-muted">' + data[s][i].checkedEvents[m].date + '</div> </div>',
-                        )
-                    }
-                }
+                console.log(this.data)
             }
         })
         .catch(err => {
@@ -121,5 +83,14 @@ export default {
     padding: 30px;
     min-height: 100vh;
     margin-bottom: 0px;
+}
+.card{ 
+    margin-top: 10px !important;
+}
+.card-body{ 
+    text-align: left !important;
+}
+.card-body h5{ 
+    font-weight: bold;
 }
 </style>
