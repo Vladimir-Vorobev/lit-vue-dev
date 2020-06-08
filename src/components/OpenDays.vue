@@ -41,6 +41,7 @@ export default {
                 top: this.$store.getters.openDaysScroll,
                 behavior: 'auto'
             });
+            this.$store.commit('SET_OPEN_DAYS_SCROLL', 0)
         }, 200);
     },
     methods:{
