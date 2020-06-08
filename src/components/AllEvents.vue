@@ -82,8 +82,8 @@ export default {
                 top: this.$store.getters.allEventsScroll,
                 behavior: 'auto'
             });
-            this.$store.commit('SET_ALL_EVENTS_SCROLL', 0)
         }, 500);
+        this.$store.commit('SET_ALL_EVENTS_SCROLL', 0)
     },
     methods:{
         add(event){
