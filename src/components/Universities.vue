@@ -40,7 +40,6 @@ export default {
     padding-top: 110px !important;
 }
 .main{
-    background-color: #fff;
     height: 100%;
     padding: 30px;
     min-height: 1018px;
