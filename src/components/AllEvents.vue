@@ -39,20 +39,28 @@
                 </div>
                 <div class="card" v-for="item in data" :key="item.value">
                     <div class="card-header">{{item.date}}</div>
-                        <div class="card-body">
-                            <h5 class="card-title">{{item.name}}</h5>
-                            <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
-                            <p class="card-text"><i class="far fa-user"></i> {{item.places}}</p>
-                            <p class="card-text">Тип: {{item.type}}</p>
-                            <p><button class="btn btn-primary"  @click="add(item)">Собираюсь посетить</button></p>
+                    <div class="card-body">
+                        <h5 class="card-title">{{item.name}}</h5>
+                        <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
+                        <p class="card-text"><i class="far fa-user"></i> {{item.places}}</p>
+                        <p class="card-text">Тип: {{item.type}}</p>
+                        <p>  <button class="btn btn-primary col-3 align-self-end"  @click="add(item)">Собираюсь посетить</button> </p>
                         <a :href="item.link" class="btn btn-primary" @click="setScroll()">Перейти к мероприятию</a>
                     </div>
                 </div>
+
+                
+            <div class="scrollup">
+            <!-- Иконка fa-chevron-up (Font Awesome) -->
+            <i class="fa fa-chevron-up"></i>
+            </div>
+
             </div>
 </template>
 
 <script>
 import needle from 'needle'
+import $ from 'jquery'
 export default {
     name: 'AllEvents',
     data(){
@@ -114,6 +122,28 @@ export default {
     }
 }
 
+$(function() {
+  // при нажатии на кнопку scrollup
+  $('.scrollup').click(function() {
+    // переместиться в верхнюю часть страницы
+    $("html, body").animate({
+      scrollTop:0
+    },1000);
+  })
+})
+// при прокрутке окна (window)
+$(window).scroll(function() {
+  // если пользователь прокрутил страницу более чем на 200px
+  if ($(this).scrollTop()>200) {
+    // то сделать кнопку scrollup видимой
+    $('.scrollup').fadeIn();
+  }
+  // иначе скрыть кнопку scrollup
+  else {
+    $('.scrollup').fadeOut();
+  }
+});
+
 </script>
 
 <style scoped>
@@ -139,4 +169,35 @@ export default {
 .card-header{
     font-weight: bold;
 }
+
+@media (max-width: 992px) {  
+    .scrollup{
+        font-size: 20px; /* размер шрифта (иконки) */
+        right: 15px; /* расстояние от правого края */
+    }
+}
+@media (min-width: 993px) {  
+    .scrollup{
+        font-size: 50px; /* размер шрифта (иконки) */
+        right: 60px; /* расстояние от правого края */
+    }
+}
+
+
+.scrollup {
+  position: fixed; /* фиксированная позиция */
+  color: #fff; /* цвет текста */
+  background-color: #286090; /* цвет заднего фона */
+  bottom: 0px; /* расстояние от нижнего края */
+  padding: 4px 10px; /* отступы до содержимого блока */
+  border-top-left-radius: 4px; /* скругление верхнего левого угла */
+  border-top-right-radius: 4px; /* скругление верхнего правого угла */
+  cursor: pointer; /* форма курсора */
+  display: none; /* не отображать элемент */
+  text-align: center; /*выравнивание содержимого элемента по центру */
+}
+.scrollup:hover {
+  background-color: #000; /* цвет заднего фона при наведении */
+}
+
 </style>
