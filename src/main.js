@@ -46,10 +46,16 @@ const routes = [
   { path: '/404', component: PageNotFound }, { path: '*', redirect: '/404' }
 ]
 
-
 const router = new VueRouter({
   mode: 'history',
-  routes // сокращённая запись для `routes: routes`
+  routes, // сокращённая запись для `routes: routes`
+  scrollBehavior (to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
 
 const store = new Vuex.Store(APP_STORE);

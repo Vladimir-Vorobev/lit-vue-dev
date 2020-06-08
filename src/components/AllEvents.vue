@@ -82,7 +82,8 @@ export default {
                 top: this.$store.getters.allEventsScroll,
                 behavior: 'auto'
             });
-        }, 200);
+            this.$store.commit('SET_ALL_EVENTS_SCROLL', 0)
+        }, 500);
     },
     methods:{
         add(event){
@@ -92,7 +93,7 @@ export default {
                 needle.post('https://makual.ru/api/checkedEventsUpdate', {email: email, events: event}, {"json": true}, function(err){
                     if (err) throw err
                     else{
-                        alert('d')
+                        alert('Мероприятие успешно добавлено')
                         let notif = document.createElement('div');
                         notif.style.top = '150px';
                         notif.style.right = '150px';
