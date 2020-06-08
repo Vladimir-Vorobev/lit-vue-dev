@@ -2,12 +2,14 @@
  <div id="app" style="height: 100% !important;">
     <page-header></page-header>
     <router-view></router-view>
+    <div class="scrollup"><i class="fa fa-chevron-up"></i></div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import PageHeader from './components/Header.vue'
+import $ from "jquery"
 export default {
   name: 'App',
   components: { PageHeader  },
@@ -49,7 +51,32 @@ export default {
         }
         name = ''
     }
-  }
+  },
+  mounted(){
+    $(function() {
+        // при нажатии на кнопку scrollup
+        $('.scrollup').click(function() {
+            // переместиться в верхнюю часть страницы
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        })
+    })
+        // при прокрутке окна (window)
+    $(window).scroll(function() {
+        // если пользователь прокрутил страницу более чем на 200px
+        if ($(this).scrollTop()>200) {
+            // то сделать кнопку scrollup видимой
+            $('.scrollup').fadeIn();
+        }
+        // иначе скрыть кнопку scrollup
+        else {
+            $('.scrollup').fadeOut();
+        }
+    });
+
+  },
 }
 </script>
 
@@ -71,5 +98,32 @@ body {
 }
 body {
   margin: 0px;
+}
+@media (max-width: 992px) {  
+    .scrollup{
+        font-size: 20px; /* размер шрифта (иконки) */
+        right: 15px; /* расстояние от правого края */
+    }
+}
+@media (min-width: 993px) {  
+    .scrollup{
+        font-size: 50px; /* размер шрифта (иконки) */
+        right: 60px; /* расстояние от правого края */
+    }
+}
+.scrollup {
+  position: fixed; /* фиксированная позиция */
+  color: #fff; /* цвет текста */
+  background-color: #286090; /* цвет заднего фона */
+  bottom: 0px; /* расстояние от нижнего края */
+  padding: 4px 10px; /* отступы до содержимого блока */
+  border-top-left-radius: 4px; /* скругление верхнего левого угла */
+  border-top-right-radius: 4px; /* скругление верхнего правого угла */
+  cursor: pointer; /* форма курсора */
+  display: none; /* не отображать элемент */
+  text-align: center; /*выравнивание содержимого элемента по центру */
+}
+.scrollup:hover {
+  background-color: #000; /* цвет заднего фона при наведении */
 }
 </style>
