@@ -138,5 +138,4 @@ export default {
 .card-header{
     font-weight: bold;
 }
-
 </style>

@@ -13,7 +13,7 @@ import $ from "jquery"
 export default {
   name: 'App',
   components: { PageHeader  },
-  computed: { ...mapGetters(['email']) },
+  computed: { ...mapGetters(['email', 'allEventsScroll', 'openDaysScroll']) },
   beforeCreate(){
     let dataq = document.cookie.split(";")
     let name = ''

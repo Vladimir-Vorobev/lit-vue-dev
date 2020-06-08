@@ -6,7 +6,7 @@
                 <h5 class="card-title">{{item.name}}</h5>
                 <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
                 <p class="card-text">Тип: {{item.type}}</p>
-                <p><button class="btn btn-primary"  @click="add(item)">Собираюсь посетить</button></p>
+                <p><button class="btn btn-info"  @click="add(item)">Собираюсь посетить</button></p>
                 <a :href="item.link" class="btn btn-primary" @click="setScroll()">Перейти к мероприятию</a>
             </div>
         </div>
