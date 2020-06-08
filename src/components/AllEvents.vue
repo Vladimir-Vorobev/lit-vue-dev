@@ -44,7 +44,7 @@
                         <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
                         <p class="card-text"><i class="far fa-user"></i> {{item.places}}</p>
                         <p class="card-text">Тип: {{item.type}}</p>
-                        <p>  <button class="btn btn-primary col-3 align-self-end"  @click="add(item)">Собираюсь посетить</button> </p>
+                        <p><button class="btn btn-primary"  @click="add(item)">Собираюсь посетить</button></p>
                         <a :href="item.link" class="btn btn-primary" @click="setScroll()">Перейти к мероприятию</a>
                     </div>
                 </div>
@@ -182,8 +182,6 @@ $(window).scroll(function() {
         right: 60px; /* расстояние от правого края */
     }
 }
-
-
 .scrollup {
   position: fixed; /* фиксированная позиция */
   color: #fff; /* цвет текста */
