@@ -41,6 +41,9 @@ export default {
         }
     },
     beforeMount(){
+        if(this.$store.getters.email == ''){
+          this.$router.push("/login")
+        }
         let email = this.$store.getters.email
         fetch('https://makual.ru/api/getOtherInformation', {
             method: 'get',

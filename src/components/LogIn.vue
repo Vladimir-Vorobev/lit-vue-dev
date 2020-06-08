@@ -23,6 +23,11 @@ import needle from "needle"
 
 export default {
     name: 'Login',
+    beforeMount(){
+      if(this.$store.getters.email != ''){
+        this.$router.push("/profile")
+      }
+    },
     methods: {
       loginUser(){
         event.preventDefault()

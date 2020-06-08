@@ -74,22 +74,15 @@ export default {
             allEventsText,
             yourEventsText,
             loginText: 'Войти',
-            email: this.$store.getters.email
         }
     },
-    mounted(){
-      setInterval(() => {
-        if(this.$store.getters.email != '' && this.$route.path == '/login'){
-          this.$router.push("/profile")
-        }
-        else if(this.$store.getters.email == '' && this.$route.path == '/profile'){
-          this.$router.push("/login")
-        }
-        if(this.$store.getters.email != ''){
+    beforeMount(){
+      let email = this.$store.getters.email
+        if(email != ''){
           if(this.loginText == 'Войти'){
             setTimeout(fetch('https://makual.ru/api/getInformation', {
                     method: 'get',
-                    headers: {email: this.email},
+                    headers: {email: email},
             })
             .then(response => {
                 console.log("res", response)
@@ -97,22 +90,12 @@ export default {
             })
             .then(data => {
               this.loginText = data.name + ' ' + data.surname
-            }),500)
+            }),100)
           }
         }
         else{
           this.loginText = 'Войти' 
         }
-        if(this.$store.getters.email == '' && this.$route.path == '/friend-statistics'){
-          this.$router.push("/login")
-        }
-        if(this.$store.getters.email == '' && this.$route.path == '/school-statistics'){
-          this.$router.push("/login")
-        }
-        if(this.$store.getters.email == '' && this.$route.path == '/full-school-statistics'){
-          this.$router.push("/login")
-        }
-      }, 200);
     }
 
 }
