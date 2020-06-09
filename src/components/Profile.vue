@@ -83,6 +83,9 @@ export default {
         email: this.$store.getters.email
       }
     },
+    beforeMount(){
+      if(this.email == '') window.location.pathname = "/login"
+    },
     mounted(){
       fetch('https://makual.ru/api/getInformation', {
               method: 'get',
@@ -184,7 +187,7 @@ export default {
         })
       },
       exit(){
-        document.cookie = "email="
+        document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
         window.location.reload()
       }
     }
