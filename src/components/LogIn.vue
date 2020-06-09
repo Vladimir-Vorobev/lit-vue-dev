@@ -45,7 +45,7 @@ export default {
               alert('Пользователь не найден')
             }
             else if(body != 'Incorect password'){
-              document.cookie = "email=" + email
+              document.cookie = "email=" + email + "; expires=" + new Date(Date.now() + 864000e3).toUTCString()
               document.location.href = "/profile"
             }
             else{

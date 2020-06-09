@@ -105,7 +105,7 @@ export default {
                 })
             }
             else{
-                this.$route.path = "/login"
+                window.location.pathname = "/login"
             }
         },
         setScroll(){
