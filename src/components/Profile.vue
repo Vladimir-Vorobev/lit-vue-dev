@@ -66,7 +66,7 @@
             </div>
             <div class="form-group row"> 
                 <button class="btn btn-primary btn-lg" @click="updateUser()">Сохранить</button>
-              </div>
+            </div>
         </form>
         <div class='row' style="text-align: left;">
           <h5 class="col-12">Уникальный номер: <span class="statNumber"></span> </h5>
