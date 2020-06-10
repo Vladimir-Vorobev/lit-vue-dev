@@ -3,16 +3,18 @@
     <page-header></page-header>
     <router-view></router-view>
     <div class="scrollup"><i class="fa fa-chevron-up"></i></div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import PageHeader from './components/Header.vue'
+import Footer from './components/footer.vue'
 import $ from "jquery"
 export default {
   name: 'App',
-  components: { PageHeader  },
+  components: { PageHeader,  Footer },
   computed: { ...mapGetters(['email', 'allEventsScroll', 'openDaysScroll']) },
   beforeCreate(){
     let dataq = document.cookie.split(";")
