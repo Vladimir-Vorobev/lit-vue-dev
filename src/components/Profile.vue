@@ -5,6 +5,11 @@
               <h2 class="col-11">Редактировать профиль</h2>
               <div class="col-1"><button class='btn btn-danger' @click="exit()"><i class="fas fa-sign-out-alt"></i></button></div>
             </div>
+            <div class="row">
+              <div class="col-9 col-md-3">
+                <a href="#" class="btn btn-secondary btn-lg">Админ панель</a>
+              </div>
+            </div> <br>
             <div class="form-group row">
               <div class="col-12 col-md-6"><input name="name" class="form-control name" placeholder="Имя"></div>
               <div class="col-12 col-md-6"><input name="surname"  class="form-control surname" placeholder="Фамилия"></div>
