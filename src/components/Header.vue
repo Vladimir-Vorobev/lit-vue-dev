@@ -1,9 +1,9 @@
 <template>
 <div>
     <div id="app">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <router-link to="/" class="router-link">
-            <a class="navbar-brand" ref="home">Главная</a>
+            <a class="navbar-brand" ref="home" style="color: #f23333">Profevents</a>
         </router-link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -12,21 +12,21 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
               <router-link to="/all-events" class="router-link">
-                  <a class="nav-link" ref="allEvents">{{allEventsText}}</a>
+                  <a class="nav-link" ref="allEvents" style="color: #000 !important">{{allEventsText}}</a>
               </router-link>
             </li>
             <li class="nav-item">
               <router-link to="/recommended-events" class="router-link">
-                  <a class="nav-link" ref="recommendedEvents">{{recommendedEventsText}}</a>
+                  <a class="nav-link" ref="recommendedEvents" style="color: #000 !important">{{recommendedEventsText}}</a>
               </router-link>
             </li>
             <li class="nav-item">
               <router-link to="/your-events" class="router-link">
-                  <a class="nav-link" ref="yourEvents">{{yourEventsText}}</a>
+                  <a class="nav-link" ref="yourEvents" style="color: #000 !important">{{yourEventsText}}</a>
               </router-link>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #000 !important">
                 Другое
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -49,7 +49,7 @@
             </li>
           </ul>
           <router-link to='/login' class="router-link login">
-              <a type="button" class="btn btn-success btn-lg " ref="login">{{loginText}}</a>
+              <a type="button" class="btn btn-primary btn-lg" ref="login" >{{loginText}}</a>
           </router-link>
         </div>
       </nav>

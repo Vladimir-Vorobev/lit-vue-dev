@@ -88,7 +88,8 @@ body {
   height: 100% !important;
   padding: 0px;
   margin: 0px;
-  background-color: rgb(231, 231, 231);
+  /*background-color: rgb(231, 231, 231);*/
+  background-color: #eef5ff;
 }
 body {
   margin: 0px;
