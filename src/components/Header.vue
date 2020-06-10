@@ -49,7 +49,7 @@
             </li>
           </ul>
           <router-link to='/login' class="router-link login">
-              <a type="button" class="btn btn-primary btn-lg" ref="login" >{{loginText}}</a>
+              <a type="button" class="btn btn-primary btn-lg" ref="login">{{loginText}}</a>
           </router-link>
         </div>
       </nav>
