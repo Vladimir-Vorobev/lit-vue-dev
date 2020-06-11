@@ -21,9 +21,8 @@ import needle from 'needle'
 export default {
     name: 'YourEvents',
     data(){
-        let data = []
         return{
-            data
+            data: []
         }
     },
      beforeMount(){

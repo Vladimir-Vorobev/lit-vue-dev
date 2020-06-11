@@ -56,9 +56,8 @@ import needle from 'needle'
 export default {
     name: 'AllEvents',
     data(){
-        let data = []
         return{
-            data,
+            data: [],
         }
     },
     beforeMount(){

@@ -18,9 +18,8 @@ import needle from 'needle'
 export default {
     name: 'OpenDays',
     data(){
-        let data = []
         return{
-            data
+            data: []
         }
     },
     beforeMount(){

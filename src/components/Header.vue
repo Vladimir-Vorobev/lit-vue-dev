@@ -12,17 +12,17 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
               <router-link to="/all-events" class="router-link">
-                  <a class="nav-link" ref="allEvents" style="color: #000 !important">{{allEventsText}}</a>
+                  <a class="nav-link" ref="allEvents" style="color: #000 !important">Все мероприятия</a>
               </router-link>
             </li>
             <li class="nav-item">
               <router-link to="/recommended-events" class="router-link">
-                  <a class="nav-link" ref="recommendedEvents" style="color: #000 !important">{{recommendedEventsText}}</a>
+                  <a class="nav-link" ref="recommendedEvents" style="color: #000 !important">Рекомендуемые мероприятия</a>
               </router-link>
             </li>
             <li class="nav-item">
               <router-link to="/your-events" class="router-link">
-                  <a class="nav-link" ref="yourEvents" style="color: #000 !important">{{yourEventsText}}</a>
+                  <a class="nav-link" ref="yourEvents" style="color: #000 !important">Ваши мероприятия</a>
               </router-link>
             </li>
             <li class="nav-item dropdown">
@@ -64,16 +64,9 @@
 export default {
     name: 'Header',
     data(){
-        let homeText = "Главная"
-        let recommendedEventsText = "Рекомендуемые мероприятия"
-        let allEventsText = "Все мероприятия"
-        let yourEventsText = "Ваши мероприятия"
         return {
-            homeText,
-            recommendedEventsText,
-            allEventsText,
-            yourEventsText,
             loginText: 'Войти',
+
         }
     },
     beforeMount(){

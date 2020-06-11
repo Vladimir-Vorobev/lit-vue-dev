@@ -15,9 +15,8 @@
 export default {
     name: 'Universities',
     data(){
-        let data = []
         return{
-            data
+            data: []
         }
     },
     beforeMount(){

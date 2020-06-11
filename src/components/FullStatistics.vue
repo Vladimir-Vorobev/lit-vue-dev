@@ -32,12 +32,10 @@
 export default {
     name: 'FullStatistics',
     data(){
-        let director = false
-        let data = []
         return{
             s: 0,
-            director,
-            data,
+            director: false,
+            data: [],
         }
     },
     beforeMount(){

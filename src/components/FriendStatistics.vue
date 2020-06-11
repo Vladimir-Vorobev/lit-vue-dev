@@ -36,9 +36,8 @@ import needle from 'needle'
 export default {
     name: 'Statistics',
     data(){
-        let data = []
         return{
-            data
+            data: []
         }
     },
     beforeMount(){

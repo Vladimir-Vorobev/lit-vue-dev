@@ -30,11 +30,9 @@
 export default {
     name: 'Statistics',
     data(){
-        let data = []
-        let director = false
         return{
-            data,
-            director,
+            data: [],
+            director: false,
             s: 0,
             a: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
             c: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
