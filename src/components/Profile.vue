@@ -7,7 +7,7 @@
             </div>
             <div class="row">
               <div class="col-9 col-md-3">
-                <a href="#" class="btn btn-secondary btn-lg">Админ панель</a>
+                <router-link to="/admin" class="btn btn-secondary btn-lg">Административная панель</router-link>
               </div>
             </div> <br>
             <div class="form-group row">
