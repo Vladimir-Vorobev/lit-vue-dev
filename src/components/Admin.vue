@@ -1,5 +1,5 @@
 <template>
-    <div class='main'>
+    <div class='main container'>
         <transition name="auth">
             <div v-if="show">
                 <form class="formbox">
@@ -13,14 +13,13 @@
                         <input type="password" class="form-control" name="password" placeholder="Пароль">
                     </div>
                     <div class="form-group row"> 
-                        <button class="btn btn-primary btn-lg" @click="loginUser()">Администрировать</button>
+                        <button class="btn btn-primary btn-lg" @click="loginUser()">Войти в админ панель</button>
                     </div>
                 </form>
-                <p><router-link to="/registration" class="link">Еще нет аккаунта? Зарегистрируйтесь</router-link></p>
             </div>
             <div v-if="!show">
                 <form class="formbox">
-                    <h2>Административная панель</h2>
+                    <h2>Панель администратора</h2>
                 </form>
             </div>
         </transition>
