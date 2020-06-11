@@ -13,7 +13,7 @@
                         <input type="password" class="form-control" name="password" placeholder="Пароль">
                     </div>
                     <div class="form-group row"> 
-                        <button class="btn btn-primary btn-lg" @click="loginUser()">Админестрировать</button>
+                        <button class="btn btn-primary btn-lg" @click="loginUser()">Администрировать</button>
                     </div>
                 </form>
                 <p><router-link to="/registration" class="link">Еще нет аккаунта? Зарегистрируйтесь</router-link></p>
