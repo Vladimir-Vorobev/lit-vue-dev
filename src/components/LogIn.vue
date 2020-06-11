@@ -41,11 +41,13 @@ export default {
         }
         needle.post('https://makual.ru/api/login', data, {"json": true}, function(err, res, body){
             if(err) console.log(err)
-            if(res.body != 'Incorect password' && res.body != 'Correct password'){
+            console.log(body)
+            if(res.body == 'Incorect password'){
               alert('Пользователь не найден')
             }
-            else if(body != 'Incorect password'){
+            else if(res.body.length == 128){
               document.cookie = "email=" + email + "; expires=" + new Date(Date.now() + 864000e3).toUTCString()
+              document.cookie = "SessionID=" + body + "; expires=" + new Date(Date.now() + 864000e3).toUTCString()
               document.location.href = "/profile"
             }
             else{

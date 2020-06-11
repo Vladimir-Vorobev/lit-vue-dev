@@ -85,7 +85,8 @@ export default {
     name: 'Profile',
     data(){
       return{
-        email: this.$store.getters.email
+        email: this.$store.getters.email,
+        SessionID: this.$store.getters.SessionID,
       }
     },
     beforeMount(){
@@ -94,7 +95,7 @@ export default {
     mounted(){
       fetch('https://makual.ru/api/getInformation', {
               method: 'get',
-              headers: {email: this.email},
+              headers: {email: this.email, SessionID: this.SessionID},
       })
       .then(response => {
           console.log("res", response)
@@ -193,6 +194,7 @@ export default {
       },
       exit(){
         document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
         window.location.reload()
       }
     }

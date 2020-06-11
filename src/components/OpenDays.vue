@@ -46,9 +46,10 @@ export default {
     methods:{
         add(event){
             let email = this.$store.getters.email
+            let SessionID = this.$store.getters.SessionID
             if(email != ''){
                 delete event.places
-                needle.post('https://makual.ru/api/checkedEventsUpdate', {email: email, events: event}, {"json": true}, function(err){
+                needle.post('https://makual.ru/api/checkedEventsUpdate', {email: email, events: event, SessionID: SessionID}, {"json": true}, function(err){
                     if (err) throw err
                 })
             }

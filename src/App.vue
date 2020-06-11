@@ -33,6 +33,9 @@ export default {
                 else if(name == 'openDaysScroll'){
                     b = 3
                 }
+                else if(name == 'SessionID'){
+                    b = 4
+                }
                 name = ''
             }
             else if(dataq[i][j] != " "){
@@ -49,6 +52,10 @@ export default {
         }
         else if(b == 3){
             this.$store.commit('SET_OPEN_DAYS_SCROLL', name)
+            b = 0
+        }
+        else if(b == 4){
+            this.$store.commit('GET_USER_SESSIONID', name)
             b = 0
         }
         name = ''

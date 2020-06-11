@@ -27,9 +27,10 @@ export default {
     },
      beforeMount(){
         let email = this.$store.getters.email
+        let SessionID = this.$store.getters.SessionID
         fetch('https://makual.ru/api/getCheckedEvents', {
             method: 'get',
-            headers: {email: email},
+            headers: {email: email, SessionID: SessionID},
 		})
         .then(response => {
             console.log("res", response)
@@ -46,7 +47,8 @@ export default {
          deleteEvent(events){
             event.preventDefault()
             let email = this.$store.getters.email
-            needle.post('https://makual.ru/api/deleteEvent', {email: email, event: events}, {"json": true}, function(err){
+            let SessionID = this.$store.getters.SessionID
+            needle.post('https://makual.ru/api/deleteEvent', {email: email, event: events, SessionID: SessionID}, {"json": true}, function(err){
                 if(err) console.log(err)
                 window.location.reload()
             })

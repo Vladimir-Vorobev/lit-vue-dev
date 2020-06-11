@@ -45,9 +45,10 @@ export default {
           this.$router.push("/login")
         }
         let email = this.$store.getters.email
+        let SessionID = this.$store.getters.SessionID
         fetch('https://makual.ru/api/getOtherInformation', {
         method: 'get',
-        headers: {email: email},
+        headers: {email: email, SessionID: SessionID},
         })
         .then(response => {
             console.log("res", response)
