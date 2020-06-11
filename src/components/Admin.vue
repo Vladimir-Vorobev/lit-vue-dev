@@ -20,7 +20,7 @@
             </div>
             <div v-if="!show">
                 <form class="formbox">
-                    <h2>Админ-панель</h2>
+                    <h2>Административная панель</h2>
                 </form>
             </div>
         </transition>
