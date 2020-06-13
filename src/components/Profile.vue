@@ -5,7 +5,7 @@
               <h2 class="col-11">Редактировать профиль</h2>
               <div class="col-1"><button class='btn btn-danger' @click="exit()"><i class="fas fa-sign-out-alt"></i></button></div>
             </div>
-            <div class="row">
+            <div class="row" v-if="role">
               <div class="col-9 col-md-3">
                 <router-link to="/admin" class="btn btn-secondary btn-lg">Административная панель</router-link>
               </div>
@@ -51,14 +51,6 @@
                   <option value="университет">ВУЗ</option>
                 </select>
               </div>
-              <div class="col-12 col-md-6"> 
-                <select name="role" class="custom-select custom-select-lg mb-3 role">
-                  <option selected>Роль в учебном заведении</option>
-                  <option value="ученик">Ученик</option>
-                  <option value="учитель">Учитель</option>
-                  <option value="директор">Директор</option>
-              </select>
-              </div>
             </div>
             <div class="form-group row">
               <div class="col-12 col-md-6"><input name="class_number" class="form-control class_number" placeholder="Номер класса"></div>
@@ -87,6 +79,7 @@ export default {
       return{
         email: this.$store.getters.email,
         SessionID: this.$store.getters.SessionID,
+        role: false,
       }
     },
     beforeMount(){
@@ -95,13 +88,18 @@ export default {
     mounted(){
       fetch('https://makual.ru/api/getInformation', {
               method: 'get',
-              headers: {email: this.email, SessionID: this.SessionID},
+              headers: {email: this.email, sessionid: this.SessionID},
       })
       .then(response => {
           console.log("res", response)
           return response.json()
       })
       .then(data => {
+          if(data == '310'){
+            document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            window.location.reload()
+          }
           if(data.city != undefined){
             document.querySelector(".city").value = data.city;
           }
@@ -111,8 +109,8 @@ export default {
           if(data.schoolType != undefined){
             document.querySelector(".schoolType").value = data.schoolType;
           }
-          if(data.role != undefined) {
-            document.querySelector(".role").value = data.role;
+          if(data.role != 'user' && data.role != 'student') {
+            this.role = true
           }
           if(data.class_number != undefined){
             document.querySelector(".class_number").value = data.class_number;
@@ -178,7 +176,7 @@ export default {
             if(role.trim() != '' && role != "Роль в учебном заведении") dataq.role = role
             if(class_number.trim() != '') dataq.class_number = class_number
             if(simvol.trim() != '') dataq.simvol = simvol
-            needle.post('https://makual.ru/api/updateInformation', {email: this.email, update: dataq}, {"json": true}, function(err){
+            needle.post('https://makual.ru/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: dataq}, {"json": true}, function(err){
                 if (err) console.log(err)
                 window.location.reload()
             })

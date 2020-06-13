@@ -21,6 +21,11 @@
                 <form class="formbox">
                     <h2>Панель администратора</h2>
                 </form>
+                <div class="list">
+                    <router-link class="name" :to="'/teachers-timetable/' + item.student" v-for="item in students" :key="item.student">
+                        <div class="name_group">{{ item.student }} </div>
+                    </router-link> 
+                </div>
             </div>
         </transition>
     </div>
@@ -32,8 +37,20 @@ export default {
     name: 'Admin',
     data(){
         return{
-            show: true
+            show: true,
+            students: [],
         }
+    },
+    beforeMount(){
+        let students = []
+        let email = this.$store.getters.email
+        needle.post('https://makual.ru/api/getAdminList', {email: email}, {"json": true}, function(err, res){
+            if(err) console.log(err)
+            for(let i = 0; i < res.body.length; i++){
+                students.push({student: res.body[i]})
+            }
+        })
+        this.students = students
     },
     methods:{
         loginUser(){
@@ -43,21 +60,23 @@ export default {
             let password = form.elements.password.value
             let crypto = require('crypto')
             let data = {
-            email: email,
-            password: crypto.createHash('md5').update(password).digest("hex"), 
+                email: email,
+                password: crypto.createHash('md5').update(password).digest("hex"), 
             }
-            needle.post('https://makual.ru/api/login', data, {"json": true}, function(err, res, body){
+            let show
+            needle.post('https://makual.ru/api/adminLogin', data, {"json": true}, function(err, res){
                 if(err) console.log(err)
-                if(res.body != 'Incorect password' && res.body != 'Correct password'){
-                alert('Пользователь не найден')
+                if(res.body == 'Incorect password'){
+                    alert('Пользователь не найден')
                 }
-                else if(body != 'Incorect password'){
-                this.show = false
+                else if(res.body == "OK"){
+                    show = false
                 }
                 else{
-                alert("Неверный email или пароль")
+                    alert("Неверный email или пароль")
                 }
             })
+            if(!show) this.show = false
         },
     },
 }

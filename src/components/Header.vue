@@ -71,17 +71,23 @@ export default {
     },
     beforeMount(){
       let email = this.$store.getters.email
+      let SessionID = this.$store.getters.SessionID
         if(email != ''){
           if(this.loginText == 'Войти'){
             setTimeout(fetch('https://makual.ru/api/getInformation', {
                     method: 'get',
-                    headers: {email: email},
+                    headers: {email: email, sessionid: SessionID},
             })
             .then(response => {
                 console.log("res", response)
                 return response.json()
             })
             .then(data => {
+              if(data == '310'){
+                document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                window.location.reload()
+              }
               this.loginText = data.name + ' ' + data.surname
             }),100)
           }

@@ -48,13 +48,18 @@ export default {
         let SessionID = this.$store.getters.SessionID
         fetch('https://makual.ru/api/getOtherInformation', {
         method: 'get',
-        headers: {email: email, SessionID: SessionID},
+        headers: {email: email, sessionid: SessionID},
         })
         .then(response => {
             console.log("res", response)
             return response.json()
         })
         .then(datan => {
+            if(datan == '310'){
+                document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                window.location.reload()
+            }
             if(datan.role == 'директор'){
                 this.data = datan.data
                 this.director = true

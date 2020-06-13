@@ -30,7 +30,7 @@ export default {
         let SessionID = this.$store.getters.SessionID
         fetch('https://makual.ru/api/getCheckedEvents', {
             method: 'get',
-            headers: {email: email, SessionID: SessionID},
+            headers: {email: email, sessionid: SessionID},
 		})
         .then(response => {
             console.log("res", response)
@@ -48,8 +48,13 @@ export default {
             event.preventDefault()
             let email = this.$store.getters.email
             let SessionID = this.$store.getters.SessionID
-            needle.post('https://makual.ru/api/deleteEvent', {email: email, event: events, SessionID: SessionID}, {"json": true}, function(err){
+            needle.post('https://makual.ru/api/deleteEvent', {email: email, event: events, sessionid: SessionID}, {"json": true}, function(res, err){
                 if(err) console.log(err)
+                if(res.body == '310'){
+                    document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                    document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                    window.location.reload()
+                }
                 window.location.reload()
             })
         }

@@ -24,7 +24,7 @@ import needle from "needle"
 export default {
     name: 'Login',
     beforeMount(){
-      if(this.$store.getters.email != ''){
+      if(this.$store.getters.email != '' && this.$store.getters.SessionID != ''){
         this.$router.push("/profile")
       }
     },
@@ -41,7 +41,6 @@ export default {
         }
         needle.post('https://makual.ru/api/login', data, {"json": true}, function(err, res, body){
             if(err) console.log(err)
-            console.log(body)
             if(res.body == 'Incorect password'){
               alert('Пользователь не найден')
             }

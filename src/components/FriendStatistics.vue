@@ -48,13 +48,18 @@ export default {
         let SessionID = this.$store.getters.SessionID
         fetch('https://makual.ru/api/getCodeInformation', {
             method: 'get',
-            headers: {email: email, SessionID: SessionID},
+            headers: {email: email, sessionid: SessionID},
         })
         .then(response => {
             console.log("res", response)
             return response.json()
         })
         .then(data => {
+            if(data == '310'){
+            document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            window.location.reload()
+            }
             this.data = data
         })
         .catch(err => {
@@ -64,11 +69,12 @@ export default {
     methods:{
         addFriend(){
             event.preventDefault()
+            let SessionID = this.$store.getters.SessionID
             if(document.querySelector('.name').value.trim() == '') alert('Введите номер')
             else if(document.querySelector('.name').value.trim() == '-1') alert('Введите корректный номер')
             else{
                 let email = this.$store.getters.email
-                needle.post('https://makual.ru/api/addFriendCode', {email: email, statNumber: document.querySelector('.name').value}, {"json": true}, function(err, res){
+                needle.post('https://makual.ru/api/addFriendCode', {email: email, sessionid: SessionID, statNumber: document.querySelector('.name').value}, {"json": true}, function(err, res){
                 if (err) console.log(err)
                 else{
                     let data = res.body
