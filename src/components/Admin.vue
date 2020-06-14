@@ -21,12 +21,22 @@
                 <form class="formbox">
                     <h2>Панель администратора</h2>
                 </form>
-                <div class="list">
-                    <router-link class="name" :to="'/teachers-timetable/' + item.student" v-for="item in students" :key="item.student">
-                        <div class="name_group">{{ item.student }} </div>
-                    </router-link> 
+                <div class="card">
+                    <div class="card-body row">
+                        <button @click="update('classList')">Список класса</button>
+                        <button @click="update('updateList')">Обновить список</button>
+                    </div>
                 </div>
-                <input type="file" ref="file" class="form-control-file" @change="file()">
+                <transition name="show">
+                    <div v-if="this.viewoption == 'classList'" class="list">
+                        <router-link class="name" :to="'/teachers-timetable/' + item.student" v-for="item in students" :key="item.student">
+                            <div class="name_group">{{ item.student }} </div>
+                        </router-link> 
+                    </div>
+                    <div v-if="this.viewoption == 'updateList'">
+                        <input type="file" ref="file" class="form-control-file" @change="file()">
+                    </div>
+                </transition>
             </div>
         </transition>
     </div>
@@ -40,6 +50,7 @@ export default {
     data(){
         return{
             show: true,
+            viewoption: 'classList',
             students: [],
         }
     },
@@ -65,7 +76,7 @@ export default {
                 email: email,
                 password: crypto.createHash('md5').update(password).digest("hex"), 
             }
-            let show
+            let show = true
             needle.post('https://makual.ru/api/adminLogin', data, {"json": true}, function(err, res){
                 if(err) console.log(err)
                 if(res.body == 'Incorect password'){
@@ -78,7 +89,7 @@ export default {
                     alert("Неверный email или пароль")
                 }
             })
-            if(!show) this.show = false
+            if(show) this.show = false
         },
         file(){
             let data = []
@@ -87,6 +98,9 @@ export default {
                     data.push({email: rows[i][0], name: rows[i][1], surname: rows[i][2], class: rows[i][3], simvol: rows[i][4],})
                 }
             })
+        },
+        update(value){
+            this.viewoption = value
         },
     },
 }
@@ -108,6 +122,13 @@ export default {
   transition: opacity .5s;
 }
 .auth-enter, .auth-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+  opacity: 0;
+}
+
+.show-enter-active, .auth-leave-active {
+  transition: opacity .5s;
+}
+.show-enter, .auth-leave-to /* .fade-leave-active до версии 2.1.8 */ {
   opacity: 0;
 }
 </style>

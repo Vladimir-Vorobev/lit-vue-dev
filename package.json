@@ -17,7 +17,6 @@
     "dns": "^0.2.2",
     "fs": "0.0.1-security",
     "jQuery": "^1.7.4",
-    "jquery": "^3.5.1",
     "jsdom": "^16.2.2",
     "location": "0.0.1",
     "module": "^1.2.5",
