@@ -23,19 +23,19 @@
                 </form>
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Список класса</a>
+                        <a class="nav-link active" id="pills-list-student-tab" data-toggle="pill" href="#pills-list-student" role="tab" aria-controls="pills-list-student" aria-selected="true">Список класса</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Обновить список</a>
+                        <a class="nav-link" id="pills-update-list-tab" data-toggle="pill" href="#pills-update-list" role="tab" aria-controls="pills-update-list" aria-selected="false">Обновить список</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="tab-pane fade show active" id="pills-list-student" role="tabpanel" aria-labelledby="pills-list-student-tab">
                         <router-link class="name" :to="'/teachers-timetable/' + item.student" v-for="item in students" :key="item.student">
                             <div class="name_group">{{ item.student }} </div>
-                        </router-link> 
+                        </router-link>
                     </div>
-                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                    <div class="tab-pane fade" id="pills-update-list" role="tabpanel" aria-labelledby="pills-update-list-tab">
                         <input type="file" ref="file" class="form-control-file" @change="file()">
                     </div>
                 </div>
