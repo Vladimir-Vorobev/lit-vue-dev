@@ -21,10 +21,10 @@
                 <form class="formbox">
                     <h2>Панель администратора</h2>
                 </form>
-                <div class="card">
-                    <div class="card-body row">
-                        <button @click="update('classList')">Список класса</button>
-                        <button @click="update('updateList')">Обновить список</button>
+                <div class="panel">
+                    <div class="row">
+                        <div class="col-3"><button class="btn btn-outline-primary" @click="update('updateList')">Обновить список</button></div>
+                        <div class="col-3"><button class="btn btn-outline-primary" @click="update('classList')">Список класса</button></div>
                     </div>
                 </div>
                 <transition name="show">
