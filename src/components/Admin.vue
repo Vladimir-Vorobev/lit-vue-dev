@@ -30,6 +30,7 @@
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
+                    <hr>
                     <div class="tab-pane fade show active" id="pills-list-student" role="tabpanel" aria-labelledby="pills-list-student-tab">
                         <router-link class="name" :to="'/teachers-timetable/' + item.student" v-for="item in students" :key="item.student">
                             <div class="name_group">{{ item.student }} </div>

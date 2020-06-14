@@ -1,9 +1,11 @@
 <template>
     <div class="main container">
         Если Вы являетесь директором или уполномоченным представителем учебного заведения и хотите стать нашем партнером, заполните эту форму, прикрепив подтверждающие документы из перечня
-        <div class="form-group row">
-            <label for="exampleInputEmail1">Email адресс</label>
-            <input name="email" class="form-control" placeholder="example@gmail.com">
+        <div class="form-group row" style="margin-top: 1em">
+            <!-- <label for="exampleInputEmail1" style="text-align: left">Email адресс</label> -->
+            <div class="col-12">
+                <input name="email" class="form-control" placeholder="example@gmail.com">
+            </div>
         </div>
         <div class="form-group row">
             <div class="col-12 col-md-7"> 
