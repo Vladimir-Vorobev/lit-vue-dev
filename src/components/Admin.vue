@@ -18,9 +18,9 @@
                 </form>
             </div>
             <div v-if="!show">
-                <form class="formbox">
+                <div class="formbox">
                     <h2>Панель администратора</h2>
-                </form>
+                </div>
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" id="pills-list-student-tab" data-toggle="pill" href="#pills-list-student" role="tab" aria-controls="pills-list-student" aria-selected="true">Список класса</a>
