@@ -22,21 +22,21 @@
                     <h2>Панель администратора</h2>
                 </form>
                 <div class="panel">
-                    <div class="row">
+                    <div class="row justify-content-center">
                         <div class="col-12 col-md-3"><button class="btn btn-outline-primary" @click="update('classList')">Список класса</button></div>
                         <div class="col-12 col-md-3"><button class="btn btn-outline-primary" @click="update('updateList')">Обновить список</button></div>
                     </div>
                 </div>
                 <transition name="show">
-                    <div v-if="this.viewoption == 'classList'" class="list">
+                    <div style="margin-top: 1em" v-if="this.viewoption == 'classList'" class="list">
                         <router-link class="name" :to="'/teachers-timetable/' + item.student" v-for="item in students" :key="item.student">
                             <div class="name_group">{{ item.student }} </div>
                         </router-link> 
                     </div>
-                    <div v-if="this.viewoption == 'updateList'">
+                    <div style="margin-top: 1em" v-if="this.viewoption == 'updateList'">
                         <input type="file" ref="file" class="form-control-file" @change="file()">
                     </div>
-                </transition>
+                </transition>  
             </div>
         </transition>
     </div>
