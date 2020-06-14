@@ -23,8 +23,8 @@
                 </form>
                 <div class="panel">
                     <div class="row">
-                        <div class="col-12 col-md-3"><button class="btn btn-outline-primary" @click="update('updateList')">Обновить список</button></div>
                         <div class="col-12 col-md-3"><button class="btn btn-outline-primary" @click="update('classList')">Список класса</button></div>
+                        <div class="col-12 col-md-3"><button class="btn btn-outline-primary" @click="update('updateList')">Обновить список</button></div>
                     </div>
                 </div>
                 <transition name="show">
