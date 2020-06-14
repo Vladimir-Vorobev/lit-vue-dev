@@ -26,6 +26,7 @@
                         <div class="name_group">{{ item.student }} </div>
                     </router-link> 
                 </div>
+                <input type="file" ref="file" class="form-control-file" @change="file()">
             </div>
         </transition>
     </div>
@@ -33,6 +34,7 @@
 
 <script>
 import needle from 'needle'
+import readXlsxFile from 'read-excel-file'
 export default {
     name: 'Admin',
     data(){
@@ -47,7 +49,7 @@ export default {
         needle.post('https://makual.ru/api/getAdminList', {email: email}, {"json": true}, function(err, res){
             if(err) console.log(err)
             for(let i = 0; i < res.body.length; i++){
-                students.push({student: res.body[i]})
+                students.push({student: res.body[i].name + ' ' + res.body[i].surname})
             }
         })
         this.students = students
@@ -77,6 +79,14 @@ export default {
                 }
             })
             if(!show) this.show = false
+        },
+        file(){
+            let data = []
+            readXlsxFile(this.$refs.file.files[0]).then((rows) => {
+                for(let i = 0; i < rows.length; i++){
+                    data.push({email: rows[i][0], name: rows[i][1], surname: rows[i][2], class: rows[i][3], simvol: rows[i][4],})
+                }
+            })
         },
     },
 }
