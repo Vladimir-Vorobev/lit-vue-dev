@@ -21,6 +21,25 @@
                 <form class="formbox">
                     <h2>Панель администратора</h2>
                 </form>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Список класса</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Обновить список</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <router-link class="name" :to="'/teachers-timetable/' + item.student" v-for="item in students" :key="item.student">
+                            <div class="name_group">{{ item.student }} </div>
+                        </router-link> 
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <input type="file" ref="file" class="form-control-file" @change="file()">
+                    </div>
+                </div>
+                <!--
                 <div class="panel">
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-3"><button class="btn btn-outline-primary" @click="update('classList')">Список класса</button></div>
@@ -36,7 +55,7 @@
                     <div style="margin-top: 1em" v-if="this.viewoption == 'updateList'">
                         <input type="file" ref="file" class="form-control-file" @change="file()">
                     </div>
-                </transition>  
+                </transition> --> 
             </div>
         </transition>
     </div>
