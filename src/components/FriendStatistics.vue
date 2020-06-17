@@ -56,9 +56,9 @@ export default {
         })
         .then(data => {
             if(data == '310'){
-            document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-            document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-            window.location.reload()
+                document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                window.location.href = '/login'
             }
             this.data = data
         })
@@ -76,6 +76,11 @@ export default {
                 let email = this.$store.getters.email
                 needle.post('https://makual.ru/api/addFriendCode', {email: email, sessionid: SessionID, statNumber: document.querySelector('.name').value}, {"json": true}, function(err, res){
                 if (err) console.log(err)
+                if(res.body == '310'){
+                    document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                    document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                    window.location.href = '/login'
+                }
                 else{
                     let data = res.body
                     if(data == 'Code not found'){

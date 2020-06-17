@@ -58,7 +58,7 @@ export default {
             if(datan == '310'){
                 document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
                 document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-                window.location.reload()
+                window.location.href = '/login'
             }
             if(datan.role == 'директор'){
                 this.data = datan.data

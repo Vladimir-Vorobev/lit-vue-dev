@@ -37,6 +37,11 @@ export default {
             return response.json()
         })
         .then(data => {
+            if(data == '310'){
+                document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                window.location.href = '/login'
+            }
             this.data = data
         })
         .catch(err => {
@@ -48,12 +53,12 @@ export default {
             event.preventDefault()
             let email = this.$store.getters.email
             let SessionID = this.$store.getters.SessionID
-            needle.post('https://makual.ru/api/deleteEvent', {email: email, event: events, sessionid: SessionID}, {"json": true}, function(res, err){
+            needle.post('https://makual.ru/api/deleteEvent', {email: email, event: events, sessionid: SessionID}, {"json": true}, function(err, res){
                 if(err) console.log(err)
                 if(res.body == '310'){
                     document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
                     document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-                    window.location.reload()
+                    window.location.href = '/login'
                 }
                 window.location.reload()
             })

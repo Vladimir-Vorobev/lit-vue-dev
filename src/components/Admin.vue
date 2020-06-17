@@ -37,7 +37,9 @@
                         </router-link>
                     </div>
                     <div class="tab-pane fade" id="pills-update-list" role="tabpanel" aria-labelledby="pills-update-list-tab">
+                        Загрузите актуальный список Вашего класса в excel файле
                         <input type="file" ref="file" class="form-control-file" @change="file()">
+                        <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
                     </div>
                 </div>
                 <!--
@@ -72,11 +74,13 @@ export default {
             show: true,
             viewoption: 'classList',
             students: [],
+            email: this.$store.getters.email,
+            classData: [],
         }
     },
     beforeMount(){
         let students = []
-        let email = this.$store.getters.email
+        let email = this.email
         needle.post('https://makual.ru/api/getAdminList', {email: email}, {"json": true}, function(err, res){
             if(err) console.log(err)
             for(let i = 0; i < res.body.length; i++){
@@ -115,12 +119,28 @@ export default {
             let data = []
             readXlsxFile(this.$refs.file.files[0]).then((rows) => {
                 for(let i = 0; i < rows.length; i++){
-                    data.push({email: rows[i][0], name: rows[i][1], surname: rows[i][2], class: rows[i][3], simvol: rows[i][4],})
+                    data.push({email: rows[i][0], name: rows[i][1], surname: rows[i][2]})
                 }
             })
+            this.classData = data
         },
         update(value){
             this.viewoption = value
+        },
+        add(){
+            event.preventDefault()
+            if(this.classData.length != 0){
+                needle.post('http://37.228.118.76:3000/api/uploadTable', {data: this.classData, email: this.email}, {"json": true}, function(err, res){
+                    if(err) throw err
+                    if(res.body == 'OK'){
+                        alert('Файл успешно добавлен')
+                    }
+                    else{
+                        alert(res.body)
+                    }
+                })
+            }
+            else alert('Файл не выбран')
         },
     },
 }

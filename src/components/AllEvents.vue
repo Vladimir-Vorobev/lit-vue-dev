@@ -90,8 +90,13 @@ export default {
             let SessionID = this.$store.getters.SessionID
             if(email != ''){
                 delete event.places
-                needle.post('https://makual.ru/api/checkedEventsUpdate', {email: email, events: event, SessionID: SessionID}, {"json": true}, function(err){
+                needle.post('https://makual.ru/api/checkedEventsUpdate', {email: email, events: event, sessionid: SessionID}, {"json": true}, function(err, res){
                     if (err) throw err
+                    if(res.body == '310'){
+                        document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                        document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                        window.location.href = '/login'
+                    }
                     else{
                         alert('Мероприятие успешно добавлено')
                         let notif = document.createElement('div');

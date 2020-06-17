@@ -39,14 +39,14 @@ export default {
           email: email,
           password: crypto.createHash('md5').update(password).digest("hex"), 
         }
-        needle.post('https://makual.ru/api/login', data, {"json": true}, function(err, res, body){
+        needle.post('https://makual.ru/api/login', data, {"json": true}, function(err, res){
             if(err) console.log(err)
             if(res.body == 'Incorect password'){
               alert('Пользователь не найден')
             }
             else if(res.body.length == 128){
               document.cookie = "email=" + email + "; expires=" + new Date(Date.now() + 864000e3).toUTCString()
-              document.cookie = "SessionID=" + body + "; expires=" + new Date(Date.now() + 864000e3).toUTCString()
+              document.cookie = "SessionID=" + res.body + "; expires=" + new Date(Date.now() + 864000e3).toUTCString()
               document.location.href = "/profile"
             }
             else{
