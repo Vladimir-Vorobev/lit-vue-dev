@@ -185,7 +185,7 @@ export default {
       addNumber(){
         event.preventDefault()
         let statNumber = {statNumber: Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000}
-        needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: statNumber}, {"json": true}, function(err){
+        needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, update: statNumber}, {"json": true}, function(err){
           if(err) console.log(err)
           window.location.reload()
         })

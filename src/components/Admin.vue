@@ -130,7 +130,7 @@ export default {
         add(){
             event.preventDefault()
             if(this.classData.length != 0){
-                needle.post('http://37.228.118.76:3000/api/uploadTable', {data: this.classData, email: this.email}, {"json": true}, function(err, res){
+                needle.post('http://78.155.219.12:3000/api/uploadTable', {data: this.classData, email: this.email}, {"json": true}, function(err, res){
                     if(err) throw err
                     if(res.body == 'OK'){
                         alert('Файл успешно добавлен')
