@@ -20,7 +20,7 @@ export default {
         }
     },
     beforeMount(){
-        fetch('https://makual.ru/api/getAllEvents', {
+        fetch('http://78.155.219.12:3000/api/getAllEvents', {
             method: 'get',
         })
         .then(response => {

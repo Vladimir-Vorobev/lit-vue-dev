@@ -44,7 +44,7 @@ export default {
         }
         let email = this.$store.getters.email
         let SessionID = this.$store.getters.SessionID
-        fetch('https://makual.ru/api/getOtherInformation', {
+        fetch('http://78.155.219.12:3000/api/getOtherInformation', {
             method: 'get',
             headers: {email: email, sessionid: SessionID},
         })

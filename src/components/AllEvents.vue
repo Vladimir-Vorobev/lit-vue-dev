@@ -61,7 +61,7 @@ export default {
         }
     },
     beforeMount(){
-        fetch('https://makual.ru/api/getAllEvents', {
+        fetch('http://78.155.219.12:3000/api/getAllEvents', {
             method: 'get',
         })
         .then(response => {
@@ -90,7 +90,7 @@ export default {
             let SessionID = this.$store.getters.SessionID
             if(email != ''){
                 delete event.places
-                needle.post('https://makual.ru/api/checkedEventsUpdate', {email: email, events: event, sessionid: SessionID}, {"json": true}, function(err, res){
+                needle.post('http://78.155.219.12:3000/api/checkedEventsUpdate', {email: email, events: event, sessionid: SessionID}, {"json": true}, function(err, res){
                     if (err) throw err
                     if(res.body == '310'){
                         document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
