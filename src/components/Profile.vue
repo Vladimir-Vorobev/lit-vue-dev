@@ -86,7 +86,7 @@ export default {
       if(this.email == '') window.location.pathname = "/login"
     },
     mounted(){
-      fetch('https://makual.ru/api/getInformation', {
+      fetch('http://78.155.219.12:3000/api/getInformation', {
               method: 'get',
               headers: {email: this.email, sessionid: this.SessionID},
       })
@@ -176,7 +176,7 @@ export default {
             if(role.trim() != '' && role != "Роль в учебном заведении") dataq.role = role
             if(class_number.trim() != '') dataq.class_number = class_number
             if(simvol.trim() != '') dataq.simvol = simvol
-            needle.post('https://makual.ru/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: dataq}, {"json": true}, function(err){
+            needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: dataq}, {"json": true}, function(err){
                 if (err) console.log(err)
                 window.location.reload()
             })
@@ -185,7 +185,7 @@ export default {
       addNumber(){
         event.preventDefault()
         let statNumber = {statNumber: Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000}
-        needle.post('https://makual.ru/api/updateInformation', {email: this.email, update: statNumber}, {"json": true}, function(err){
+        needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: statNumber}, {"json": true}, function(err){
           if(err) console.log(err)
           window.location.reload()
         })

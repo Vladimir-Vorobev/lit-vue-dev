@@ -81,7 +81,7 @@ export default {
     beforeMount(){
         let students = []
         let email = this.email
-        needle.post('https://makual.ru/api/getAdminList', {email: email}, {"json": true}, function(err, res){
+        needle.post('http://78.155.219.12:3000/api/getAdminList', {email: email}, {"json": true}, function(err, res){
             if(err) console.log(err)
             for(let i = 0; i < res.body.length; i++){
                 students.push({student: res.body[i].name + ' ' + res.body[i].surname})
@@ -101,7 +101,7 @@ export default {
                 password: crypto.createHash('md5').update(password).digest("hex"), 
             }
             let show = true
-            needle.post('https://makual.ru/api/adminLogin', data, {"json": true}, function(err, res){
+            needle.post('http://78.155.219.12:3000/api/adminLogin', data, {"json": true}, function(err, res){
                 if(err) console.log(err)
                 if(res.body == 'Incorect password'){
                     alert('Пользователь не найден')

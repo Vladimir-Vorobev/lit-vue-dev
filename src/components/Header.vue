@@ -74,7 +74,7 @@ export default {
       let SessionID = this.$store.getters.SessionID
         if(email != ''){
           if(this.loginText == 'Войти'){
-            setTimeout(fetch('https://makual.ru/api/getInformation', {
+            setTimeout(fetch('http://78.155.219.12:3000/api/getInformation', {
                     method: 'get',
                     headers: {email: email, sessionid: SessionID},
             })

@@ -4,7 +4,7 @@
                 <div class="card-body row">
                     <div class="col-md-5 col-12"> <p class="card-text" style="font-weight: bold; font-size: 1.3em">Сортировка мероприятий: </p> </div> 
                         <div class="col-md-7 col-12" v-if="this.$route.path == '/all-events'"> 
-                            <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
+                            <select class="custom-select custom-select-sm mb-3 events " onchange="location.href=this.value">
                                 <option value="/all-events" selected>Все</option>
                                 <option value="/it-events">IT</option>
                                 <option value="/engineering-events">Инженерия</option>
@@ -61,7 +61,7 @@ export default {
         }
     },
     beforeMount(){
-        fetch('https://makual.ru/api/getAllEvents', {
+        fetch('http://78.155.219.12:3000/api/getAllEvents', {
             method: 'get',
         })
         .then(response => {
@@ -90,7 +90,7 @@ export default {
             let SessionID = this.$store.getters.SessionID
             if(email != ''){
                 delete event.places
-                needle.post('https://makual.ru/api/checkedEventsUpdate', {email: email, events: event, sessionid: SessionID}, {"json": true}, function(err, res){
+                needle.post('http://78.155.219.12:3000/api/checkedEventsUpdate', {email: email, events: event, sessionid: SessionID}, {"json": true}, function(err, res){
                     if (err) throw err
                     if(res.body == '310'){
                         document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
