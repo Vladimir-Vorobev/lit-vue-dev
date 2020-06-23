@@ -4,7 +4,7 @@
                 <div class="card-body row">
                     <div class="col-md-5 col-12"> <p class="card-text" style="font-weight: bold; font-size: 1.3em">Сортировка мероприятий: </p> </div> 
                         <div class="col-md-7 col-12" v-if="this.$route.path == '/all-events'"> 
-                            <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
+                            <select class="custom-select custom-select-sm mb-3 events " onchange="location.href=this.value">
                                 <option value="/all-events" selected>Все</option>
                                 <option value="/it-events">IT</option>
                                 <option value="/engineering-events">Инженерия</option>
