@@ -60,7 +60,7 @@
 
 
 <script>
-
+import needle from 'needle'
 export default {
     name: 'Header',
     data(){
@@ -74,26 +74,17 @@ export default {
       let SessionID = this.$store.getters.SessionID
         if(email != ''){
           if(this.loginText == 'Войти'){
-            setTimeout(fetch('http://78.155.219.12:3000/api/getInformation', {
-                    method: 'get',
-                    headers: {email: email, sessionid: SessionID},
-            })
-            .then(response => {
-                console.log("res", response)
-                return response.json()
-            })
-            .then(data => {
+            needle.post('http://78.155.219.12:3000/api/getInformation', {email: email, sessionid: SessionID}, {"json": true}, function(err,res){
+              if(err) console.log(err)
+              let data = res.body
               if(data == '310'){
                 document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
                 document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
                 window.location.reload()
               }
               this.loginText = data.name + ' ' + data.surname
-            }),100)
+            })
           }
-        }
-        else{
-          this.loginText = 'Войти' 
         }
     }
 

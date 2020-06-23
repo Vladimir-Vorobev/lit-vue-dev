@@ -3,7 +3,7 @@
         <form class="formbox">
             <div class="row" style="margin-bottom: 1em;">
               <h2 class="col-11">Редактировать профиль</h2>
-              <div class="col-1"><button class='btn btn-danger' @click="exit()"><i class="fas fa-sign-out-alt"></i></button></div>
+              <div class="col-1"><button class='btn btn-danger' @keyup.enter="notexit()" @click="exit()"><i class="fas fa-sign-out-alt"></i></button></div>
             </div>
             <div class="row" v-if="role">
               <div class="col-9 col-md-3">
@@ -84,18 +84,10 @@ export default {
     },
     beforeMount(){
       if(this.email == '') window.location.pathname = "/login"
-    },
-    mounted(){
-      fetch('http://78.155.219.12:3000/api/getInformation', {
-              method: 'get',
-              headers: {email: this.email, sessionid: this.SessionID},
-      })
-      .then(response => {
-          console.log("res", response)
-          return response.json()
-      })
-      .then(data => {
-          if(data == '310'){
+      needle.post('http://78.155.219.12:3000/api/getInformation', {email: this.email, sessionid: this.SessionID}, {"json": true}, function(err,res){
+        if(err) console.log(err)
+        let data = res.body
+        if(data == '310'){
             document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
             document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
             window.location.reload()
@@ -197,7 +189,6 @@ export default {
       }
     }
   }
-
 </script>
 
 <style scoped>

@@ -101,18 +101,21 @@ export default {
                 password: crypto.createHash('md5').update(password).digest("hex"), 
             }
             let show = true
-            needle.post('http://78.155.219.12:3000/api/adminLogin', data, {"json": true}, function(err, res){
-                if(err) console.log(err)
-                if(res.body == 'Incorect password'){
-                    alert('Пользователь не найден')
-                }
-                else if(res.body == "OK"){
-                    show = false
-                }
-                else{
-                    alert("Неверный email или пароль")
-                }
-            })
+            async function get(){
+                await needle.post('http://78.155.219.12:3000/api/adminLogin', data, {"json": true}, function(err, res){
+                    if(err) console.log(err)
+                    if(res.body == 'Incorect password'){
+                        alert('Пользователь не найден')
+                    }
+                    else if(res.body == "OK"){
+                        show = false
+                    }
+                    else{
+                        alert("Неверный email или пароль")
+                    }
+                })
+            }
+            get()
             if(show) this.show = false
         },
         file(){
