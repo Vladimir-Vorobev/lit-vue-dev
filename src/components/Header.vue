@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #000 !important">
-                Другое
+                Полезное
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <router-link to="/literature" class="dropdown-item">
@@ -66,15 +66,15 @@ export default {
     data(){
         return {
             loginText: 'Войти',
-
         }
     },
-    beforeMount(){
+    created(){
       let email = this.$store.getters.email
       let SessionID = this.$store.getters.SessionID
-        if(email != ''){
+      let user = ''
+      if(email != ''){
           if(this.loginText == 'Войти'){
-            needle.post('http://78.155.219.12:3000/api/getInformation', {email: email, sessionid: SessionID}, {"json": true}, function(err,res){
+            needle.post('http://78.155.219.12:3000/api/getInformation', {email: email, sessionid: SessionID}, {"json": true}, function(err, res){
               if(err) console.log(err)
               let data = res.body
               if(data == '310'){
@@ -82,9 +82,18 @@ export default {
                 document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
                 window.location.reload()
               }
-              this.loginText = data.name + ' ' + data.surname
+              user = data.name + ' ' + data.surname
             })
           }
+          while(user){
+            if(user != ''){
+              this.loginText = user
+              return
+            }
+          }
+        }
+        else{
+          this.loginText = 'Войти' 
         }
     }
 

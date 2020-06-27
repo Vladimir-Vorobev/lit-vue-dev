@@ -31,10 +31,13 @@
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
                     <hr>
-                    <div class="tab-pane fade show active" id="pills-list-student" role="tabpanel" aria-labelledby="pills-list-student-tab">
-                        <router-link class="name" :to="'/teachers-timetable/' + item.student" v-for="item in students" :key="item.student">
+                    <div class="tab-pane fade show active" id="pills-list-student" role="tabpanel" aria-labelledby="pills-list-student-tab" v-for="item in students" :key="item.student">
+                        <a class="name" href="#" @click="showInfo(item.email)">
                             <div class="name_group">{{ item.student }} </div>
-                        </router-link>
+                        </a>
+                        <div :class="item.email" style="display: none;">
+                            <p>Статистика...</p>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="pills-update-list" role="tabpanel" aria-labelledby="pills-update-list-tab">
                         Загрузите актуальный список Вашего класса в excel файле
@@ -88,6 +91,7 @@ export default {
             }
         })
         this.students = students
+        this.students = [{student: 'Иванова Мария', email: 'v11ru'}, {student: 'Иванов Иван', email: 'v12ru'}, {student: 'Сергеев Сергей', email: 'v13ru'}]
     },
     methods:{
         loginUser(){
@@ -117,6 +121,19 @@ export default {
             }
             get()
             if(show) this.show = false
+        },
+        showInfo(email){
+            for(let i = 0; i < this.students.length; i++){
+                if(document.querySelector('.' + this.students[i].email).style.display == 'block' && this.students[i].email != email){
+                    document.querySelector('.' + this.students[i].email).style.display = 'none'
+                }
+            }
+            if(document.querySelector('.' + email).style.display == 'block'){
+                document.querySelector('.' + email).style.display = 'none'
+            }
+            else{
+                document.querySelector('.' + email).style.display = 'block'
+            }
         },
         file(){
             let data = []
