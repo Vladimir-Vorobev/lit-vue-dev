@@ -34,7 +34,7 @@
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
                     <hr>
-                    <div v-if="role='teacher'">
+                    <div v-if="role == 'teacher'">
                         <div class="tab-pane fade show active" id="pills-list-student" role="tabpanel" aria-labelledby="pills-list-student-tab" v-for="item in students" :key="item.student">
                             <a class="name" href="#" @click="showInfo(item.email)">
                                 <div class="name_group">{{ item.student }} </div>
@@ -44,25 +44,30 @@
                                 <div :id='item.email + "v"' style="display: none;"></div>       
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="pills-update-list" role="tabpanel" aria-labelledby="pills-update-list-tab">
+                            Загрузите актуальный список Вашего класса в excel файле
+                            <input type="file" ref="file" class="form-control-file" @change="file()">
+                            <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
+                        </div>
                     </div>
 
                     <div v-if="role == 'school-admin'">
                         <div class="tab-pane fade show active" id="pills-list-teacher" role="tabpanel" aria-labelledby="pills-list-teacher-tab" v-for="item in students" :key="item.student">
-                            <a class="name" href="#" @click="showInfo(item.email)">
+                            <!-- <a class="name" href="#" @click="showInfo(item.email)">
                                 <div class="name_group">{{ item.student }} </div>
                             </a>
                             <div :class="item.email" style="display: none;">
                                 <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
                                 <div :id='item.email + "v"' style="display: none;"></div>       
-                            </div>
+                            </div> -->
+                        </div>
+                        <div class="tab-pane fade" id="pills-update-list" role="tabpanel" aria-labelledby="pills-update-list-tab">
+                            Загрузите актуальный список Ваших учителей в excel файле
+                            <input type="file" ref="file" class="form-control-file" @change="file()">
+                            <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
                         </div>
                     </div>
 
-                    <div class="tab-pane fade" id="pills-update-list" role="tabpanel" aria-labelledby="pills-update-list-tab">
-                        Загрузите актуальный список Вашего класса в excel файле
-                        <input type="file" ref="file" class="form-control-file" @change="file()">
-                        <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
-                    </div>
                 </div>
             </div>
         </transition>
@@ -77,7 +82,7 @@ export default {
     data(){
         return{
             show: true,
-            role: 'teacher',
+            role: '',
             students: [],
             email: this.$store.getters.email,
             classData: [],
@@ -115,7 +120,6 @@ export default {
                     }
                     else if(res.body == "OK"){
                         show = false
-                        this.role = 'teacher'
                     }
                     else{
                         alert("Неверный email или пароль")
@@ -124,6 +128,7 @@ export default {
             }
             get()
             if(show) this.show = false
+            this.role = 'teacher'
         },
         showInfo(email){
             for(let i = 0; i < this.students.length; i++){
@@ -154,9 +159,6 @@ export default {
                 }
             })
             this.classData = data
-        },
-        update(value){
-            this.viewoption = value
         },
         add(){
             event.preventDefault()
