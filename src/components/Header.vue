@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #000 !important">
-                Другое
+                Полезное
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <router-link to="/literature" class="dropdown-item">
@@ -60,36 +60,36 @@
 
 
 <script>
-
+import needle from 'needle'
 export default {
     name: 'Header',
     data(){
         return {
             loginText: 'Войти',
-
         }
     },
-    beforeMount(){
+    created(){
       let email = this.$store.getters.email
       let SessionID = this.$store.getters.SessionID
-        if(email != ''){
+      let user = ''
+      if(email != ''){
           if(this.loginText == 'Войти'){
-            setTimeout(fetch('http://78.155.219.12:3000/api/getInformation', {
-                    method: 'get',
-                    headers: {email: email, sessionid: SessionID},
-            })
-            .then(response => {
-                console.log("res", response)
-                return response.json()
-            })
-            .then(data => {
+            needle.post('http://78.155.219.12:3000/api/getInformation', {email: email, sessionid: SessionID}, {"json": true}, function(err, res){
+              if(err) console.log(err)
+              let data = res.body
               if(data == '310'){
                 document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
                 document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
                 window.location.reload()
               }
-              this.loginText = data.name + ' ' + data.surname
-            }),100)
+              user = data.name + ' ' + data.surname
+            })
+          }
+          while(user){
+            if(user != ''){
+              this.loginText = user
+              return
+            }
           }
         }
         else{

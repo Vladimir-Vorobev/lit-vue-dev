@@ -3,7 +3,7 @@
         <form class="formbox">
             <div class="row" style="margin-bottom: 1em;">
               <h2 class="col-11">Редактировать профиль</h2>
-              <div class="col-1"><button class='btn btn-danger' @click="exit()"><i class="fas fa-sign-out-alt"></i></button></div>
+              <div class="col-1"><button class='btn btn-danger' @keyup.enter="notexit()" @click="exit()"><i class="fas fa-sign-out-alt"></i></button></div>
             </div>
             <div class="row" v-if="role">
               <div class="col-9 col-md-3">
@@ -84,18 +84,10 @@ export default {
     },
     beforeMount(){
       if(this.email == '') window.location.pathname = "/login"
-    },
-    mounted(){
-      fetch('http://78.155.219.12:3000/api/getInformation', {
-              method: 'get',
-              headers: {email: this.email, sessionid: this.SessionID},
-      })
-      .then(response => {
-          console.log("res", response)
-          return response.json()
-      })
-      .then(data => {
-          if(data == '310'){
+      needle.post('http://78.155.219.12:3000/api/getInformation', {email: this.email, sessionid: this.SessionID}, {"json": true}, function(err,res){
+        if(err) console.log(err)
+        let data = res.body
+        if(data == '310'){
             document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
             document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
             window.location.reload()
@@ -147,7 +139,6 @@ export default {
         let city = form.elements.city.value
         let school = form.elements.school.value
         let schoolType = form.elements.schoolType.value
-        let role = form.elements.role.value
         let class_number = form.elements.class_number.value
         let simvol = form.elements.simvol.value
         if(password != password2){
@@ -173,7 +164,6 @@ export default {
             if(city.trim() != '') dataq.city = city
             if(school.trim() != '') dataq.school = school
             if(schoolType.trim() != '' && schoolType != "Тип учебного заведения") dataq.schoolType = schoolType
-            if(role.trim() != '' && role != "Роль в учебном заведении") dataq.role = role
             if(class_number.trim() != '') dataq.class_number = class_number
             if(simvol.trim() != '') dataq.simvol = simvol
             needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: dataq}, {"json": true}, function(err){
@@ -185,7 +175,7 @@ export default {
       addNumber(){
         event.preventDefault()
         let statNumber = {statNumber: Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000}
-        needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, update: statNumber}, {"json": true}, function(err){
+        needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, update: statNumber, sessionid: this.SessionID}, {"json": true}, function(err){
           if(err) console.log(err)
           window.location.reload()
         })
@@ -197,7 +187,6 @@ export default {
       }
     }
   }
-
 </script>
 
 <style scoped>
