@@ -36,7 +36,8 @@
                             <div class="name_group">{{ item.student }} </div>
                         </a>
                         <div :class="item.email" style="display: none;">
-                            <p>Статистика...</p>
+                            <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
+                            <div :id='item.email + "v"' style="display: none;"></div>       
                         </div>
                     </div>
                     <div class="tab-pane fade" id="pills-update-list" role="tabpanel" aria-labelledby="pills-update-list-tab">
@@ -45,23 +46,6 @@
                         <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
                     </div>
                 </div>
-                <!--
-                <div class="panel">
-                    <div class="row justify-content-center">
-                        <div class="col-12 col-md-3"><button class="btn btn-outline-primary" @click="update('classList')">Список класса</button></div>
-                        <div class="col-12 col-md-3"><button class="btn btn-outline-primary" @click="update('updateList')">Обновить список</button></div>
-                    </div>
-                </div>
-                <transition name="show">
-                    <div style="margin-top: 1em" v-if="this.viewoption == 'classList'" class="list">
-                        <router-link class="name" :to="'/teachers-timetable/' + item.student" v-for="item in students" :key="item.student">
-                            <div class="name_group">{{ item.student }} </div>
-                        </router-link> 
-                    </div>
-                    <div style="margin-top: 1em" v-if="this.viewoption == 'updateList'">
-                        <input type="file" ref="file" class="form-control-file" @change="file()">
-                    </div>
-                </transition> --> 
             </div>
         </transition>
     </div>
@@ -133,6 +117,14 @@ export default {
             }
             else{
                 document.querySelector('.' + email).style.display = 'block'
+                if(document.getElementById(email).style.display == 'block'){
+                    // запрос
+                    setTimeout(function(){
+                        document.getElementById(email).style.display = 'none'
+                        document.getElementById(email + 'v').innerHTML = 'Статистика'
+                        document.getElementById(email + 'v').style.display = 'block'
+                    }, 1500);
+                } 
             }
         },
         file(){
