@@ -26,7 +26,7 @@
                         <a class="nav-link active" id="pills-list-student-tab" data-toggle="pill" href="#pills-list-student" role="tab" aria-controls="pills-list-student" aria-selected="true">Список класса</a>
                     </li>
                     <li class="nav-item" role="presentation" v-if="role == 'school-admin'">
-                        <a class="nav-link active" id="pills-list-teacher-tab" data-toggle="pill" href="#pills-list-teacher" role="tab" aria-controls="pills-list-teacher" aria-selected="true">Список учителей</a>
+                        <a class="nav-link" id="pills-list-teacher-tab" data-toggle="pill" href="#pills-list-teacher" role="tab" aria-controls="pills-list-teacher" aria-selected="false">Список учителей</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <a class="nav-link" id="pills-update-list-tab" data-toggle="pill" href="#pills-update-list" role="tab" aria-controls="pills-update-list" aria-selected="false">Обновить список</a>
