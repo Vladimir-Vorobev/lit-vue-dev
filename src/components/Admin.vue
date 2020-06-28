@@ -40,42 +40,50 @@
                 <div class="tab-content" id="pills-tabContent">
                     <hr>
                     <div v-if="role == 'teacher'">
-                        <div v-if="ShowList">
-                            <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.student">
-                                <a class="name" href="#" @click="showInfo(item.email)">
-                                    <div class="name_group">{{ item.student }} </div>
-                                </a>
-                                <div :class="item.email" style="display: none;">
-                                    <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
-                                    <div :id='item.email + "v"' style="display: none;"></div>       
+                        <transition name="main">
+                            <div v-if="ShowList">
+                                <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.student">
+                                    <a class="name" href="#" @click="showInfo(item.email)">
+                                        <div class="name_group">{{ item.student }} </div>
+                                    </a>
+                                    <div :class="item.email" style="display: none;">
+                                        <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
+                                        <div :id='item.email + "v"' style="display: none;"></div>       
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div v-if="ShowAdd">
-                            Загрузите актуальный список Вашего класса в excel файле
-                            <input type="file" ref="file" class="form-control-file" @change="file()">
-                            <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
-                        </div>
+                        </transition>
+                        <transition name="main">
+                            <div v-if="ShowAdd">
+                                Загрузите актуальный список Вашего класса в excel файле
+                                <input type="file" ref="file" class="form-control-file" @change="file()">
+                                <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
+                            </div>
+                        </transition>
                     </div>
 
                     
                     <div v-if="role == 'school-admin'">
-                        <div v-if="ShowList">
-                            <!-- <div class="tab-pane fade show active" id="pills-list-teacher" role="tabpanel" v-for="item in students" :key="item.student">
-                                <a class="name" href="#" @click="showInfo(item.email)">
-                                    <div class="name_group">{{ item.student }} </div>
-                                </a>
-                                <div :class="item.email" style="display: none;">
-                                    <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
-                                    <div :id='item.email + "v"' style="display: none;"></div>       
-                                </div>
-                            </div> -->
-                        </div>
-                        <div v-if="ShowAdd">
-                            Загрузите актуальный список Ваших учителей в excel файле
-                            <input type="file" ref="file" class="form-control-file" @change="file()">
-                            <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
-                        </div>
+                        <transition name="main">
+                            <div v-if="ShowList">
+                                <!-- <div class="tab-pane fade show active" id="pills-list-teacher" role="tabpanel" v-for="item in students" :key="item.student">
+                                    <a class="name" href="#" @click="showInfo(item.email)">
+                                        <div class="name_group">{{ item.student }} </div>
+                                    </a>
+                                    <div :class="item.email" style="display: none;">
+                                        <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
+                                        <div :id='item.email + "v"' style="display: none;"></div>       
+                                    </div>
+                                </div> -->
+                            </div>
+                        </transition>
+                        <transition name="main">
+                            <div v-if="ShowAdd">
+                                Загрузите актуальный список Ваших учителей в excel файле
+                                <input type="file" ref="file" class="form-control-file" @change="file()">
+                                <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
+                            </div>
+                        </transition>
                     </div> 
                 </div>
             </div>
@@ -214,10 +222,13 @@ export default {
 .nav-pills{
     cursor: pointer;
 }
-.auth-enter-active, .auth-leave-active {
+.main-enter-active{
   transition: opacity .5s;
 }
-.auth-enter, .auth-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+.main-leave-active{
+    transition: opacity;
+}
+.main-enter, .main-leave-to /* .fade-leave-active до версии 2.1.8 */ {
   opacity: 0;
 }
 
