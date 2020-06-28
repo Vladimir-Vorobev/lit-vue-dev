@@ -51,6 +51,7 @@
                         </div>
                     </div>
 
+                    
                     <div v-if="role == 'school-admin'">
                         <div class="tab-pane fade show active" id="pills-list-teacher" role="tabpanel" aria-labelledby="pills-list-teacher-tab" v-for="item in students" :key="item.student">
                             <!-- <a class="name" href="#" @click="showInfo(item.email)">
@@ -66,8 +67,7 @@
                             <input type="file" ref="file" class="form-control-file" @change="file()">
                             <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
                         </div>
-                    </div>
-
+                    </div> 
                 </div>
             </div>
         </transition>
