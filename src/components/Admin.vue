@@ -44,10 +44,10 @@
                             <transition-group name="main">
                                 <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.student">
                                     <a class="person" href="#" @click="showInfo(item.email)">
-                                        <div class="person_box"  @click="opclp()">
+                                        <div class="person_box"   @click="opclp(item.email)">
                                             <div class="name row">
                                                 <div class="name_group col-11">{{ item.student }} </div>
-                                                <div class="col-1 ar-collapse"></div>
+                                                <div class="col-1 ar-collapse" :id='item.email'></div>
                                             </div>
                                             <div :class="item.email" style="display: none;">
                                                 <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: inline-block;"></i></div>
@@ -236,9 +236,9 @@ export default {
             this.ShowAdd = true
             this.ShowList = false
         },
-        opclp(){
-            $('.ar-collapse').not('.ar-collapse').removeClass('ar-show');
-            $('.ar-collapse').toggleClass('ar-show');
+        opclp(email){
+            $('#'+email).not('.ar-collapse').removeClass('ar-show');
+            $('#'+email).toggleClass('ar-show');
         },
     },
 }
