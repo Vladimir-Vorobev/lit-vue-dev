@@ -50,19 +50,10 @@
                                             <div class="name_group">{{ item.student }} </div>
                                         </div>
                                         <div :class="item.email" style="display: none;">
-                                            <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
+                                            <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: inline-block;"></i>
                                             <div :id='item.email + "v"' style="display: none;"></div>       
                                         </div>
                                     </div></a>
-                                    <!-- <a class="name" href="#" @click="showInfo(item.email)">
-                                        <div class="name_group">{{ item.student }} </div>
-                                    </a>
-                                    <div :class="item.email" style="display: none;">
-                                        <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
-                                        <div :id='item.email + "v"' style="display: none;"></div>       
-                                    </div> -->
-
-
                                 </div>
                             </transition-group>
                         </div>
@@ -84,7 +75,7 @@
                                         <div class="name_group">{{ item.teacher }} </div>
                                     </a>
                                     <div :class="item.email" style="display: none;">
-                                        <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
+                                        <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: inline-block;"></i>
                                         <div :id='item.email + "v"' style="display: none;"></div>       
                                     </div>
                                 </div>
@@ -162,7 +153,7 @@ export default {
             }
             get()
             if(show) this.show = false
-            this.role = 'school-admin'
+            this.role = 'teacher'
         },
         showInfo(email){
             for(let i = 0; i < this.students.length; i++){
@@ -175,7 +166,7 @@ export default {
             }
             else{
                 document.querySelector('.' + email).style.display = 'block'
-                if(document.getElementById(email).style.display == 'block'){
+                if(document.getElementById(email).style.display == 'inline-block'){
                     // запрос
                     setTimeout(function(){
                         document.getElementById(email).style.display = 'none'
@@ -196,7 +187,7 @@ export default {
             }
             else{
                 document.querySelector('.' + email).style.display = 'block'
-                if(document.getElementById(email).style.display == 'block'){
+                if(document.getElementById(email).style.display == 'inline-block'){
                     // запрос
                     setTimeout(function(){
                         document.getElementById(email).style.display = 'none'
