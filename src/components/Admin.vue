@@ -139,7 +139,7 @@ export default {
             }
             get()
             if(show) this.show = false
-            this.role = 'school-admin'
+            this.role = 'teacher'
         },
         showInfo(email){
             for(let i = 0; i < this.students.length; i++){
