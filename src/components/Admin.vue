@@ -78,6 +78,11 @@
                                         <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: inline-block;"></i>
                                         <div :id='item.email + "v"' style="display: none;"></div>       
                                     </div>
+                                    <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
+                                        <a class="name" href="#" @click="showInfo(item2.email)">
+                                            <div class="name_group">{{ item2.student }} </div>
+                                        </a>      
+                                    </div>
                                 </div>
                             </transition-group>
                         </div>
@@ -105,6 +110,7 @@ export default {
             show: true,
             role: '',
             students: [],
+            students2: [],
             teachers: [],
             email: this.$store.getters.email,
             classData: [],
@@ -123,7 +129,7 @@ export default {
         })
         this.students = students
         this.students = [{student: 'Иванова Мария', email: 'v11ru'}, {student: 'Иванов Иван', email: 'v12ru'}, {student: 'Сергеев Сергей', email: 'v13ru'}]
-        this.teachers = [{teacher: 'Иванова Мария', email: 'v11ru'}, {teacher: 'Иванов Иван', email: 'v12ru'}, {teacher: 'Сергеев Сергей', email: 'v13ru'}]
+        this.teachers = [{teacher: 'Иванова Мария', email: 'v14ru'}, {teacher: 'Иванов Иван', email: 'v15ru'}, {teacher: 'Сергеев Сергей', email: 'v16ru'}]
     },
     methods:{
         loginUser(){
@@ -153,9 +159,10 @@ export default {
             }
             get()
             if(show) this.show = false
-            this.role = 'teacher'
+            this.role = 'school-admin'
         },
         showInfo(email){
+            console.log('d')
             for(let i = 0; i < this.students.length; i++){
                 if(document.querySelector('.' + this.students[i].email).style.display == 'block' && this.students[i].email != email){
                     document.querySelector('.' + this.students[i].email).style.display = 'none'
@@ -178,8 +185,8 @@ export default {
         },
         showTeacherInfo(email){
             for(let i = 0; i < this.students.length; i++){
-                if(document.querySelector('.' + this.students[i].email).style.display == 'block' && this.students[i].email != email){
-                    document.querySelector('.' + this.students[i].email).style.display = 'none'
+                if(document.querySelector('.' + this.teachers[i].email).style.display == 'block' && this.teachers[i].email != email){
+                    document.querySelector('.' + this.teachers[i].email).style.display = 'none'
                 }
             }
             if(document.querySelector('.' + email).style.display == 'block'){
@@ -189,14 +196,18 @@ export default {
                 document.querySelector('.' + email).style.display = 'block'
                 if(document.getElementById(email).style.display == 'inline-block'){
                     // запрос
-                    setTimeout(function(){
                         document.getElementById(email).style.display = 'none'
-                        let students = ['Ваня', 'Петя', 'Даша']
+                        let students = [{student: 'Иванова Мария', email: 'v11ru'}, {student: 'Иванов Иван', email: 'v12ru'}, {student: 'Сергеев Сергей', email: 'v13ru'}]
                         for(let i = 0; i < 3; i++){
-                            document.getElementById(email + 'v').innerHTML += students[i] + '<br>'
+                            this.students2.push(students[i])
                         }
+                        // for(let i = 0; i < 3; i++){
+                        //     document.getElementById(email + 'v').insertAdjacentHTML(
+                        //         'beforeEnd',
+                        //         '<a class="person" href="#" @click="showInfo(' + students[i].email + ')"><div class="person_box"><div class="name" ><div class="name_group">' + students[i].student + '</div></div><div :class="' + students[i].email + '" style="display: none;"><i class="fa fa-spinner fa-pulse fa-3x" :id="' + students[i].email + '" style="display: inline-block;"></i><div :id="' + students[i].email + "v" + '" style="display: none;""></div></div></div></a>'
+                        //     );
+                        // }
                         document.getElementById(email + 'v').style.display = 'block'
-                    }, 1500);
                 } 
             }
         },
