@@ -72,7 +72,7 @@
                         <div v-if="ShowList">
                             <transition-group name="main">
                                 <div class="tab-pane fade show active" id="pills-list-student" v-for="item in teachers" :key="item.teacher">
-                                    <a class="name" href="#" @click="showTeacherInfo(item.email)">
+                                    <!-- <a class="name" href="#" @click="showTeacherInfo(item.email)">
                                         <div class="name_group">{{ item.teacher }}</div>
                                     </a>
                                     <div :id='item.email + "s"' style="display: none;">
@@ -85,7 +85,40 @@
                                                 <div :id='item2.email + "v"' style="display: none;"></div>       
                                             </div>      
                                         </div>
-                                    </div>
+                                    </div> -->
+
+                                    <a class="person" href="#" @click="showTeacherInfo(item.email)">
+                                        <div class="person_box">
+                                            <div class="name row">
+                                                <div class="name_group col-11">{{ item.teacher }}</div>
+                                                <div class="col-1 ar-collapse" :id='item.email'></div>
+                                            </div>
+                                            <div :id='item.email + "s"' style="display: none;">
+                                                <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
+                                                    <!-- <a class="name" href="#" @click="showInfo(item2.email)">
+                                                        <div class="name_group">{{ item2.student }} </div>
+                                                    </a>
+                                                    <div :class="item2.email + 'n'" style="display: none;">
+                                                        <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email' style="display: inline-block;"></i>
+                                                        <div :id='item2.email + "v"' style="display: none;"></div>       
+                                                    </div> -->
+                                                    <a class="person" href="#" @click="showInfo(item2.email)">
+                                                        <div class="person_box">
+                                                            <div class="name row">
+                                                                <div class="name_group col-11">{{ item2.student }} </div>
+                                                                <div class="col-1 ar-collapse" :id='item2.email'></div>
+                                                            </div>
+                                                            <div :class="item2.email + 'n'" style="display: none;">
+                                                                <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email' style="display: inline-block;"></i>
+                                                                <div :id='item2.email + "v"' style="display: none;"></div>       
+                                                            </div>
+                                                        </div>
+                                                    </a>    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+
                                 </div>
                             </transition-group>
                         </div>
@@ -239,6 +272,9 @@ export default {
                         document.getElementById(email + 's').style.display = 'block'
                 } 
             }
+            //изменение классов чтобы стрелка меняла направление
+            $('#'+email).not('.ar-collapse').removeClass('ar-show');
+            $('#'+email).toggleClass('ar-show');
         },
         file(){
             let data = []
