@@ -40,8 +40,8 @@
                 <div class="tab-content" id="pills-tabContent">
                     <hr>
                     <div v-if="role == 'teacher'">
-                        <transition name="main">
-                            <div v-if="ShowList">
+                        <div v-if="ShowList">
+                            <transition-group name="main">
                                 <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.student">
                                     <a class="name" href="#" @click="showInfo(item.email)">
                                         <div class="name_group">{{ item.student }} </div>
@@ -51,21 +51,21 @@
                                         <div :id='item.email + "v"' style="display: none;"></div>       
                                     </div>
                                 </div>
-                            </div>
-                        </transition>
-                        <transition name="main">
-                            <div v-if="ShowAdd">
-                                Загрузите актуальный список Вашего класса в excel файле
-                                <input type="file" ref="file" class="form-control-file" @change="file()">
-                                <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
-                            </div>
-                        </transition>
+                            </transition-group>
+                        </div>
+                        <div v-if="ShowAdd">
+                            <transition-group name="main">
+                                <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
+                                <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
+                                <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить</button>
+                            </transition-group>
+                        </div>
                     </div>
 
                     
                     <div v-if="role == 'school-admin'">
-                        <transition name="main">
-                            <div v-if="ShowList">
+                        <div v-if="ShowList">
+                            <transition-group name="main">
                                 <!-- <div class="tab-pane fade show active" id="pills-list-teacher" role="tabpanel" v-for="item in students" :key="item.student">
                                     <a class="name" href="#" @click="showInfo(item.email)">
                                         <div class="name_group">{{ item.student }} </div>
@@ -75,15 +75,15 @@
                                         <div :id='item.email + "v"' style="display: none;"></div>       
                                     </div>
                                 </div> -->
-                            </div>
-                        </transition>
-                        <transition name="main">
-                            <div v-if="ShowAdd">
-                                Загрузите актуальный список Ваших учителей в excel файле
-                                <input type="file" ref="file" class="form-control-file" @change="file()">
-                                <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
-                            </div>
-                        </transition>
+                            </transition-group>
+                        </div>
+                        <div v-if="ShowAdd">
+                            <transition-group name="main">
+                                <p key="p">Загрузите актуальный список Ваших учителей в excel файле</p>
+                                <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
+                                <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить</button>
+                            </transition-group>
+                        </div>
                     </div> 
                 </div>
             </div>
