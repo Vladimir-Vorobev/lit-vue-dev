@@ -44,7 +44,7 @@
                             <transition-group name="main">
                                 <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.student">
                                     <a class="person" href="#" @click="showInfo(item.email)">
-                                        <div class="person_box"   @click="opclp(item.email)">
+                                        <div class="person_box">
                                             <div class="name row">
                                                 <div class="name_group col-11">{{ item.student }} </div>
                                                 <div class="col-1 ar-collapse" :id='item.email'></div>
@@ -208,7 +208,9 @@ export default {
                     }
                 } 
             }
-            
+            //изменение классов чтобы стрелка меняла направление
+            $('#'+email).not('.ar-collapse').removeClass('ar-show');
+            $('#'+email).toggleClass('ar-show');
         },
         showTeacherInfo(email){
             for(let i = 0; i < this.teachers.length; i++){
@@ -272,10 +274,10 @@ export default {
             this.ShowAdd = true
             this.ShowList = false
         },
-        opclp(email){
-            $('#'+email).not('.ar-collapse').removeClass('ar-show');
-            $('#'+email).toggleClass('ar-show');
-        },
+        // opclp(email){
+        //     // $('#'+email).not('.ar-collapse').removeClass('ar-show');
+        //     // $('#'+email).toggleClass('ar-show');
+        // },
     },
 }
 </script>
