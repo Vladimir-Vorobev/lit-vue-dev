@@ -43,13 +43,26 @@
                         <div v-if="ShowList">
                             <transition-group name="main">
                                 <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.student">
-                                    <a class="name" href="#" @click="showInfo(item.email)">
+
+                                    <a class="person" href="#" @click="showInfo(item.email)">
+                                    <div class="person_box">
+                                        <div class="name" >
+                                            <div class="name_group">{{ item.student }} </div>
+                                        </div>
+                                        <div :class="item.email" style="display: none;">
+                                            <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
+                                            <div :id='item.email + "v"' style="display: none;"></div>       
+                                        </div>
+                                    </div></a>
+                                    <!-- <a class="name" href="#" @click="showInfo(item.email)">
                                         <div class="name_group">{{ item.student }} </div>
                                     </a>
                                     <div :class="item.email" style="display: none;">
                                         <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
                                         <div :id='item.email + "v"' style="display: none;"></div>       
-                                    </div>
+                                    </div> -->
+
+
                                 </div>
                             </transition-group>
                         </div>
@@ -264,4 +277,20 @@ export default {
 .show-enter, .auth-leave-to /* .fade-leave-active до версии 2.1.8 */ {
   opacity: 0;
 }
+
+.person{
+    text-decoration: none;
+}
+.person_box{
+    border: 1px solid black;
+    margin-bottom: 0.4em;
+    border-radius: 0.5em;
+    padding: 1em;
+    text-align: left;
+    
+}
+.person_box a{
+    text-decoration: none;
+}
+
 </style>
