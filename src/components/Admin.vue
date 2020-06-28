@@ -73,16 +73,18 @@
                             <transition-group name="main">
                                 <div class="tab-pane fade show active" id="pills-list-student" v-for="item in teachers" :key="item.teacher">
                                     <a class="name" href="#" @click="showTeacherInfo(item.email)">
-                                        <div class="name_group">{{ item.teacher }} </div>
+                                        <div class="name_group">{{ item.teacher }}</div>
                                     </a>
-                                    <div :class="item.email" style="display: none;">
-                                        <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: inline-block;"></i>
-                                        <div :id='item.email + "v"' style="display: none;"></div>       
-                                    </div>
-                                    <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
-                                        <a class="name" href="#" @click="showInfo(item2.email)">
-                                            <div class="name_group">{{ item2.student }} </div>
-                                        </a>      
+                                    <div :id='item.email + "s"' style="display: none;">
+                                        <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
+                                            <a class="name" href="#" @click="showInfo(item2.email)">
+                                                <div class="name_group">{{ item2.student }} </div>
+                                            </a>
+                                            <div :class="item2.email + 'n'" style="display: none;">
+                                                <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email' style="display: inline-block;"></i>
+                                                <div :id='item2.email + "v"' style="display: none;"></div>       
+                                            </div>      
+                                        </div>
                                     </div>
                                 </div>
                             </transition-group>
@@ -164,42 +166,65 @@ export default {
             this.role = 'school-admin'
         },
         showInfo(email){
-            console.log('d')
-            for(let i = 0; i < this.students.length; i++){
-                if(document.querySelector('.' + this.students[i].email).style.display == 'block' && this.students[i].email != email){
-                    document.querySelector('.' + this.students[i].email).style.display = 'none'
+            if(this.role == 'teacher'){
+                for(let i = 0; i < this.students.length; i++){
+                    if(document.querySelector('.' + this.students[i].email).style.display == 'block' && this.students[i].email != email){
+                        document.querySelector('.' + this.students[i].email).style.display = 'none'
+                    }
+                }
+                if(document.querySelector('.' + email).style.display == 'block'){
+                    document.querySelector('.' + email).style.display = 'none'
+                }
+                else{
+                    document.querySelector('.' + email).style.display = 'block'
+                    if(document.getElementById(email).style.display == 'inline-block'){
+                        // запрос
+                        setTimeout(function(){
+                            document.getElementById(email).style.display = 'none'
+                            document.getElementById(email + 'v').innerHTML = 'Статистика'
+                            document.getElementById(email + 'v').style.display = 'block'
+                        }, 1500);
+                    } 
                 }
             }
-            if(document.querySelector('.' + email).style.display == 'block'){
-                document.querySelector('.' + email).style.display = 'none'
-            }
-            else{
-                document.querySelector('.' + email).style.display = 'block'
-                if(document.getElementById(email).style.display == 'inline-block'){
-                    // запрос
-                    setTimeout(function(){
-                        document.getElementById(email).style.display = 'none'
-                        document.getElementById(email + 'v').innerHTML = 'Статистика'
-                        document.getElementById(email + 'v').style.display = 'block'
-                    }, 1500);
+            else if(this.role == 'school-admin'){
+                for(let i = 0; i < this.students2.length; i++){
+                    if(document.querySelector('.' + this.students2[i].email + 'n').style.display == 'block' && this.students2[i].email != email){
+                        document.querySelector('.' + this.students2[i].email + 'n').style.display = 'none'
+                    }
+                }
+                if(document.querySelector('.' + email + 'n').style.display == 'block'){
+                    document.querySelector('.' + email + 'n').style.display = 'none'
+                }
+                else{
+                    document.querySelector('.' + email + 'n').style.display = 'block'
+                    if(document.getElementById(email).style.display == 'inline-block'){
+                        // запрос
+                        setTimeout(function(){
+                            document.getElementById(email).style.display = 'none'
+                            document.getElementById(email + 'v').innerHTML = 'Статистика'
+                            document.getElementById(email + 'v').style.display = 'block'
+                        }, 1500);
+                    }
                 } 
             }
+            
         },
         showTeacherInfo(email){
-            for(let i = 0; i < this.students.length; i++){
-                if(document.querySelector('.' + this.teachers[i].email).style.display == 'block' && this.teachers[i].email != email){
-                    document.querySelector('.' + this.teachers[i].email).style.display = 'none'
+            for(let i = 0; i < this.teachers.length; i++){
+                if(document.getElementById(this.teachers[i].email + 's').style.display == 'block' && this.teachers[i].email != email){
+                    document.getElementById(this.teachers[i].email + 's').style.display = 'none'
                 }
             }
-            if(document.querySelector('.' + email).style.display == 'block'){
-                document.querySelector('.' + email).style.display = 'none'
+            if(document.getElementById(email + 's').style.display == 'block'){
+                document.getElementById(email + 's').style.display = 'none'
             }
             else{
-                document.querySelector('.' + email).style.display = 'block'
-                if(document.getElementById(email).style.display == 'inline-block'){
+                if(document.getElementById(email + 's').style.display == 'none'){
                     // запрос
-                        document.getElementById(email).style.display = 'none'
-                        let students = [{student: 'Иванова Мария', email: 'v11ru'}, {student: 'Иванов Иван', email: 'v12ru'}, {student: 'Сергеев Сергей', email: 'v13ru'}]
+                        this.students2 = []
+                        //document.getElementById(email).style.display = 'none'
+                        let students = [{student: 'Петя', email: 'v11ru'}, {student: 'Вася', email: 'v12ru'}, {student: 'Дима', email: 'v13ru'}]
                         for(let i = 0; i < 3; i++){
                             this.students2.push(students[i])
                         }
@@ -209,7 +234,7 @@ export default {
                         //         '<a class="person" href="#" @click="showInfo(' + students[i].email + ')"><div class="person_box"><div class="name" ><div class="name_group">' + students[i].student + '</div></div><div :class="' + students[i].email + '" style="display: none;"><i class="fa fa-spinner fa-pulse fa-3x" :id="' + students[i].email + '" style="display: inline-block;"></i><div :id="' + students[i].email + "v" + '" style="display: none;""></div></div></div></a>'
                         //     );
                         // }
-                        document.getElementById(email + 'v').style.display = 'block'
+                        document.getElementById(email + 's').style.display = 'block'
                 } 
             }
         },
