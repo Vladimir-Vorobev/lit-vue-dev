@@ -21,30 +21,37 @@
                 <div class="formbox">
                     <h2>Панель администратора</h2>
                 </div>
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation" v-if="role == 'teacher'">
-                        <a class="nav-link active" id="pills-list-student-tab" data-toggle="pill" href="#pills-list-student" role="tab" aria-controls="pills-list-student" aria-selected="true">Список класса</a>
-                    </li>
-                    <li class="nav-item" role="presentation" v-if="role == 'school-admin'">
-                        <a class="nav-link active" id="pills-list-teacher-tab" data-toggle="pill" href="#pills-list-teacher" role="tab" aria-controls="pills-list-teacher" aria-selected="true">Список учителей</a>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'teacher'">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список класса</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" id="pills-update-list-tab" data-toggle="pill" href="#pills-update-list" role="tab" aria-controls="pills-update-list" aria-selected="false">Обновить список</a>
+                        <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
+                    </li>
+                </ul>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'school-admin'">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список учителей</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="pills-tabContent">
                     <hr>
                     <div v-if="role == 'teacher'">
-                        <div class="tab-pane fade show active" id="pills-list-student" role="tabpanel" aria-labelledby="pills-list-student-tab" v-for="item in students" :key="item.student">
-                            <a class="name" href="#" @click="showInfo(item.email)">
-                                <div class="name_group">{{ item.student }} </div>
-                            </a>
-                            <div :class="item.email" style="display: none;">
-                                <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
-                                <div :id='item.email + "v"' style="display: none;"></div>       
+                        <div v-if="ShowList">
+                            <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.student">
+                                <a class="name" href="#" @click="showInfo(item.email)">
+                                    <div class="name_group">{{ item.student }} </div>
+                                </a>
+                                <div :class="item.email" style="display: none;">
+                                    <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
+                                    <div :id='item.email + "v"' style="display: none;"></div>       
+                                </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-update-list" role="tabpanel" aria-labelledby="pills-update-list-tab">
+                        <div v-if="ShowAdd">
                             Загрузите актуальный список Вашего класса в excel файле
                             <input type="file" ref="file" class="form-control-file" @change="file()">
                             <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
@@ -52,16 +59,18 @@
                     </div>
 
                     <div v-if="role == 'school-admin'">
-                        <div class="tab-pane fade show active" id="pills-list-teacher" role="tabpanel" aria-labelledby="pills-list-teacher-tab" v-for="item in students" :key="item.student">
-                            <!-- <a class="name" href="#" @click="showInfo(item.email)">
-                                <div class="name_group">{{ item.student }} </div>
-                            </a>
-                            <div :class="item.email" style="display: none;">
-                                <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
-                                <div :id='item.email + "v"' style="display: none;"></div>       
+                        <div v-if="ShowList">
+                            <!-- <div class="tab-pane fade show active" id="pills-list-teacher" role="tabpanel" v-for="item in students" :key="item.student">
+                                <a class="name" href="#" @click="showInfo(item.email)">
+                                    <div class="name_group">{{ item.student }} </div>
+                                </a>
+                                <div :class="item.email" style="display: none;">
+                                    <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
+                                    <div :id='item.email + "v"' style="display: none;"></div>       
+                                </div>
                             </div> -->
                         </div>
-                        <div class="tab-pane fade" id="pills-update-list" role="tabpanel" aria-labelledby="pills-update-list-tab">
+                        <div v-if="ShowAdd">
                             Загрузите актуальный список Ваших учителей в excel файле
                             <input type="file" ref="file" class="form-control-file" @change="file()">
                             <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
@@ -86,6 +95,8 @@ export default {
             students: [],
             email: this.$store.getters.email,
             classData: [],
+            ShowList: true,
+            ShowAdd: false,
         }
     },
     beforeMount(){
@@ -128,7 +139,7 @@ export default {
             }
             get()
             if(show) this.show = false
-            this.role = 'teacher'
+            this.role = 'school-admin'
         },
         showInfo(email){
             for(let i = 0; i < this.students.length; i++){
@@ -175,6 +186,16 @@ export default {
             }
             else alert('Файл не выбран')
         },
+        showList(){
+            event.preventDefault()
+            this.ShowList = true
+            this.ShowAdd = false
+        },
+        showAdd(){
+            event.preventDefault()
+            this.ShowAdd = true
+            this.ShowList = false
+        },
     },
 }
 </script>
@@ -190,7 +211,9 @@ export default {
     min-height: 1018px;
     margin-bottom: 0px;
 }
-
+.nav-pills{
+    cursor: pointer;
+}
 .auth-enter-active, .auth-leave-active {
   transition: opacity .5s;
 }
