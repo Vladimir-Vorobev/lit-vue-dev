@@ -43,17 +43,18 @@
                         <div v-if="ShowList">
                             <transition-group name="main">
                                 <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.student">
-
                                     <a class="person" href="#" @click="showInfo(item.email)">
-                                    <div class="person_box">
-                                        <div class="name" >
-                                            <div class="name_group">{{ item.student }} </div>
+                                        <div class="person_box"   @click="opclp(item.email)">
+                                            <div class="name row">
+                                                <div class="name_group col-11">{{ item.student }} </div>
+                                                <div class="col-1 ar-collapse" :id='item.email'></div>
+                                            </div>
+                                            <div :class="item.email" style="display: none;">
+                                                <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: inline-block;"></i></div>
+                                                <div :id='item.email + "v"' style="display: none;"></div>       
+                                            </div>
                                         </div>
-                                        <div :class="item.email" style="display: none;">
-                                            <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: inline-block;"></i>
-                                            <div :id='item.email + "v"' style="display: none;"></div>       
-                                        </div>
-                                    </div></a>
+                                    </a>
                                 </div>
                             </transition-group>
                         </div>
@@ -103,6 +104,7 @@
 <script>
 import needle from 'needle'
 import readXlsxFile from 'read-excel-file'
+import $ from 'jquery'
 export default {
     name: 'Admin',
     data(){
@@ -245,6 +247,10 @@ export default {
             this.ShowAdd = true
             this.ShowList = false
         },
+        opclp(email){
+            $('#'+email).not('.ar-collapse').removeClass('ar-show');
+            $('#'+email).toggleClass('ar-show');
+        },
     },
 }
 </script>
@@ -282,6 +288,12 @@ export default {
 
 .person{
     text-decoration: none;
+    color: black;
+}
+.person_box:hover{
+    text-decoration: none;
+    color: black;
+    background-color: rgba(221, 221, 221, 0.466);
 }
 .person_box{
     border: 1px solid black;
@@ -293,6 +305,18 @@ export default {
 }
 .person_box a{
     text-decoration: none;
+}
+.name_group{
+    font-size: 1.2em;
+}
+
+.ar-collapse:after{
+    content: "\f078";
+    font-family: fontawesome !important;
+}
+.ar-show:after{
+    content: "\f077";
+    font-family: fontawesome !important;
 }
 
 </style>
