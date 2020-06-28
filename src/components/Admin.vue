@@ -58,6 +58,7 @@
                         </div>
                     </div>
 
+                    
                     <div v-if="role == 'school-admin'">
                         <div v-if="ShowList">
                             <!-- <div class="tab-pane fade show active" id="pills-list-teacher" role="tabpanel" v-for="item in students" :key="item.student">
@@ -75,8 +76,7 @@
                             <input type="file" ref="file" class="form-control-file" @change="file()">
                             <button type="submit" @click="add()" class="btn btn-primary btn-lg">Обновить</button>
                         </div>
-                    </div>
-
+                    </div> 
                 </div>
             </div>
         </transition>
