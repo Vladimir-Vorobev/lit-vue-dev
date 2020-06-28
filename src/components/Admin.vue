@@ -66,15 +66,15 @@
                     <div v-if="role == 'school-admin'">
                         <div v-if="ShowList">
                             <transition-group name="main">
-                                <!-- <div class="tab-pane fade show active" id="pills-list-teacher" role="tabpanel" v-for="item in students" :key="item.student">
-                                    <a class="name" href="#" @click="showInfo(item.email)">
-                                        <div class="name_group">{{ item.student }} </div>
+                                <div class="tab-pane fade show active" id="pills-list-student" v-for="item in teachers" :key="item.teacher">
+                                    <a class="name" href="#" @click="showTeacherInfo(item.email)">
+                                        <div class="name_group">{{ item.teacher }} </div>
                                     </a>
                                     <div :class="item.email" style="display: none;">
                                         <i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: block;"></i>
                                         <div :id='item.email + "v"' style="display: none;"></div>       
                                     </div>
-                                </div> -->
+                                </div>
                             </transition-group>
                         </div>
                         <div v-if="ShowAdd">
@@ -101,6 +101,7 @@ export default {
             show: true,
             role: '',
             students: [],
+            teachers: [],
             email: this.$store.getters.email,
             classData: [],
             ShowList: true,
@@ -118,6 +119,7 @@ export default {
         })
         this.students = students
         this.students = [{student: 'Иванова Мария', email: 'v11ru'}, {student: 'Иванов Иван', email: 'v12ru'}, {student: 'Сергеев Сергей', email: 'v13ru'}]
+        this.teachers = [{teacher: 'Иванова Мария', email: 'v11ru'}, {teacher: 'Иванов Иван', email: 'v12ru'}, {teacher: 'Сергеев Сергей', email: 'v13ru'}]
     },
     methods:{
         loginUser(){
@@ -147,7 +149,7 @@ export default {
             }
             get()
             if(show) this.show = false
-            this.role = 'teacher'
+            this.role = 'school-admin'
         },
         showInfo(email){
             for(let i = 0; i < this.students.length; i++){
@@ -165,6 +167,30 @@ export default {
                     setTimeout(function(){
                         document.getElementById(email).style.display = 'none'
                         document.getElementById(email + 'v').innerHTML = 'Статистика'
+                        document.getElementById(email + 'v').style.display = 'block'
+                    }, 1500);
+                } 
+            }
+        },
+        showTeacherInfo(email){
+            for(let i = 0; i < this.students.length; i++){
+                if(document.querySelector('.' + this.students[i].email).style.display == 'block' && this.students[i].email != email){
+                    document.querySelector('.' + this.students[i].email).style.display = 'none'
+                }
+            }
+            if(document.querySelector('.' + email).style.display == 'block'){
+                document.querySelector('.' + email).style.display = 'none'
+            }
+            else{
+                document.querySelector('.' + email).style.display = 'block'
+                if(document.getElementById(email).style.display == 'block'){
+                    // запрос
+                    setTimeout(function(){
+                        document.getElementById(email).style.display = 'none'
+                        let students = ['Ваня', 'Петя', 'Даша']
+                        for(let i = 0; i < 3; i++){
+                            document.getElementById(email + 'v').innerHTML += students[i] + '<br>'
+                        }
                         document.getElementById(email + 'v').style.display = 'block'
                     }, 1500);
                 } 
