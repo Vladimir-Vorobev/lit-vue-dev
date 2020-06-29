@@ -3,6 +3,10 @@ import Vuex from 'vuex';
 import { APP_STORE } from '../store';
 import VueRouter from 'vue-router'
 import App from './App.vue'
+import Chartkick from 'vue-chartkick'
+import Chart from 'chart.js'
+
+Vue.use(Chartkick.use(Chart))
 
 import MainPage from './components/MainPage.vue'
 import RecommendedEvents from './components/RecommendedEvents.vue'

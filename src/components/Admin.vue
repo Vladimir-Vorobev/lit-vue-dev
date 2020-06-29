@@ -133,12 +133,14 @@
                 </div>
             </div>
         </transition>
+        <div width="100" height="100"><canvas id="myChart"></canvas></div>
     </div>
 </template>
 
 <script>
 import needle from 'needle'
 import readXlsxFile from 'read-excel-file'
+import Chart from 'chart.js'
 export default {
     name: 'Admin',
     data(){
@@ -166,6 +168,50 @@ export default {
         this.students = students
         this.students = [{student: 'Иванова Мария', email: 'v11ru'}, {student: 'Иванов Иван', email: 'v12ru'}, {student: 'Сергеев Сергей', email: 'v13ru'}]
         this.teachers = [{teacher: 'Иванова Мария', email: 'v14ru'}, {teacher: 'Иванов Иван', email: 'v15ru'}, {teacher: 'Сергеев Сергей', email: 'v16ru'}]
+    },
+    mounted(){
+        var ctx = document.getElementById('myChart')
+        let myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Сфера услуг', 'IT', 'Творчество и Дизайн', 'Строительство', 'Инжинерные технологии', 'Транспорт и логистика'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [3, 7, 2, 1, 3, 1],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1,
+                    hoverBackgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                        'rgba(255, 159, 64, 0.5)'
+                    ],
+                }]
+            },
+            options: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        });
+        console.log(myChart)
     },
     methods:{
         loginUser(){
