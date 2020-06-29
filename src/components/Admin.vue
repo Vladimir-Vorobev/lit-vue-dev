@@ -50,7 +50,7 @@
                                                 <div class="col-1 ar-collapse" :id='item.email'></div>
                                             </div>
                                             <div :class="item.email" style="display: none;">
-                                                <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email' style="display: inline-block;"></i></div>
+                                                <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email + "x"' style="display: inline-block;"></i></div>
                                                 <div :id='item.email + "v"' style="display: none;"></div>       
                                             </div>
                                         </div>
@@ -87,8 +87,8 @@
                                         </div>
                                     </div> -->
 
-                                    <a class="person" href="#" @click="showTeacherInfo(item.email)">
-                                        <div class="person_box">
+                                    <a class="person" href="#">
+                                        <div class="person_box" v-on:click="showTeacherInfo(item.email)">
                                             <div class="name row">
                                                 <div class="name_group col-11">{{ item.teacher }}</div>
                                                 <div class="col-1 ar-collapse" :id='item.email'></div>
@@ -103,13 +103,13 @@
                                                         <div :id='item2.email + "v"' style="display: none;"></div>       
                                                     </div> -->
                                                     <a class="person" href="#" @click="showInfo(item2.email)">
-                                                        <div class="person_box">
+                                                        <div class="person_box a">
                                                             <div class="name row">
-                                                                <div class="name_group col-11">{{ item2.student }} </div>
-                                                                <div class="col-1 ar-collapse" :id='item2.email'></div>
+                                                                <div class="name_group col-11 a">{{ item2.student }} </div>
+                                                                <div class="col-1 ar-collapse a" :id='item2.email'></div>
                                                             </div>
                                                             <div :class="item2.email + 'n'" style="display: none;">
-                                                                <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email' style="display: inline-block;"></i>
+                                                                <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email + "x"' style="display: inline-block;"></i>
                                                                 <div :id='item2.email + "v"' style="display: none;"></div>       
                                                             </div>
                                                         </div>
@@ -196,7 +196,7 @@ export default {
             }
             get()
             if(show) this.show = false
-            this.role = 'school-admin'
+            this.role = 'teacher'
         },
         showInfo(email){
             if(this.role == 'teacher'){
@@ -210,10 +210,10 @@ export default {
                 }
                 else{
                     document.querySelector('.' + email).style.display = 'block'
-                    if(document.getElementById(email).style.display == 'inline-block'){
+                    if(document.getElementById(email + "x").style.display == 'inline-block'){
                         // запрос
                         setTimeout(function(){
-                            document.getElementById(email).style.display = 'none'
+                            document.getElementById(email + "x").style.display = 'none'
                             document.getElementById(email + 'v').innerHTML = 'Статистика'
                             document.getElementById(email + 'v').style.display = 'block'
                         }, 1500);
@@ -231,10 +231,10 @@ export default {
                 }
                 else{
                     document.querySelector('.' + email + 'n').style.display = 'block'
-                    if(document.getElementById(email).style.display == 'inline-block'){
+                    if(document.getElementById(email + "x").style.display == 'inline-block'){
                         // запрос
                         setTimeout(function(){
-                            document.getElementById(email).style.display = 'none'
+                            document.getElementById(email + "x").style.display = 'none'
                             document.getElementById(email + 'v').innerHTML = 'Статистика'
                             document.getElementById(email + 'v').style.display = 'block'
                         }, 1500);
@@ -246,35 +246,31 @@ export default {
             $('#'+email).toggleClass('ar-show');
         },
         showTeacherInfo(email){
-            for(let i = 0; i < this.teachers.length; i++){
-                if(document.getElementById(this.teachers[i].email + 's').style.display == 'block' && this.teachers[i].email != email){
-                    document.getElementById(this.teachers[i].email + 's').style.display = 'none'
+            if(event.target.className == 'person_box' || event.target.className == 'name row' || event.target.className == 'name_group col-11'|| event.target.className == 'col-1 ar-collapse' || event.target.className == 'col-1 ar-collapse ar-show'){
+                for(let i = 0; i < this.teachers.length; i++){
+                    if(document.getElementById(this.teachers[i].email + 's').style.display == 'block' && this.teachers[i].email != email){
+                        document.getElementById(this.teachers[i].email + 's').style.display = 'none'
+                    }
                 }
+                if(document.getElementById(email + 's').style.display == 'block'){
+                    document.getElementById(email + 's').style.display = 'none'
+                }
+                else{
+                    if(document.getElementById(email + 's').style.display == 'none'){
+                        // запрос
+                            this.students2 = []
+                            //document.getElementById(email).style.display = 'none'
+                            let students = [{student: 'Петя', email: 'v11ru'}, {student: 'Вася', email: 'v12ru'}, {student: 'Дима', email: 'v13ru'}]
+                            for(let i = 0; i < 3; i++){
+                                this.students2.push(students[i])
+                            }
+                            document.getElementById(email + 's').style.display = 'block'
+                    } 
+                }
+                //изменение классов чтобы стрелка меняла направление
+                $('#'+email+'x').removeClass('ar-show');
+                $('#'+email+'x').toggleClass('ar-show');
             }
-            if(document.getElementById(email + 's').style.display == 'block'){
-                document.getElementById(email + 's').style.display = 'none'
-            }
-            else{
-                if(document.getElementById(email + 's').style.display == 'none'){
-                    // запрос
-                        this.students2 = []
-                        //document.getElementById(email).style.display = 'none'
-                        let students = [{student: 'Петя', email: 'v11ru'}, {student: 'Вася', email: 'v12ru'}, {student: 'Дима', email: 'v13ru'}]
-                        for(let i = 0; i < 3; i++){
-                            this.students2.push(students[i])
-                        }
-                        // for(let i = 0; i < 3; i++){
-                        //     document.getElementById(email + 'v').insertAdjacentHTML(
-                        //         'beforeEnd',
-                        //         '<a class="person" href="#" @click="showInfo(' + students[i].email + ')"><div class="person_box"><div class="name" ><div class="name_group">' + students[i].student + '</div></div><div :class="' + students[i].email + '" style="display: none;"><i class="fa fa-spinner fa-pulse fa-3x" :id="' + students[i].email + '" style="display: inline-block;"></i><div :id="' + students[i].email + "v" + '" style="display: none;""></div></div></div></a>'
-                        //     );
-                        // }
-                        document.getElementById(email + 's').style.display = 'block'
-                } 
-            }
-            //изменение классов чтобы стрелка меняла направление
-            $('#'+email).not('.ar-collapse').removeClass('ar-show');
-            $('#'+email).toggleClass('ar-show');
         },
         file(){
             let data = []
