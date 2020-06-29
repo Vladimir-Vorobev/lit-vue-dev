@@ -139,7 +139,6 @@
 <script>
 import needle from 'needle'
 import readXlsxFile from 'read-excel-file'
-import $ from 'jquery'
 export default {
     name: 'Admin',
     data(){
@@ -196,20 +195,23 @@ export default {
             }
             get()
             if(show) this.show = false
-            this.role = 'teacher'
+            this.role = 'school-admin'
         },
         showInfo(email){
             if(this.role == 'teacher'){
                 for(let i = 0; i < this.students.length; i++){
                     if(document.querySelector('.' + this.students[i].email).style.display == 'block' && this.students[i].email != email){
                         document.querySelector('.' + this.students[i].email).style.display = 'none'
+                        document.getElementById(this.students[i].email).classList.remove('ar-show');
                     }
                 }
                 if(document.querySelector('.' + email).style.display == 'block'){
                     document.querySelector('.' + email).style.display = 'none'
+                    document.getElementById(email).classList.remove('ar-show');
                 }
                 else{
                     document.querySelector('.' + email).style.display = 'block'
+                    document.getElementById(email).classList.add('ar-show');
                     if(document.getElementById(email + "x").style.display == 'inline-block'){
                         // запрос
                         setTimeout(function(){
@@ -224,13 +226,16 @@ export default {
                 for(let i = 0; i < this.students2.length; i++){
                     if(document.querySelector('.' + this.students2[i].email + 'n').style.display == 'block' && this.students2[i].email != email){
                         document.querySelector('.' + this.students2[i].email + 'n').style.display = 'none'
+                        document.getElementById(this.students2[i].email).classList.remove('ar-show');
                     }
                 }
                 if(document.querySelector('.' + email + 'n').style.display == 'block'){
                     document.querySelector('.' + email + 'n').style.display = 'none'
+                    document.getElementById(email).classList.remove('ar-show');
                 }
                 else{
                     document.querySelector('.' + email + 'n').style.display = 'block'
+                    document.getElementById(email).classList.add('ar-show');
                     if(document.getElementById(email + "x").style.display == 'inline-block'){
                         // запрос
                         setTimeout(function(){
@@ -241,21 +246,21 @@ export default {
                     }
                 } 
             }
-            //изменение классов чтобы стрелка меняла направление
-            $('#'+email).not('.ar-collapse').removeClass('ar-show');
-            $('#'+email).toggleClass('ar-show');
         },
         showTeacherInfo(email){
             if(event.target.className == 'person_box' || event.target.className == 'name row' || event.target.className == 'name_group col-11'|| event.target.className == 'col-1 ar-collapse' || event.target.className == 'col-1 ar-collapse ar-show'){
                 for(let i = 0; i < this.teachers.length; i++){
                     if(document.getElementById(this.teachers[i].email + 's').style.display == 'block' && this.teachers[i].email != email){
                         document.getElementById(this.teachers[i].email + 's').style.display = 'none'
+                        document.getElementById(this.teachers[i].email).classList.remove('ar-show');
                     }
                 }
                 if(document.getElementById(email + 's').style.display == 'block'){
                     document.getElementById(email + 's').style.display = 'none'
+                    document.getElementById(email).classList.remove('ar-show');
                 }
                 else{
+                    document.getElementById(email).classList.add('ar-show');
                     if(document.getElementById(email + 's').style.display == 'none'){
                         // запрос
                             this.students2 = []
@@ -267,9 +272,6 @@ export default {
                             document.getElementById(email + 's').style.display = 'block'
                     } 
                 }
-                //изменение классов чтобы стрелка меняла направление
-                $('#'+email+'x').removeClass('ar-show');
-                $('#'+email+'x').toggleClass('ar-show');
             }
         },
         file(){
