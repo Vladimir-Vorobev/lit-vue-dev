@@ -51,7 +51,27 @@
                                             </div>
                                             <div :id="item.email + 'n'" style="display: none;">
                                                 <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email + "x"' style="display: inline-block;"></i></div>
-                                                <div width="50" height="50"><canvas width="50" height="50" :id="'chart' + item.email" style="display: none;"></canvas></div>
+                                                <form :id="'form' + item.email">
+                                                    <input class="radio" :name="'donaught' + item.email" type="radio" value="donaught" checked @click="changeInfo(item.email, 'donaught')"> Кругова диаграмма
+                                                    <input class="radio" :name="'bar' + item.email" type="radio" value="bar" @click="changeInfo(item.email, 'bar')"> Столбчатая диаграмма
+                                                    <input class="radio" :name="'full' + item.email" type="radio" value="full" @click="changeInfo(item.email)"> Полная статистика
+                                                </form>
+                                                <div class="chart-container" :id="'chartDiv' + item.email" style="display: none;"><canvas :id="'chart' + item.email"></canvas></div>
+                                                <div class="chart-container" :id="'chartDiv2' + item.email" style="display: none;"><canvas :id="'chart2' + item.email"></canvas></div>
+                                                <div :id="'chartDiv3' + item.email">
+                                                    <div v-if="data.length == 0"><h3>Нет мероприятий</h3></div>
+                                                    <div class="card" v-for="item3 in data" :key="item3.value">
+                                                        <div class="card-header">{{item3.date}}</div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <h5 class="card-title col-11">{{item3.name}}</h5>
+                                                            </div>
+                                                            <p class="card-text"><i class="far fa-clock"></i> {{item3.time}}</p>
+                                                            <p class="card-text">Тип: {{item3.type}}</p>
+                                                            <a :href="item3.link" class="btn btn-primary">Перейти к мероприятию</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </a>
@@ -88,7 +108,7 @@
                                                             </div>
                                                             <div :id="item2.email + 'n'" style="display: none;">
                                                                 <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email + "x"' style="display: inline-block;"></i>
-                                                                <div width="50" height="50"><canvas width="50" height="50" :id="'chart' + item2.email" style="display: none;"></canvas></div>      
+                                                                <div class="chart-container"><canvas :id="'chart' + item2.email" style="display: none;"></canvas></div>      
                                                             </div>
                                                         </div>
                                                     </a>    
@@ -131,6 +151,7 @@ export default {
             classData: [],
             ShowList: true,
             ShowAdd: false,
+            data: [],
         }
     },
     methods:{
@@ -188,8 +209,8 @@ export default {
         },
         showInfo(email){
             if(this.role == 'teacher'){
-                console.log(event.target)
-                if(event.target.className != 'chartjs-render-monitor'){
+                console.log(event.target.className)
+                if(event.target.className != 'chartjs-render-monitor' && event.target.className != 'radio'){
                     for(let i = 0; i < this.students.length; i++){
                         if(document.getElementById(this.students[i].email + 'n').style.display == 'block' && this.students[i].email != email){
                             document.getElementById(this.students[i].email + 'n').style.display = 'none'
@@ -206,7 +227,6 @@ export default {
                         if(document.getElementById(email + "x").style.display == 'inline-block'){
                             let SessionID = this.$store.getters.SessionID
                             let teacherEmail = this.$store.getters.email
-                            console.log(SessionID)
                             fetch('http://78.155.219.12:3000/api/getCheckedEvents', {
                                 method: 'get',
                                 headers: {email: teacherEmail, studEmail: email, sessionid: SessionID},
@@ -217,8 +237,10 @@ export default {
                             })
                             .then(datan => {
                                 let statistics = datan.stat
-                                console.log(statistics)
-                                var ctx = document.getElementById('chart' + email)
+                                this.data = []
+                                this.data = datan.events
+                                let ctx = document.getElementById('chart' + email)
+                                let ctx2 = document.getElementById('chart2' + email)
                                 let myChart = new Chart(ctx, {
                                     type: 'doughnut',
                                     data: {
@@ -243,6 +265,7 @@ export default {
                                                 'rgba(255, 159, 64, 1)'
                                             ],
                                             borderWidth: 1,
+                                            hoverBorderWidth: 5,
                                         }]
                                     },
                                     options: {
@@ -251,16 +274,46 @@ export default {
                                         }
                                     }
                                 });
-                                console.log(myChart)
+                                let myChart2 = new Chart(ctx2, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: ['Сфера услуг', 'IT', 'Творчество и Дизайн', 'Строительство', 'Инжинерные технологии', 'Транспорт и логистика'],
+                                        datasets: [{
+                                            label: '# of Votes',
+                                            data: [statistics.service, statistics.programming, 0, 0,  statistics.engeniring, 0],
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.5)',
+                                                'rgba(54, 162, 235, 0.5)',
+                                                'rgba(255, 206, 86, 0.5)',
+                                                'rgba(75, 192, 192, 0.5)',
+                                                'rgba(153, 102, 255, 0.5)',
+                                                'rgba(255, 159, 64, 0.5)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(54, 162, 235, 1)',
+                                                'rgba(255, 206, 86, 1)',
+                                                'rgba(75, 192, 192, 1)',
+                                                'rgba(153, 102, 255, 1)',
+                                                'rgba(255, 159, 64, 1)'
+                                            ],
+                                            borderWidth: 1,
+                                            hoverBorderWidth: 5,
+                                        }]
+                                    },
+                                    options: {
+                                        legend: {
+                                            position: 'bottom',
+                                        }
+                                    }
+                                });
+                                console.log(myChart, myChart2)
                                 document.getElementById(email + "x").style.display = 'none'
-                                document.getElementById('chart' + email).style.display = 'block'
+                                document.getElementById('chartDiv' + email).style.display = 'block'
                             })
                             .catch(err => {
                                 console.log(err)
                             })
-                            setTimeout(function(){
-                                
-                            }, 1500);
                         } 
                     }
                 }
@@ -387,10 +440,30 @@ export default {
             this.ShowAdd = true
             this.ShowList = false
         },
-        // opclp(email){
-        //     // $('#'+email).not('.ar-collapse').removeClass('ar-show');
-        //     // $('#'+email).toggleClass('ar-show');
-        // },
+        changeInfo(email, chart){
+            let form = document.getElementById('form' + email)
+            if(chart == 'donaught'){
+                form['bar' + email].checked = false
+                form['full' + email].checked = false
+                document.getElementById('chartDiv' + email).style.display = 'block'
+                document.getElementById('chartDiv2' + email).style.display = 'none'
+                document.getElementById('chartDiv3' + email).style.display = 'none'
+            }
+            else if(chart == 'bar'){
+                form['donaught' + email].checked = false
+                form['full' + email].checked = false
+                document.getElementById('chartDiv' + email).style.display = 'none'
+                document.getElementById('chartDiv2' + email).style.display = 'block'
+                document.getElementById('chartDiv3' + email).style.display = 'none'
+            }
+            else{
+                form['donaught' + email].checked = false
+                form['bar' + email].checked = false
+                document.getElementById('chartDiv' + email).style.display = 'none'
+                document.getElementById('chartDiv2' + email).style.display = 'none'
+                document.getElementById('chartDiv3' + email).style.display = 'block'
+            }
+        },
     },
 }
 </script>
@@ -458,5 +531,9 @@ export default {
     content: "\f077";
     font-family: fontawesome !important;
 }
-
+.chart-container {
+  position: relative;
+  height: 500px;
+  width: 1000px;
+}
 </style>

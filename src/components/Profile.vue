@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import needle from "needle"
+import needle from 'needle'
 export default {
     name: 'Profile',
     data(){
@@ -84,9 +84,15 @@ export default {
     },
     beforeMount(){
       if(this.email == '') window.location.pathname = "/login"
-      needle.post('http://78.155.219.12:3000/api/getInformation', {email: this.email, sessionid: this.SessionID}, {"json": true}, function(err,res){
-        if(err) console.log(err)
-        let data = res.body
+      fetch('http://78.155.219.12:3000/api/getInformation', {
+          method: 'POST',
+          headers: {email: this.email, sessionid: this.SessionID},
+      })
+      .then(response => {
+          console.log("res", response)
+          return response.json()
+      })
+      .then(data => {
         if(data == '310'){
             document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
             document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
@@ -118,11 +124,13 @@ export default {
               span.innerText = data.statNumber;
             }
           }
-
           document.querySelector(".name").value = data.name;
           document.querySelector(".surname").value = data.surname;
           document.querySelector(".email").value = data.email;
           document.querySelector(".age").value = data.age;
+      })
+      .catch(err => {
+          console.log(err)
       })
     },
     methods: {
