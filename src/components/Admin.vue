@@ -432,7 +432,7 @@ export default {
 .person_box:hover{
     text-decoration: none;
     color: black;
-    background-color: rgba(221, 221, 221, 0.466);
+    background-color: rgba(228, 228, 228, 0.466);
 }
 .person_box{
     border: 1px solid black;
