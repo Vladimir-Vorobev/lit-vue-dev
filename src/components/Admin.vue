@@ -188,6 +188,7 @@ export default {
         },
         showInfo(email){
             if(this.role == 'teacher'){
+                console.log(event.target)
                 if(event.target.className != 'chartjs-render-monitor'){
                     for(let i = 0; i < this.students.length; i++){
                         if(document.getElementById(this.students[i].email + 'n').style.display == 'block' && this.students[i].email != email){
@@ -224,7 +225,7 @@ export default {
                                         labels: ['Сфера услуг', 'IT', 'Творчество и Дизайн', 'Строительство', 'Инжинерные технологии', 'Транспорт и логистика'],
                                         datasets: [{
                                             label: '# of Votes',
-                                            data: [statistics.service, statistics.programming, statistics.inj, 0, 0, 0],
+                                            data: [statistics.service, statistics.programming, 0, 0,  statistics.engeniring, 0],
                                             backgroundColor: [
                                                 'rgba(255, 99, 132, 0.5)',
                                                 'rgba(54, 162, 235, 0.5)',
