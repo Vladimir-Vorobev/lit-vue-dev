@@ -11,7 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <router-link to="/all-events" class="router-link">
+              <router-link to="/it-events" class="router-link">
                   <a class="nav-link" ref="allEvents" style="color: #000 !important">Все мероприятия</a>
               </router-link>
             </li>
@@ -72,24 +72,24 @@ export default {
       let email = this.$store.getters.email
       let SessionID = this.$store.getters.SessionID
       let user = ''
+      async function get(){
+        await needle.post('http://78.155.219.12:3000/api/getInformation', {email: email, sessionid: SessionID}, {"json": true}, function(err, res){
+          if(err) console.log(err)
+          let data = res.body
+          if(data == '310'){
+            document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            window.location.reload()
+          }
+          user = data.name + ' ' + data.surname
+          console.log(user)
+        })
+      }
       if(email != ''){
           if(this.loginText == 'Войти'){
-            needle.post('http://78.155.219.12:3000/api/getInformation', {email: email, sessionid: SessionID}, {"json": true}, function(err, res){
-              if(err) console.log(err)
-              let data = res.body
-              if(data == '310'){
-                document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-                document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-                window.location.reload()
-              }
-              user = data.name + ' ' + data.surname
-            })
-          }
-          while(user){
-            if(user != ''){
-              this.loginText = user
-              return
-            }
+            get()
+            console.log(user)
+            this.loginText = user
           }
         }
         else{

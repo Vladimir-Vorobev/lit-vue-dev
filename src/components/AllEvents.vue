@@ -3,36 +3,36 @@
             <div class="card">
                 <div class="card-body row">
                     <div class="col-md-5 col-12"> <p class="card-text" style="font-weight: bold; font-size: 1.3em">Сортировка мероприятий: </p> </div> 
-                        <div class="col-md-7 col-12" v-if="this.$route.path == '/all-events'"> 
+                        <!-- <div class="col-md-7 col-12" v-if="this.$route.path == '/all-events'"> 
                             <select class="custom-select custom-select-sm mb-3 events " onchange="location.href=this.value">
-                                <option value="/all-events" selected>Все</option>
-                                <option value="/it-events">IT</option>
-                                <option value="/engineering-events">Инженерия</option>
-                                <option value="/medicine-events">Медицина</option>
-                            </select>
-                        </div>
-                        <div class="col-md-7 col-12" v-else-if="this.$route.path == '/it-events'"> 
-                            <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
                                 <option value="/all-events">Все</option>
                                 <option value="/it-events" selected>IT</option>
                                 <option value="/engineering-events">Инженерия</option>
-                                <option value="/medicine-events">Медицина</option>
+                                <option value="/service-events">Сфера услуг</option>
+                            </select>
+                        </div> -->
+                        <div class="col-md-7 col-12" v-if="this.$route.path == '/it-events'"> 
+                            <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
+                                <!-- <option value="/all-events">Все</option> -->
+                                <option value="/it-events" selected>IT</option>
+                                <option value="/engineering-events">Инженерия</option>
+                                <option value="/service-events">Сфера услуг</option>
                             </select>
                         </div>
-                        <div class="col-md-7 col-12" v-else-if="this.$route.path == '/medicine-events'"> 
+                        <div class="col-md-7 col-12" v-else-if="this.$route.path == '/service-events'"> 
                             <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
-                                <option value="/all-events">Все</option>
+                                <!-- <option value="/all-events">Все</option> -->
                                 <option value="/it-events">IT</option>
                                 <option value="/engineering-events">Инженерия</option>
-                                <option value="/medicine-events" selected>Медицина</option>
+                                <option value="/service-events" selected>Сфера услуг</option>
                             </select>
                         </div>
                         <div class="col-md-7 col-12" v-else> 
                             <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
-                                <option value="/all-events">Все</option>
+                                <!-- <option value="/all-events">Все</option> -->
                                 <option value="/it-events">IT</option>
                                 <option value="/engineering-events" selected>Инженерия</option>
-                                <option value="/medicine-events">Медицина</option>
+                                <option value="/service-events">Сфера услуг</option>
                             </select>
                         </div>
                     </div>
@@ -69,9 +69,8 @@ export default {
             return response.json()
         })
         .then(datan => {
-            if(this.$route.path == '/all-events') this.data = datan.allE
-            else if(this.$route.path == '/it-events') this.data = datan.programming
-            else if(this.$route.path == '/medicine-events') this.data = datan.medicine
+            if(this.$route.path == '/it-events') this.data = datan.programming
+            else if(this.$route.path == '/service-events') this.data = datan.service
             else this.data = datan.engeniring
         })
     },
@@ -90,6 +89,10 @@ export default {
             let SessionID = this.$store.getters.SessionID
             if(email != ''){
                 delete event.places
+                if(this.$route.path == '/it-events') event.mainType = 'programming'
+                else if(this.$route.path == '/service-events') event.mainType = 'service'
+                else event.mainType = 'engeniring'
+                console.log(event)
                 needle.post('http://78.155.219.12:3000/api/checkedEventsUpdate', {email: email, events: event, sessionid: SessionID}, {"json": true}, function(err, res){
                     if (err) throw err
                     if(res.body == '310'){

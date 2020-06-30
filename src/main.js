@@ -33,10 +33,10 @@ Vue.use(Vuex)
 const routes = [
   { path: '/', component: MainPage },
   { path: '/recommended-events', component: RecommendedEvents },
-  { path: '/all-events', component: AllEvents },
+  // { path: '/all-events', component: AllEvents },
   { path: '/it-events', component: AllEvents },
   { path: '/engineering-events', component: AllEvents },
-  { path: '/medicine-events', component: AllEvents },
+  { path: '/service-events', component: AllEvents },
   { path: '/your-events', component: YourEvents },
   { path: '/registration', component: Registration },
   { path: '/login', component: LogIn },
@@ -55,13 +55,6 @@ const routes = [
 const router = new VueRouter({
   mode: 'history',
   routes, // сокращённая запись для `routes: routes`
-  scrollBehavior (to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
-    }
-  }
 })
 
 const store = new Vuex.Store(APP_STORE);

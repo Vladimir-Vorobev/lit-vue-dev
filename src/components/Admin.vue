@@ -42,16 +42,16 @@
                     <div v-if="role == 'teacher'">
                         <div v-if="ShowList">
                             <transition-group name="main">
-                                <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.student">
+                                <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.person">
                                     <a class="person" href="#" @click="showInfo(item.email)">
                                         <div class="person_box">
                                             <div class="name row">
-                                                <div class="name_group col-11">{{ item.student }} </div>
+                                                <div class="name_group col-11">{{ item.person }} </div>
                                                 <div class="col-1 ar-collapse" :id='item.email'></div>
                                             </div>
-                                            <div :class="item.email" style="display: none;">
+                                            <div :id="item.email + 'n'" style="display: none;">
                                                 <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email + "x"' style="display: inline-block;"></i></div>
-                                                <div :id='item.email + "v"' style="display: none;"></div>       
+                                                <div width="50" height="50"><canvas width="50" height="50" :id="'chart' + item.email" style="display: none;"></canvas></div>
                                             </div>
                                         </div>
                                     </a>
@@ -71,46 +71,24 @@
                     <div v-if="role == 'school-admin'">
                         <div v-if="ShowList">
                             <transition-group name="main">
-                                <div class="tab-pane fade show active" id="pills-list-student" v-for="item in teachers" :key="item.teacher">
-                                    <!-- <a class="name" href="#" @click="showTeacherInfo(item.email)">
-                                        <div class="name_group">{{ item.teacher }}</div>
-                                    </a>
-                                    <div :id='item.email + "s"' style="display: none;">
-                                        <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
-                                            <a class="name" href="#" @click="showInfo(item2.email)">
-                                                <div class="name_group">{{ item2.student }} </div>
-                                            </a>
-                                            <div :class="item2.email + 'n'" style="display: none;">
-                                                <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email' style="display: inline-block;"></i>
-                                                <div :id='item2.email + "v"' style="display: none;"></div>       
-                                            </div>      
-                                        </div>
-                                    </div> -->
-
+                                <div class="tab-pane fade show active" id="pills-list-student" v-for="item in teachers" :key="item.person">
                                     <a class="person" href="#">
                                         <div class="person_box" v-on:click="showTeacherInfo(item.email)">
                                             <div class="name row">
-                                                <div class="name_group col-11">{{ item.teacher }}</div>
+                                                <div class="name_group col-11">{{ item.person }}</div>
                                                 <div class="col-1 ar-collapse" :id='item.email'></div>
                                             </div>
                                             <div :id='item.email + "s"' style="display: none;">
                                                 <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
-                                                    <!-- <a class="name" href="#" @click="showInfo(item2.email)">
-                                                        <div class="name_group">{{ item2.student }} </div>
-                                                    </a>
-                                                    <div :class="item2.email + 'n'" style="display: none;">
-                                                        <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email' style="display: inline-block;"></i>
-                                                        <div :id='item2.email + "v"' style="display: none;"></div>       
-                                                    </div> -->
                                                     <a class="person" href="#" @click="showInfo(item2.email)">
                                                         <div class="person_box a">
                                                             <div class="name row">
                                                                 <div class="name_group col-11 a">{{ item2.student }} </div>
                                                                 <div class="col-1 ar-collapse a" :id='item2.email'></div>
                                                             </div>
-                                                            <div :class="item2.email + 'n'" style="display: none;">
+                                                            <div :id="item2.email + 'n'" style="display: none;">
                                                                 <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email + "x"' style="display: inline-block;"></i>
-                                                                <div :id='item2.email + "v"' style="display: none;"></div>       
+                                                                <div width="50" height="50"><canvas width="50" height="50" :id="'chart' + item2.email" style="display: none;"></canvas></div>      
                                                             </div>
                                                         </div>
                                                     </a>    
@@ -133,7 +111,6 @@
                 </div>
             </div>
         </transition>
-        <div width="100" height="100"><canvas id="myChart"></canvas></div>
     </div>
 </template>
 
@@ -156,63 +133,6 @@ export default {
             ShowAdd: false,
         }
     },
-    beforeMount(){
-        let students = []
-        let email = this.email
-        needle.post('http://78.155.219.12:3000/api/getAdminList', {email: email}, {"json": true}, function(err, res){
-            if(err) console.log(err)
-            for(let i = 0; i < res.body.length; i++){
-                students.push({student: res.body[i].name + ' ' + res.body[i].surname})
-            }
-        })
-        this.students = students
-        this.students = [{student: 'Иванова Мария', email: 'v11ru'}, {student: 'Иванов Иван', email: 'v12ru'}, {student: 'Сергеев Сергей', email: 'v13ru'}]
-        this.teachers = [{teacher: 'Иванова Мария', email: 'v14ru'}, {teacher: 'Иванов Иван', email: 'v15ru'}, {teacher: 'Сергеев Сергей', email: 'v16ru'}]
-    },
-    mounted(){
-        var ctx = document.getElementById('myChart')
-        let myChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Сфера услуг', 'IT', 'Творчество и Дизайн', 'Строительство', 'Инжинерные технологии', 'Транспорт и логистика'],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [3, 7, 2, 1, 3, 1],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1,
-                    hoverBackgroundColor: [
-                        'rgba(255, 99, 132, 0.5)',
-                        'rgba(54, 162, 235, 0.5)',
-                        'rgba(255, 206, 86, 0.5)',
-                        'rgba(75, 192, 192, 0.5)',
-                        'rgba(153, 102, 255, 0.5)',
-                        'rgba(255, 159, 64, 0.5)'
-                    ],
-                }]
-            },
-            options: {
-                legend: {
-                    position: 'bottom',
-                }
-            }
-        });
-        console.log(myChart)
-    },
     methods:{
         loginUser(){
             event.preventDefault()
@@ -220,74 +140,186 @@ export default {
             let email = form.elements.email.value
             let password = form.elements.password.value
             let crypto = require('crypto')
-            let data = {
-                email: email,
-                password: crypto.createHash('md5').update(password).digest("hex"), 
-            }
-            let show = true
-            async function get(){
-                await needle.post('http://78.155.219.12:3000/api/adminLogin', data, {"json": true}, function(err, res){
-                    if(err) console.log(err)
-                    if(res.body == 'Incorect password'){
-                        alert('Пользователь не найден')
-                    }
-                    else if(res.body == "OK"){
-                        show = false
-                    }
-                    else{
-                        alert("Неверный email или пароль")
-                    }
-                })
-            }
-            get()
-            if(show) this.show = false
-            this.role = 'school-admin'
+            fetch('http://78.155.219.12:3000/api/adminLogin', {
+                method: 'POST',
+                headers: {email: email, password: crypto.createHash('md5').update(password).digest("hex")},
+            })
+            .then(response => {
+                console.log("res", response)
+                return response.json()
+            })
+            .then(data => {
+                if(data == 'Incorect password'){
+                    alert('Пользователь не найден')
+                }
+                else if(data == "teacher" || data == 'school-admin'){
+                    this.show = false
+                    this.role = data
+                }
+                else{
+                    alert("Неверный email или пароль")
+                }
+                console.log(data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            let students = []
+            fetch('http://78.155.219.12:3000/api/getAdminList', {
+                method: 'POST',
+                headers: {email: email},
+            })
+            .then(response => {
+                console.log("res", response)
+                return response.json()
+            })
+            .then(data => {
+                for(let i = 0; i < data.length; i++){
+                    students.push({person: data[i].name + ' ' + data[i].surname, email: data[i].email})
+                }
+                if(this.role == 'teacher') this.students = students
+                else if(this.role == 'school-admin') this.teachers = students
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            // this.students = [{person: 'Иванова Мария', email: 'v11ru'}, {person: 'Иванов Иван', email: 'v12ru'}, {person: 'Сергеев Сергей', email: 'v13ru'}]
+            // this.teachers = [{person: 'Иванова Мария', email: 'v14ru'}, {person: 'Иванов Иван', email: 'v15ru'}, {person: 'Сергеев Сергей', email: 'v16ru'}]
         },
         showInfo(email){
             if(this.role == 'teacher'){
-                for(let i = 0; i < this.students.length; i++){
-                    if(document.querySelector('.' + this.students[i].email).style.display == 'block' && this.students[i].email != email){
-                        document.querySelector('.' + this.students[i].email).style.display = 'none'
-                        document.getElementById(this.students[i].email).classList.remove('ar-show');
+                if(event.target.className != 'chartjs-render-monitor'){
+                    for(let i = 0; i < this.students.length; i++){
+                        if(document.getElementById(this.students[i].email + 'n').style.display == 'block' && this.students[i].email != email){
+                            document.getElementById(this.students[i].email + 'n').style.display = 'none'
+                            document.getElementById(this.students[i].email).classList.remove('ar-show');
+                        }
                     }
-                }
-                if(document.querySelector('.' + email).style.display == 'block'){
-                    document.querySelector('.' + email).style.display = 'none'
-                    document.getElementById(email).classList.remove('ar-show');
-                }
-                else{
-                    document.querySelector('.' + email).style.display = 'block'
-                    document.getElementById(email).classList.add('ar-show');
-                    if(document.getElementById(email + "x").style.display == 'inline-block'){
-                        // запрос
-                        setTimeout(function(){
-                            document.getElementById(email + "x").style.display = 'none'
-                            document.getElementById(email + 'v').innerHTML = 'Статистика'
-                            document.getElementById(email + 'v').style.display = 'block'
-                        }, 1500);
-                    } 
+                    if(document.getElementById(email + 'n').style.display == 'block'){
+                        document.getElementById(email + 'n').style.display = 'none'
+                        document.getElementById(email).classList.remove('ar-show');
+                    }
+                    else{
+                        document.getElementById(email + 'n').style.display = 'block'
+                        document.getElementById(email).classList.add('ar-show');
+                        if(document.getElementById(email + "x").style.display == 'inline-block'){
+                            let SessionID = this.$store.getters.SessionID
+                            let teacherEmail = this.$store.getters.email
+                            console.log(SessionID)
+                            fetch('http://78.155.219.12:3000/api/getCheckedEvents', {
+                                method: 'get',
+                                headers: {email: teacherEmail, studEmail: email, sessionid: SessionID},
+                            })
+                            .then(response => {
+                                console.log("res", response)
+                                return response.json()
+                            })
+                            .then(datan => {
+                                let statistics = datan.stat
+                                console.log(statistics)
+                                var ctx = document.getElementById('chart' + email)
+                                let myChart = new Chart(ctx, {
+                                    type: 'doughnut',
+                                    data: {
+                                        labels: ['Сфера услуг', 'IT', 'Творчество и Дизайн', 'Строительство', 'Инжинерные технологии', 'Транспорт и логистика'],
+                                        datasets: [{
+                                            label: '# of Votes',
+                                            data: [statistics.service, statistics.programming, statistics.inj, 0, 0, 0],
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.5)',
+                                                'rgba(54, 162, 235, 0.5)',
+                                                'rgba(255, 206, 86, 0.5)',
+                                                'rgba(75, 192, 192, 0.5)',
+                                                'rgba(153, 102, 255, 0.5)',
+                                                'rgba(255, 159, 64, 0.5)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(54, 162, 235, 1)',
+                                                'rgba(255, 206, 86, 1)',
+                                                'rgba(75, 192, 192, 1)',
+                                                'rgba(153, 102, 255, 1)',
+                                                'rgba(255, 159, 64, 1)'
+                                            ],
+                                            borderWidth: 1,
+                                        }]
+                                    },
+                                    options: {
+                                        legend: {
+                                            position: 'bottom',
+                                        }
+                                    }
+                                });
+                                console.log(myChart)
+                                document.getElementById(email + "x").style.display = 'none'
+                                document.getElementById('chart' + email).style.display = 'block'
+                            })
+                            .catch(err => {
+                                console.log(err)
+                            })
+                            setTimeout(function(){
+                                
+                            }, 1500);
+                        } 
+                    }
                 }
             }
             else if(this.role == 'school-admin'){
                 for(let i = 0; i < this.students2.length; i++){
-                    if(document.querySelector('.' + this.students2[i].email + 'n').style.display == 'block' && this.students2[i].email != email){
-                        document.querySelector('.' + this.students2[i].email + 'n').style.display = 'none'
+                    if(document.getElementById('.' + this.students2[i].email + 'n').style.display == 'block' && this.students2[i].email != email){
+                        document.getElementById('.' + this.students2[i].email + 'n').style.display = 'none'
                         document.getElementById(this.students2[i].email).classList.remove('ar-show');
                     }
                 }
-                if(document.querySelector('.' + email + 'n').style.display == 'block'){
-                    document.querySelector('.' + email + 'n').style.display = 'none'
+                if(document.getElementById('.' + email + 'n').style.display == 'block'){
+                    document.getElementById('.' + email + 'n').style.display = 'none'
                     document.getElementById(email).classList.remove('ar-show');
                 }
                 else{
-                    document.querySelector('.' + email + 'n').style.display = 'block'
+                    document.getElementById('.' + email + 'n').style.display = 'block'
                     document.getElementById(email).classList.add('ar-show');
                     if(document.getElementById(email + "x").style.display == 'inline-block'){
                         // запрос
                         setTimeout(function(){
+                            var ctx = document.getElementById('chart' + email)
+                            let myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['Сфера услуг', 'IT', 'Творчество и Дизайн', 'Строительство', 'Инжинерные технологии', 'Транспорт и логистика'],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [3, 7, 2, 1, 3, 1],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.5)',
+                                            'rgba(54, 162, 235, 0.5)',
+                                            'rgba(255, 206, 86, 0.5)',
+                                            'rgba(75, 192, 192, 0.5)',
+                                            'rgba(153, 102, 255, 0.5)',
+                                            'rgba(255, 159, 64, 0.5)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                        borderWidth: 1,
+                                        howerBorderWidrh: 5,
+                                    }]
+                                },
+                                options: {
+                                    legend: {
+                                        position: 'bottom',
+                                    }
+                                }
+                            });
+                            console.log(myChart)
                             document.getElementById(email + "x").style.display = 'none'
-                            document.getElementById(email + 'v').innerHTML = 'Статистика'
-                            document.getElementById(email + 'v').style.display = 'block'
+                            document.getElementById('chart' + email).style.display = 'block'
+                            document.getElementById(email + "x").style.display = 'none'
+                            document.getElementById('chart' + email).style.display = 'block'
                         }, 1500);
                     }
                 } 

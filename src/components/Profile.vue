@@ -101,9 +101,9 @@ export default {
           if(data.schoolType != undefined){
             document.querySelector(".schoolType").value = data.schoolType;
           }
-          if(data.role != 'user' && data.role != 'student') {
-            this.role = true
-          }
+          // if(data.role != 'user' && data.role != 'student') {
+          //   this.role = true
+          // }
           if(data.class_number != undefined){
             document.querySelector(".class_number").value = data.class_number;
           }
