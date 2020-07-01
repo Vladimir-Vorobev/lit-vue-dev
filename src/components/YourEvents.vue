@@ -42,7 +42,8 @@ export default {
                 document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
                 window.location.href = '/login'
             }
-            this.data = data
+            console.log(data)
+            this.data = data.checkedEvents
         })
         .catch(err => {
             console.log(err)

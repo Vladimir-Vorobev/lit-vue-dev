@@ -26,6 +26,9 @@
                         <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список класса</a>
                     </li>
                     <li class="nav-item" role="presentation">
+                        <a class="nav-link" @click="showTop()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Рейтинг класса</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
                         <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
                     </li>
                 </ul>
@@ -58,9 +61,9 @@
                                                 </form>
                                                 <div class="chart-container" :id="'chartDiv' + item.email" style="display: none;"><canvas :id="'chart' + item.email"></canvas></div>
                                                 <div class="chart-container" :id="'chartDiv2' + item.email" style="display: none;"><canvas :id="'chart2' + item.email"></canvas></div>
-                                                <div :id="'chartDiv3' + item.email">
-                                                    <div v-if="data.length == 0"><h3>Нет мероприятий</h3></div>
-                                                    <div class="card" v-for="item3 in data" :key="item3.value">
+                                                <div :id="'chartDiv3' + item.email" style="display: none;">
+                                                    <div v-if="data[item.email] != undefined && studentEvents[data.lastIndexOf(item.email)][0].length == 0"><h3>Нет мероприятий</h3></div>
+                                                    <div class="card" v-for="item3 in studentEvents[data.lastIndexOf(item.email)][0]" :key="item3.value">
                                                         <div class="card-header">{{item3.date}}</div>
                                                         <div class="card-body">
                                                             <div class="row">
@@ -76,6 +79,11 @@
                                         </div>
                                     </a>
                                 </div>
+                            </transition-group>
+                        </div>
+                        <div v-if="ShowTop">
+                            <transition-group name="main">
+                                <p key="p">Рейтинг тут</p>
                             </transition-group>
                         </div>
                         <div v-if="ShowAdd">
@@ -150,8 +158,10 @@ export default {
             email: this.$store.getters.email,
             classData: [],
             ShowList: true,
+            ShowTop: false,
             ShowAdd: false,
             data: [],
+            studentEvents: [],
         }
     },
     methods:{
@@ -197,6 +207,8 @@ export default {
             .then(data => {
                 for(let i = 0; i < data.length; i++){
                     students.push({person: data[i].name + ' ' + data[i].surname, email: data[i].email})
+                    this.data.push(data[i].email)
+                    this.studentEvents.push([])
                 }
                 if(this.role == 'teacher') this.students = students
                 else if(this.role == 'school-admin') this.teachers = students
@@ -237,8 +249,11 @@ export default {
                             })
                             .then(datan => {
                                 let statistics = datan.stat
-                                this.data = []
-                                this.data = datan.events
+                                console.log(this.data)
+                                console.log(this.data.lastIndexOf(email))
+                                this.studentEvents[this.data.lastIndexOf(email)].push(datan.checkedEvents)
+                                console.log(this.studentEvents)
+                                console.log(this.studentEvents[this.data.lastIndexOf(email)][0])
                                 let ctx = document.getElementById('chart' + email)
                                 let ctx2 = document.getElementById('chart2' + email)
                                 let myChart = new Chart(ctx, {
@@ -434,11 +449,19 @@ export default {
             event.preventDefault()
             this.ShowList = true
             this.ShowAdd = false
+            this.ShowTop = false
+        },
+        showTop(){
+            event.preventDefault()
+            this.ShowTop = true
+            this.ShowList = false
+            this.ShowAdd = false
         },
         showAdd(){
             event.preventDefault()
             this.ShowAdd = true
             this.ShowList = false
+            this.ShowTop = false
         },
         changeInfo(email, chart){
             let form = document.getElementById('form' + email)

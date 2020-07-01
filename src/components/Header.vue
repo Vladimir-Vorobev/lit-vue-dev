@@ -67,28 +67,30 @@ export default {
             loginText: 'Войти',
         }
     },
-    created(){
+    beforeMount(){
       let email = this.$store.getters.email
       let SessionID = this.$store.getters.SessionID
-      fetch('http://78.155.219.12:3000/api/getInformation', {
+      if(email != ''){
+        fetch('http://78.155.219.12:3000/api/getInformation', {
           method: 'POST',
           headers: {email: email, sessionid: SessionID},
-      })
-      .then(response => {
-          console.log("res", response)
-          return response.json()
-      })
-      .then(data => {
-          if(data == '310'){
-            document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-            document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-            window.location.reload()
-          }
-          this.loginText = data.name + ' ' + data.surname
-      })
-      .catch(err => {
-          console.log(err)
-      })
+        })
+        .then(response => {
+            console.log("res", response)
+            return response.json()
+        })
+        .then(data => {
+            if(data == '310'){
+              document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+              document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+              window.location.reload()
+            }
+            this.loginText = data.name + ' ' + data.surname
+        })
+        .catch(err => {
+            console.log(err)
+        })
+      }
     }
 
 }
