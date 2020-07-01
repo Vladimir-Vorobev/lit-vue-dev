@@ -18,6 +18,7 @@
 
 <script>
 import needle from 'needle'
+import Vue from 'vue';
 export default {
     name: 'YourEvents',
     data(){
@@ -52,7 +53,7 @@ export default {
      methods:{
         deleteEvent(events){
             this.$swal({
-                icon: 'question',
+                icon: 'warning',
                 title: 'Вы уверены что хотите удалить?',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -71,7 +72,15 @@ export default {
                             document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
                             window.location.href = '/login'
                         }
-                        window.location.reload()
+                        Vue.swal({
+                            icon: 'success',
+                            text: 'Мероприятие успешно удаленно',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            timerProgressBar: true,
+                        }).then(() => {
+                            window.location.reload()
+                        });
                     })
                 }
             });
