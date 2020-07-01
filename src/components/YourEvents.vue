@@ -50,19 +50,31 @@ export default {
         })
      },
      methods:{
-         deleteEvent(events){
-            event.preventDefault()
-            let email = this.$store.getters.email
-            let SessionID = this.$store.getters.SessionID
-            needle.post('http://78.155.219.12:3000/api/deleteEvent', {email: email, event: events, sessionid: SessionID}, {"json": true}, function(err, res){
-                if(err) console.log(err)
-                if(res.body == '310'){
-                    document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-                    document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-                    window.location.href = '/login'
+        deleteEvent(events){
+            this.$swal({
+                icon: 'question',
+                title: 'Вы уверены что хотите удалить?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Да',
+                cancelButtonText: 'Отмена'
+            }).then((result) => {
+                if (result.value) {
+                    event.preventDefault()
+                    let email = this.$store.getters.email
+                    let SessionID = this.$store.getters.SessionID
+                    needle.post('http://78.155.219.12:3000/api/deleteEvent', {email: email, event: events, sessionid: SessionID}, {"json": true}, function(err, res){
+                        if(err) console.log(err)
+                        if(res.body == '310'){
+                            document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                            document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                            window.location.href = '/login'
+                        }
+                        window.location.reload()
+                    })
                 }
-                window.location.reload()
-            })
+            });
         }
      }
 }

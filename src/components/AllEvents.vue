@@ -48,7 +48,6 @@
                         <a :href="item.link" class="btn btn-primary" @click="setScroll()">Перейти к мероприятию</a>
                     </div>
                 </div>
-                <button @click="test()">test</button>
             </div>
 </template>
 
@@ -115,7 +114,20 @@ export default {
                 })
             }
             else{
-                window.location.pathname = "/login"
+                this.$swal({
+                    icon: 'error',
+                    title: 'Вы не авторизованы!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Авторизоваться',
+                    cancelButtonText: 'Отмена'
+                }).then((result) => {
+                    if (result.value) {
+                        window.location.pathname = "/login"
+                    }
+                });
+                //window.location.pathname = "/login"
             }
         },
         setScroll(){
