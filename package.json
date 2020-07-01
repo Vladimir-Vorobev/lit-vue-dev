@@ -29,6 +29,7 @@
     "nodemailer": "^6.4.10",
     "read-excel-file": "^4.0.6",
     "request": "^2.88.2",
+    "sweetalert2": "^9.15.2",
     "tress": "^1.1.4",
     "vue": "^2.6.11",
     "vue-chartjs": "^3.5.0",
