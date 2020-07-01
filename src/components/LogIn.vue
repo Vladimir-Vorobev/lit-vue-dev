@@ -40,7 +40,7 @@ export default {
           password: crypto.createHash('md5').update(password).digest("hex"), 
         }
         needle.post('http://78.155.219.12:3000/api/login', data, {"json": true}, function(err, res){
-            if(err) console.log(err)
+            if(err){console.log(err)} 
             if(res.body == 'Incorect password'){
               //alert('Неверный email или пароль')
               this.$swal({
