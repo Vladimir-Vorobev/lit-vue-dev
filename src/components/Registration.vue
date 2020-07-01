@@ -169,11 +169,8 @@ export default {
                     showConfirmButton: false,
                     timer: 1500,
                     timerProgressBar: true,
-                }).then((result) => {
-                  /* Read more about handling dismissals below */
-                  if (result.dismiss === Swal.DismissReason.timer) {
+                }).then(() => {
                     document.location.href = "/login"
-                  }
                 });
                 //document.location.href = "/login"
               }
