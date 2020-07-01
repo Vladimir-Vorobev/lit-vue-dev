@@ -101,7 +101,8 @@ export default {
                         window.location.href = '/login'
                     }
                     else{
-                        alert('Мероприятие успешно добавлено')
+                        //alert('Мероприятие успешно добавлено')
+                        this.$swal('Мероприятие успешно добавлено');
                         let notif = document.createElement('div');
                         notif.style.top = '150px';
                         notif.style.right = '150px';

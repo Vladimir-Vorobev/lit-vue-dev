@@ -42,10 +42,12 @@ export default {
         needle.post('http://78.155.219.12:3000/api/login', data, {"json": true}, function(err, res){
             if(err) console.log(err)
             if(res.body == 'Incorect password'){
-              alert('Неверный email или пароль')
+              //alert('Неверный email или пароль')
+              this.$swal('Неверный email или пароль');
             }
             else if(res.body == 'User undefined'){
-              alert('Пользователь не найден')
+              //alert('Пользователь не найден')
+              this.$swal('Пользователь не найден');
             }
             else if(res.body.length == 128){
               document.cookie = "email=" + email + "; expires=" + new Date(Date.now() + 864000e3).toUTCString()
