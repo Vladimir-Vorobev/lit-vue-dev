@@ -156,12 +156,28 @@ export default {
             }
             if(it + eng + med + art != 10){
                 //alert('Ответьте на все вопросы')
-                this.$swal('Ответьте на все вопросы');
+                this.$swal({
+                    icon: 'error',
+                    text: 'Ответьте на все вопросы'
+                });
             }
             else{
                 //alert('Ваши ответы: ' + ' It: ' + it + ' Инженерия: ' + eng + ' Медицина: ' + med  + ' Арт: ' + art  + ' Перейдите на страницу мероприятий и выберите, что Вам подходит!')
-                this.$swal('Ваши ответы: ' + ' It: ' + it + ' Инженерия: ' + eng + ' Медицина: ' + med  + ' Арт: ' + art  + ' Перейдите на страницу мероприятий и выберите, что Вам подходит!');
-                document.location.href = '/all-events'
+                this.$swal({
+                    icon: 'success',
+                    title: 'Результаты',
+                    text: 'Ваши ответы: ' + ' It: ' + it + ' Инженерия: ' + eng + ' Медицина: ' + med  + ' Арт: ' + art  + ' Перейдите на страницу мероприятий и выберите, что Вам подходит!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Перейти',
+                    cancelButtonText: 'Отмена'
+                }).then((result) => {
+                    if (result.value) {
+                        document.location.href = '/all-events'
+                    }
+                });
+                //document.location.href = '/all-events'
             }
         }
     }

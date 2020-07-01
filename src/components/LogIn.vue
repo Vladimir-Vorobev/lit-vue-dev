@@ -43,11 +43,17 @@ export default {
             if(err) console.log(err)
             if(res.body == 'Incorect password'){
               //alert('Неверный email или пароль')
-              this.$swal('Неверный email или пароль');
+              this.$swal({
+                  icon: 'error',
+                  text: 'Неверный email или пароль'
+              });
             }
             else if(res.body == 'User undefined'){
               //alert('Пользователь не найден')
-              this.$swal('Пользователь не найден');
+              this.$swal({
+                  icon: 'error',
+                  text: 'Пользователь не найден'
+              });
             }
             else if(res.body.length == 128){
               document.cookie = "email=" + email + "; expires=" + new Date(Date.now() + 864000e3).toUTCString()

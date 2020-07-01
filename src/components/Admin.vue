@@ -196,7 +196,10 @@ export default {
             .then(data => {
                 if(data == 'Incorect password'){
                     //alert('Пользователь не найден')
-                    this.$swal('Пользователь не найден');
+                    this.$swal({
+                        icon: 'error',
+                        text: 'Пользователь не найден'
+                    });
                 }
                 else if(data == "teacher" || data == 'school-admin'){
                     this.show = false
@@ -204,7 +207,10 @@ export default {
                 }
                 else{
                     //alert("Неверный email или пароль")
-                    this.$swal('Неверный email или пароль');
+                    this.$swal({
+                        icon: 'error',
+                        text: 'Неверный email или пароль'
+                    });
                 }
                 console.log(data)
             })
@@ -473,7 +479,10 @@ export default {
                         if(err) throw err
                         if(res.body == 'OK'){
                             //alert('Файл успешно добавлен')
-                            this.$swal('Файл успешно добавлен');
+                            this.$swal({
+                                icon: 'success',
+                                text: 'Файл успешно добавлен'
+                            });
                         }
                         else{
                             //alert(res.body)
@@ -488,7 +497,10 @@ export default {
                         if(err) throw err
                         if(res.body == 'OK'){
                             //alert('Файл успешно добавлен')
-                            this.$swal('Файл успешно добавлен');
+                            this.$swal({
+                                icon: 'success',
+                                text: 'Файл успешно добавлен'
+                            });
                         }
                         else{
                             //alert(res.body)

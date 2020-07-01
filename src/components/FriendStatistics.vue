@@ -70,8 +70,18 @@ export default {
         addFriend(){
             event.preventDefault()
             let SessionID = this.$store.getters.SessionID
-            if(document.querySelector('.name').value.trim() == '') this.$swal('Введите номер');//alert('Введите номер')
-            else if(document.querySelector('.name').value.trim() == '-1') this.$swal('Введите корректный номер');//alert('Введите корректный номер')
+            if(document.querySelector('.name').value.trim() == ''){
+                this.$swal({
+                    icon: 'warning',
+                    text: 'Введите номер'
+                }); //alert('Введите номер')
+            }
+            else if(document.querySelector('.name').value.trim() == '-1'){
+                this.$swal({
+                    icon: 'error',
+                    text: 'Введите корректный номер'
+                });//alert('Введите корректный номер')
+            } 
             else{
                 let email = this.$store.getters.email
                 needle.post('http://78.155.219.12:3000/api/addFriendCode', {email: email, sessionid: SessionID, statNumber: document.querySelector('.name').value}, {"json": true}, function(err, res){
@@ -85,11 +95,17 @@ export default {
                     let data = res.body
                     if(data == 'Code not found'){
                         //alert('Пользователь не найден')
-                        this.$swal('Пользователь не найден');
+                        this.$swal({
+                            icon: 'error',
+                            text: 'Пользователь не найден'
+                        });
                     }
                     else{
                         //alert('Пользователь успешно добавлен')
-                        this.$swal('Пользователь успешно добавлен');
+                        this.$swal({
+                            icon: 'success',
+                            text: 'Пользователь успешно добавлен'
+                        });
                         document.location.reload()
                     }
                 }

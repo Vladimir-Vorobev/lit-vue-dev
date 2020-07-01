@@ -151,19 +151,31 @@ export default {
         let simvol = form.elements.simvol.value
         if(password != password2){
           //alert("Пароли не совпадают")
-          this.$swal('Пароли не совпадают');
+          this.$swal({
+              icon: 'error',
+              text: 'Пароли не совпадают'
+          });
         }
         else if(re.test(email) == false && email.trim() != ''){
           //alert("Введен некорректный email")
-          this.$swal('Введен некорректный emailн');
+          this.$swal({
+              icon: 'error',
+              text: 'Введен некорректный email'
+          })
         }
         else if(password.length < 5 && password.trim() != ''){
           //alert("Пароль слишком короткий")
-          this.$swal('Пароль слишком короткий');
+          this.$swal({
+              icon: 'error',
+              text: 'Пароль слишком короткий'
+          })
         }
         else if(password.length > 15){
           //alert("Пароль слишком длинный")
-          this.$swal('Пароль слишком длинный');
+          this.$swal({
+              icon: 'error',
+              text: 'Пароль слишком длинный'
+          })
         }
         else{
             let crypto = require('crypto')

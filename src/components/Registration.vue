@@ -60,39 +60,66 @@ export default {
         let code = form.elements.code.value
         if(namet.trim() == ''){
           //alert("Введите имя")
-          this.$swal('Введите имя');
+          this.$swal({
+              icon: 'warning',
+              text: 'Введите имя'
+          });
         }
         else if(surname.trim() == ''){
           //alert("Введите фамилию")
-          this.$swal('Введите фамилию');
+          this.$swal({
+              icon: 'warning',
+              text: 'Введите фамилию'
+          });
         }
         else if(email.trim() == ''){
           //alert("Введите email")
-          this.$swal('Введите email');
+          this.$swal({
+              icon: 'warning',
+              text: 'Введите email'
+          });
         }
         else if(age.trim() == ''){
           //alert("Введите дату рождения")
-          this.$swal('Введите дату рождения');
+          this.$swal({
+              icon: 'warning',
+              text: 'Введите дату рождения'
+          });
         }
         else if(password.trim() == ''){
           //alert("Введите пароль")
-          this.$swal('Введите пароль');
+          this.$swal({
+              icon: 'warning',
+              text: 'Введите пароль'
+          });
         }
         else if(password != password2){
           //alert("Пароли не совпадают")
-          this.$swal('Пароли не совпадают');
+          this.$swal({
+              icon: 'error',
+              text: 'Пароли не совпадают'
+          });
         }
         else if(re.test(email) == false){
           //alert("Введен некорректный email")
-          this.$swal('Введен некорректный email');
+          this.$swal({
+              icon: 'error',
+              text: 'Введен некорректный email'
+          });
         }
         else if(password.length < 5){
           //alert("Пароль слишком короткий")
-          this.$swal('Пароль слишком короткий');
+          this.$swal({
+              icon: 'error',
+              text: 'Пароль слишком короткий'
+          });
         }
         else if(password.length > 15){
           //alert("Пароль слишком длинный")
-          this.$swal('Пароль слишком длинный');
+          this.$swal({
+              icon: 'error',
+              text: 'Пароль слишком длинный'
+          });
         }
         else{
           let data = document.cookie.split(";")
@@ -136,21 +163,39 @@ export default {
             }
             needle.post('http://78.155.219.12:3000/api/registration', data, {"json": true}, function(err, res, body){
               if(body == "Reg succsesful"){
-                document.location.href = "/login"
+                this.$swal({
+                    icon: 'success',
+                    title: 'Вы успешно зарегистрированы!',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                }).then(() => {
+                    document.location.href = "/login"
+                });
+                //document.location.href = "/login"
               }
               else if(body == "Reg Fail"){
                 //alert('Пользователь с таким email существует')
-                this.$swal('Пользователь с таким email существует');
+                this.$swal({
+                    icon: 'error',
+                    text: 'Пользователь с таким email существует'
+                });
               }
               else{
                 //alert("Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы")
-                this.$swal('Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы');
+                this.$swal({
+                    icon: 'error',
+                    text: 'Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы'
+                });
               }
             })
           }
           else{
             //alert('Проверьте Вашу почту, на нее был выслан код подтверждения')
-            this.$swal('Проверьте Вашу почту, на нее был выслан код подтверждения');
+            this.$swal({
+                    icon: 'info',
+                    text: 'Проверьте Вашу почту, на нее был выслан код подтверждения'
+                });
           }
         }
       },
