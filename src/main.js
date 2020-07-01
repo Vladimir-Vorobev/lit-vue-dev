@@ -3,10 +3,16 @@ import Vuex from 'vuex';
 import { APP_STORE } from '../store';
 import VueRouter from 'vue-router'
 import App from './App.vue'
+
 import Chartkick from 'vue-chartkick'
 import Chart from 'chart.js'
-
 Vue.use(Chartkick.use(Chart))
+
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+Vue.use(VueSweetalert2);
+
+
 
 import MainPage from './components/MainPage.vue'
 import RecommendedEvents from './components/RecommendedEvents.vue'
