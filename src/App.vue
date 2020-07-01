@@ -85,6 +85,27 @@ export default {
 </script>
 
 <style>
+
+::-webkit-scrollbar { width: 10px; }
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a5a2a2;
+  border-radius: 5px;
+}
+
+html{
+    scrollbar-color: #a5a2a2 transparentf; 
+    scrollbar-width: thin;
+    scrollbar-face-color: #a5a2a2 ;
+    scrollbar-track-color: transparent;
+}
+
+
 body {
     width:100% !important; 
     height:100% !important; 
