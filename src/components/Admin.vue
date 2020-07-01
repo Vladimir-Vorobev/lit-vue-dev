@@ -88,9 +88,21 @@
                         </div>
                         <div v-if="ShowAdd">
                             <transition-group name="main">
-                                <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
-                                <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
-                                <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить</button>
+                                <form key='form' id='formList'>
+                                    <input key="input" class="radio" name='list' type="radio" checked @click="changeAddInfo('list')"> <p key="p">Добавить список учеников</p>
+                                    <input key="input" class="radio" name='one' type="radio" @click="changeAddInfo('one')"> <p key="p">Добавить ученика</p>
+                                </form>
+                                <div key="div" v-if="ShowAddList">
+                                    <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
+                                    <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
+                                    <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить список</button>
+                                </div>
+                                <form key="form" id='formOne' v-if="ShowAddOne">
+                                    <p key="p">Email </p><input key="input" name="email">
+                                    <p key="p">Имя </p><input key="input" name="name">
+                                    <p key="p">Фамилия </p><input key="input" name="surname">
+                                    <button type="submit" @click="add('one')" class="btn btn-primary btn-lg" key="button">Добавить ученика</button>
+                                </form>
                             </transition-group>
                         </div>
                     </div>
@@ -160,6 +172,8 @@ export default {
             ShowList: true,
             ShowTop: false,
             ShowAdd: false,
+            ShowAddList: true,
+            ShowAddOne: false,
             data: [],
             studentEvents: [],
         }
@@ -438,28 +452,64 @@ export default {
             })
             this.classData = data
         },
-        add(){
+        add(value){
             event.preventDefault()
-            if(this.classData.length != 0){
-                needle.post('http://78.155.219.12:3000/api/uploadTable', {data: this.classData, email: this.email}, {"json": true}, function(err, res){
-                    if(err) throw err
-                    if(res.body == 'OK'){
-                        //alert('Файл успешно добавлен')
-                        this.$swal({
-                        icon: 'success',
-                        text: 'Файл успешно добавлен'
-                    });
-                    }
-                    else{
-                        //alert(res.body)
-                        this.$swal(res.body);
-                    }
-                })
-            }
-            else this.$swal({
+            if(value == 'one'){
+                let form = document.getElementById('formOne')
+                if(form['email'].value == ''){
+                    this.$swal({
                         icon: 'error',
-                        text: 'Файл не выбран'
-                    });   //alert('Файл не выбран')
+                        text: 'Введите email'
+                    });
+                }
+                else if(form['name'].value == ''){
+                    this.$swal({
+                        icon: 'error',
+                        text: 'Введите имя'
+                    });
+                }
+                else if(form['surname'].value == ''){
+                    this.$swal({
+                        icon: 'error',
+                        text: 'Введите фамилию'
+                    });
+                }
+                else{
+                    needle.post('http://78.155.219.12:3000/api/uploadTable', {data: [{email: form['email'].value, name: form['name'].value, surname: form['surname'].value}], email: this.email}, {"json": true}, function(err, res){
+                        if(err) throw err
+                        if(res.body == 'OK'){
+                            //alert('Файл успешно добавлен')
+                            this.$swal({
+                                icon: 'success',
+                                text: 'Файл успешно добавлен'
+                            });
+                        }
+                        else{
+                            //alert(res.body)
+                            this.$swal(res.body);
+                        }
+                    })
+                }
+            }
+            else{
+                if(this.classData.length != 0){
+                    needle.post('http://78.155.219.12:3000/api/uploadTable', {data: this.classData, email: this.email}, {"json": true}, function(err, res){
+                        if(err) throw err
+                        if(res.body == 'OK'){
+                            //alert('Файл успешно добавлен')
+                            this.$swal({
+                                icon: 'success',
+                                text: 'Файл успешно добавлен'
+                            });
+                        }
+                        else{
+                            //alert(res.body)
+                            this.$swal(res.body);
+                        }
+                    })
+                }
+                else this.$swal('Файл не выбран');   //alert('Файл не выбран')
+            }
         },
         showList(){
             event.preventDefault()
@@ -501,6 +551,19 @@ export default {
                 document.getElementById('chartDiv' + email).style.display = 'none'
                 document.getElementById('chartDiv2' + email).style.display = 'none'
                 document.getElementById('chartDiv3' + email).style.display = 'block'
+            }
+        },
+        changeAddInfo(value){
+            let form = document.getElementById('formList')
+            if(value == 'list'){
+                form['one'].checked = false
+                this.ShowAddList = true
+                this.ShowAddOne = false
+            }
+            else{
+                form['list'].checked = false
+                this.ShowAddList = false
+                this.ShowAddOne = true
             }
         },
     },
