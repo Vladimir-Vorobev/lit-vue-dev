@@ -86,11 +86,15 @@ export default {
 
 <style>
 
-::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar { 
+    width: 10px;
+}
 
 ::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 5px;
+  /* box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset; */
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2)
 }
 
 ::-webkit-scrollbar-thumb {
