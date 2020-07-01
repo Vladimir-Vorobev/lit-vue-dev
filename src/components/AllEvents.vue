@@ -102,14 +102,12 @@ export default {
                     }
                     else{
                         //alert('Мероприятие успешно добавлено')
-                        this.$swal('Мероприятие успешно добавлено');
-                        let notif = document.createElement('div');
-                        notif.style.top = '150px';
-                        notif.style.right = '150px';
-                        notif.innerHTML = 'Мероприятие успешно добавлено';
-                        document.body.append(notif);
-                        console.log(notif)
-                        setTimeout(() => notif.remove(), 1500);
+                        this.$swal({
+                        icon: 'success',
+                        text: 'Мероприятие успешно добавлено',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     }
                 })
             }
