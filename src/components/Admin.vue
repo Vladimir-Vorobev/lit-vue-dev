@@ -181,14 +181,16 @@ export default {
             })
             .then(data => {
                 if(data == 'Incorect password'){
-                    alert('Пользователь не найден')
+                    //alert('Пользователь не найден')
+                    this.$swal('Пользователь не найден');
                 }
                 else if(data == "teacher" || data == 'school-admin'){
                     this.show = false
                     this.role = data
                 }
                 else{
-                    alert("Неверный email или пароль")
+                    //alert("Неверный email или пароль")
+                    this.$swal('Неверный email или пароль');
                 }
                 console.log(data)
             })
@@ -436,14 +438,16 @@ export default {
                 needle.post('http://78.155.219.12:3000/api/uploadTable', {data: this.classData, email: this.email}, {"json": true}, function(err, res){
                     if(err) throw err
                     if(res.body == 'OK'){
-                        alert('Файл успешно добавлен')
+                        //alert('Файл успешно добавлен')
+                        this.$swal('Файл успешно добавлен');
                     }
                     else{
-                        alert(res.body)
+                        //alert(res.body)
+                        this.$swal(res.body);
                     }
                 })
             }
-            else alert('Файл не выбран')
+            else this.$swal('Файл не выбран');   //alert('Файл не выбран')
         },
         showList(){
             event.preventDefault()

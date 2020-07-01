@@ -56,7 +56,8 @@ export default {
                 contentType: false,
                 processData: false,
                 success: function (returndata) {
-                alert(returndata);
+                //alert(returndata);
+                this.$swal(returndata);
                 }
             });
         },

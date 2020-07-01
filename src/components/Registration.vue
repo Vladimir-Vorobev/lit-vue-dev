@@ -59,31 +59,40 @@ export default {
         let password2 = form.elements.password2.value
         let code = form.elements.code.value
         if(namet.trim() == ''){
-          alert("Введите имя")
+          //alert("Введите имя")
+          this.$swal('Введите имя');
         }
         else if(surname.trim() == ''){
-          alert("Введите фамилию")
+          //alert("Введите фамилию")
+          this.$swal('Введите фамилию');
         }
         else if(email.trim() == ''){
-          alert("Введите email")
+          //alert("Введите email")
+          this.$swal('Введите email');
         }
         else if(age.trim() == ''){
-          alert("введите дату рождения")
+          //alert("Введите дату рождения")
+          this.$swal('Введите дату рождения');
         }
         else if(password.trim() == ''){
-          alert("Введите пароль")
+          //alert("Введите пароль")
+          this.$swal('Введите пароль');
         }
         else if(password != password2){
-          alert("Пароли не совпадают")
+          //alert("Пароли не совпадают")
+          this.$swal('Пароли не совпадают');
         }
         else if(re.test(email) == false){
-          alert("Введен некорректный email")
+          //alert("Введен некорректный email")
+          this.$swal('Введен некорректный email');
         }
         else if(password.length < 5){
-          alert("Пароль слишком короткий")
+          //alert("Пароль слишком короткий")
+          this.$swal('Пароль слишком короткий');
         }
         else if(password.length > 15){
-          alert("Пароль слишком длинный")
+          //alert("Пароль слишком длинный")
+          this.$swal('Пароль слишком длинный');
         }
         else{
           let data = document.cookie.split(";")
@@ -130,15 +139,18 @@ export default {
                 document.location.href = "/login"
               }
               else if(body == "Reg Fail"){
-                alert('Пользователь с таким email существует')
+                //alert('Пользователь с таким email существует')
+                this.$swal('Пользователь с таким email существует');
               }
               else{
-                alert("Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы")
+                //alert("Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы")
+                this.$swal('Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы');
               }
             })
           }
           else{
-            alert('Проверьте Вашу почту, на нее был выслан код подтверждения')
+            //alert('Проверьте Вашу почту, на нее был выслан код подтверждения')
+            this.$swal('Проверьте Вашу почту, на нее был выслан код подтверждения');
           }
         }
       },
