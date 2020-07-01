@@ -48,11 +48,13 @@
                         <a :href="item.link" class="btn btn-primary" @click="setScroll()">Перейти к мероприятию</a>
                     </div>
                 </div>
+                <button @click="test()">test</button>
             </div>
 </template>
 
 <script>
 import needle from 'needle'
+import Vue from 'vue';
 export default {
     name: 'AllEvents',
     data(){
@@ -102,12 +104,13 @@ export default {
                     }
                     else{
                         //alert('Мероприятие успешно добавлено')
-                        this.$swal({
-                        icon: 'success',
-                        text: 'Мероприятие успешно добавлено',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                        Vue.swal({
+                            icon: 'success',
+                            text: 'Мероприятие успешно добавлено',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            timerProgressBar: true,
+                        });
                     }
                 })
             }
@@ -117,7 +120,7 @@ export default {
         },
         setScroll(){
             document.cookie = "allEventsScroll=" + window.pageYOffset
-        }
+        },
     }
 }
 </script>

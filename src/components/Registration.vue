@@ -167,7 +167,7 @@ export default {
                     icon: 'success',
                     title: 'Вы успешно зарегистрированы!',
                     showConfirmButton: false,
-                    timer: 1500,
+                    timer: 2000,
                     timerProgressBar: true,
                 }).then(() => {
                     document.location.href = "/login"
