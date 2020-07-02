@@ -68,6 +68,7 @@
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <h5 class="card-title col-11">{{item3.name}}</h5>
+                                                                <h5><button class="btn btn-danger" @click="deleteStudent(item.email, item.name, item.surname)"> <i class="fas fa-trash-alt"></i> </button></h5>
                                                             </div>
                                                             <p class="card-text"><i class="far fa-clock"></i> {{item3.time}}</p>
                                                             <p class="card-text">Тип: {{item3.type}}</p>
@@ -158,6 +159,7 @@
 import needle from 'needle'
 import readXlsxFile from 'read-excel-file'
 import Chart from 'chart.js'
+import Vue from 'vue'
 export default {
     name: 'Admin',
     data(){
@@ -217,10 +219,15 @@ export default {
             .catch(err => {
                 console.log(err)
             })
+            this.getAdminList()
+            // this.students = [{person: 'Иванова Мария', email: 'v11ru'}, {person: 'Иванов Иван', email: 'v12ru'}, {person: 'Сергеев Сергей', email: 'v13ru'}]
+            // this.teachers = [{person: 'Иванова Мария', email: 'v14ru'}, {person: 'Иванов Иван', email: 'v15ru'}, {person: 'Сергеев Сергей', email: 'v16ru'}]
+        },
+        getAdminList(){
             let students = []
             fetch('http://78.155.219.12:3000/api/getAdminList', {
                 method: 'POST',
-                headers: {email: email},
+                headers: {email: this.email},
             })
             .then(response => {
                 console.log("res", response)
@@ -238,8 +245,6 @@ export default {
             .catch(err => {
                 console.log(err)
             })
-            // this.students = [{person: 'Иванова Мария', email: 'v11ru'}, {person: 'Иванов Иван', email: 'v12ru'}, {person: 'Сергеев Сергей', email: 'v13ru'}]
-            // this.teachers = [{person: 'Иванова Мария', email: 'v14ru'}, {person: 'Иванов Иван', email: 'v15ru'}, {person: 'Сергеев Сергей', email: 'v16ru'}]
         },
         showInfo(email){
             if(this.role == 'teacher'){
@@ -475,40 +480,32 @@ export default {
                     });
                 }
                 else{
-                    needle.post('http://78.155.219.12:3000/api/uploadTable', {data: [{email: form['email'].value, name: form['name'].value, surname: form['surname'].value}], email: this.email}, {"json": true}, function(err, res){
-                        if(err) throw err
-                        if(res.body == 'OK'){
-                            //alert('Файл успешно добавлен')
-                            this.$swal({
-                                icon: 'success',
-                                text: 'Файл успешно добавлен'
-                            });
-                        }
-                        else{
-                            //alert(res.body)
-                            this.$swal(res.body);
-                        }
-                    })
+                    send([{email: form['email'].value, name: form['name'].value, surname: form['surname'].value}], this.email, 'uploadOne')
                 }
             }
             else{
                 if(this.classData.length != 0){
-                    needle.post('http://78.155.219.12:3000/api/uploadTable', {data: this.classData, email: this.email}, {"json": true}, function(err, res){
-                        if(err) throw err
-                        if(res.body == 'OK'){
-                            //alert('Файл успешно добавлен')
-                            this.$swal({
-                                icon: 'success',
-                                text: 'Файл успешно добавлен'
-                            });
-                        }
-                        else{
-                            //alert(res.body)
-                            this.$swal(res.body);
-                        }
-                    })
+                    send(this.classData, this.email, 'uploadTable')
                 }
                 else this.$swal('Файл не выбран');   //alert('Файл не выбран')
+            }
+            function send(data, email, url){
+                needle.post('http://78.155.219.12:3000/api/' + url, {data: data, email: email, type: 'update'}, {"json": true}, function(err, res){
+                    if(err) throw err
+                    if(res.body == 'OK'){
+                        //alert('Файл успешно добавлен')
+                        Vue.swal({
+                            icon: 'success',
+                            text: 'Файл успешно добавлен'
+                        });
+                    }
+                    else{
+                        //alert(res.body)
+                        Vue.swal(res.body);
+                    }
+                }).then(() => {
+                    this.getAdminList()
+                })
             }
         },
         showList(){
@@ -565,6 +562,45 @@ export default {
                 this.ShowAddList = false
                 this.ShowAddOne = true
             }
+        },
+        deleteStudent(email, name, surname){
+            event.preventDefault()
+            let data = {
+                email: email,
+                name: name,
+                surname: surname,
+            }
+            this.$swal({
+                icon: 'warning',
+                title: 'Вы уверены что хотите удалить?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Да',
+                cancelButtonText: 'Отмена'
+            }).then((result) => {
+                 if (result.value) {
+                     needle.post('http://78.155.219.12:3000/api/uploadOne', {data: data, email: email, type: 'delete'}, {"json": true}, function(err, res){
+                        if(err) throw err
+                        if(res.body == 'OK'){
+                            //alert('Файл успешно добавлен')
+                            Vue.swal({
+                                icon: 'success',
+                                text: 'Ученик успешно удален'
+                            });
+                            window.location.reload
+                        }
+                        else{
+                            //alert(res.body)
+                            Vue.swal(res.body);
+                        }
+                    })
+                }
+            }).then((result) => {
+                 if (result.value) {
+                     this.getAdminList()
+                 }
+            })
         },
     },
 }
