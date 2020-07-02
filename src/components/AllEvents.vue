@@ -161,6 +161,7 @@ export default {
     min-height: 100vh;
     margin-bottom: 0px;
 }
+
 .card{ 
     margin-top: 10px !important; 
 }
