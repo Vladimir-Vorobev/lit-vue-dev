@@ -37,24 +37,33 @@
                 </div>
             </div>
         </div>
+        <div class="footer"><Footer></Footer></div> 
     </div>
 </template>
 
 <script>
-// import Footer from './footer.vue'
+import Footer from './footer.vue'
 export default {
     name: 'UserProfile',
-    // components: { Footer },
+    components: { Footer },
 }
 </script>
 
 <style scoped>
+.warp{
+    flex: 1 0 auto;
+}
+.footer{
+    flex: 0 0 auto;
+}
 .main{
+    display: flex;
+	flex-direction: column;
     padding-top: 95px !important;
 }
 .main{
     height: 100%;
-    padding: 30px 0px;
+    padding: 30px 0px 0px;
     min-height: 100vh;
     margin-bottom: 0px;
 }

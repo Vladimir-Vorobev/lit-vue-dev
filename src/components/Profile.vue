@@ -1,5 +1,6 @@
 <template>
-    <div class="main container">
+    <div class="main">
+      <div class="container warp">
         <form class="formbox">
             <div class="row" style="margin-bottom: 1em;">
               <h2 class="col-11">Редактировать профиль</h2>
@@ -68,13 +69,17 @@
             <div class="number"></div>
             <div class="col-12 col-md-4"><button class="btn btn-info btn-lg" @click="addNumber()">Создать уникальный номер</button></div>
         </div>
+      </div>
+      <div class="footer"><Footer></Footer></div>
     </div>
 </template>
 
 <script>
 import needle from 'needle'
+import Footer from './footer.vue'
 export default {
     name: 'Profile',
+    components: { Footer },
     data(){
       return{
         email: this.$store.getters.email,
@@ -214,17 +219,25 @@ export default {
 </script>
 
 <style scoped>
-.main{
+.warp{
+    flex: 1 0 auto;
     padding-top: 110px !important;
+    background-color: #fff;
+    padding: 0px 30px;
+}
+.footer{
+    flex: 0 0 auto;
 }
 .main{
-    background-color: #fff;
+    display: flex;
+	flex-direction: column;
+}
+.main{
     height: 100%;
-    padding: 30px;
+    padding: 0px;
     min-height: 100vh;
     margin-bottom: 0px;
 }
-
 
 .link{
   color: #4f4f50;

@@ -1,34 +1,39 @@
 <template>
     <div class='main'>
-        <h2>Статистика</h2>
-        <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
-            <option value="/friend-statistics">Статистика друзей</option>
-            <option value="/school-statistics" selected>Обобщенная статистика школы (только для сотрудников учебных заведений)</option>
-            <option value="/full-school-statistics">Полная статистика школы (только для сотрудников учебных заведений)</option>
-        </select>
-        <div v-if="director">
-            <div class="rate" v-for="(item, index) in data" :key="item.value">
-                <span class="numr row">{{index + 1}} класс</span>
-                <span class="row colv">Учеников зарегистрировано: {{item.length}}</span>
-                <span class="row colv">Учеников, посетивших 0 мероприятий: {{a[index]}}</span>
-                <span class="row colv">Учеников, посетивших от 1 до 5 мероприятий: {{c[index]}}</span>
-                <span class="row colv">Учеников, посетивших от 5 до 10 мероприятий: {{d[index]}}</span>
-                <span class="row colv">Учеников, посетивших более 10 мероприятий: {{e[index]}}</span>
+        <div class="container warp">
+            <h2>Статистика</h2>
+            <select class="custom-select custom-select-sm mb-3 events" onchange="location.href=this.value">
+                <option value="/friend-statistics">Статистика друзей</option>
+                <option value="/school-statistics" selected>Обобщенная статистика школы (только для сотрудников учебных заведений)</option>
+                <option value="/full-school-statistics">Полная статистика школы (только для сотрудников учебных заведений)</option>
+            </select>
+            <div v-if="director">
+                <div class="rate" v-for="(item, index) in data" :key="item.value">
+                    <span class="numr row">{{index + 1}} класс</span>
+                    <span class="row colv">Учеников зарегистрировано: {{item.length}}</span>
+                    <span class="row colv">Учеников, посетивших 0 мероприятий: {{a[index]}}</span>
+                    <span class="row colv">Учеников, посетивших от 1 до 5 мероприятий: {{c[index]}}</span>
+                    <span class="row colv">Учеников, посетивших от 5 до 10 мероприятий: {{d[index]}}</span>
+                    <span class="row colv">Учеников, посетивших более 10 мероприятий: {{e[index]}}</span>
+                </div>
+            </div>
+            <div class="rate" v-else>
+                <span class="row colv">Учеников зарегистрировано: {{data.length}}</span>
+                <span class="row colv">Учеников, посетивших 0 мероприятий: {{a[s]}}</span>
+                <span class="row colv">Учеников, посетивших от 1 до 5 мероприятий: {{c[s]}}</span>
+                <span class="row colv">Учеников, посетивших от 5 до 10 мероприятий: {{d[s]}}</span>
+                <span class="row colv">Учеников, посетивших более 10 мероприятий: {{e[s]}}</span>
             </div>
         </div>
-        <div class="rate" v-else>
-            <span class="row colv">Учеников зарегистрировано: {{data.length}}</span>
-            <span class="row colv">Учеников, посетивших 0 мероприятий: {{a[s]}}</span>
-            <span class="row colv">Учеников, посетивших от 1 до 5 мероприятий: {{c[s]}}</span>
-            <span class="row colv">Учеников, посетивших от 5 до 10 мероприятий: {{d[s]}}</span>
-            <span class="row colv">Учеников, посетивших более 10 мероприятий: {{e[s]}}</span>
-        </div>
+        <div class="footer"><Footer></Footer></div> 
     </div>
 </template>
 
 <script>
+import Footer from './footer.vue'
 export default {
     name: 'Statistics',
+    components: { Footer },
     data(){
         return{
             data: [],
@@ -116,16 +121,26 @@ export default {
 </script>
 
 <style scoped>
-.main{
+.warp{
+    flex: 1 0 auto;
     padding-top: 110px !important;
+    background-color: #fff;
+    padding: 0px 30px;
+}
+.footer{
+    flex: 0 0 auto;
 }
 .main{
-    background-color: #fff;
+    display: flex;
+	flex-direction: column;
+}
+.main{
     height: 100%;
-    padding: 30px;
+    padding: 0px;
     min-height: 100vh;
     margin-bottom: 0px;
 }
+
 .card{ 
     margin-top: 10px !important;
 }

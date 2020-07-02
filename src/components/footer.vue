@@ -18,8 +18,7 @@ export default {
 </script>
 
 <style scoped>
-footer
-{
+footer {
     background-color: #f8f9fa;
 }
 </style>

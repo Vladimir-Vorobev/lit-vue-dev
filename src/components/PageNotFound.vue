@@ -1,10 +1,10 @@
 <template>
     <div class="main">
-        <section class="page_404">
+        <section class="page_404 warp">
             <div class="container">
                 <div class="row">	
                 <div class="col-sm-12 ">
-                <div class="col-sm-10 col-sm-offset-1  text-center">
+                <div class="col-sm-12 col-sm-offset-1  text-center">
                 <div class="four_zero_four_bg">
                     <h1 class="text-center ">404</h1>
                 
@@ -28,24 +28,34 @@
                 </div>
             </div>
         </section>
+        <div class="footer"><Footer></Footer></div> 
     </div>
 </template>
 
 <script>
+import Footer from './footer.vue'
 export default {
     name: 'PageNotFound',
+    components: { Footer },
 }
 </script>
 
 <style scoped>
-
+.warp{
+    flex: 1 0 auto;
+}
+.footer{
+    flex: 0 0 auto;
+}
 .main{
+    display: flex;
+	flex-direction: column;
     padding-top: 110px !important;
 }
 .main{
-    background-color: #eef5ff;
+    background-color: #ffffff;
     height: 100%;
-    padding: 30px;
+    padding: 30px 0px 0px;
     min-height: 100vh;
     margin-bottom: 0px;
 }

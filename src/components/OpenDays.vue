@@ -1,22 +1,27 @@
 <template>
-    <div class="main container">
-        <div class="card" v-for="item in data" :key="item.value">
-            <div class="card-header">{{item.date}}</div>
-            <div class="card-body">
-                <h5 class="card-title">{{item.name}}</h5>
-                <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
-                <p class="card-text">Тип: {{item.type}}</p>
-                <p><button class="btn btn-info"  @click="add(item)">Собираюсь посетить</button></p>
-                <a :href="item.link" class="btn btn-primary" @click="setScroll()">Перейти к мероприятию</a>
+    <div class="main">
+        <div class="container warp">
+            <div class="card" v-for="item in data" :key="item.value">
+                <div class="card-header">{{item.date}}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{item.name}}</h5>
+                    <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
+                    <p class="card-text">Тип: {{item.type}}</p>
+                    <p><button class="btn btn-info"  @click="add(item)">Собираюсь посетить</button></p>
+                    <a :href="item.link" class="btn btn-primary" @click="setScroll()">Перейти к мероприятию</a>
+                </div>
             </div>
         </div>
+        <div class="footer"><Footer></Footer></div> 
     </div>
 </template>
 
 <script>
 import needle from 'needle'
+import Footer from './footer.vue'
 export default {
     name: 'OpenDays',
+    components: { Footer },
     data(){
         return{
             data: []
@@ -70,13 +75,21 @@ export default {
 </script>
 
 <style scoped>
+.warp{
+    flex: 1 0 auto;
+}
+.footer{
+    flex: 0 0 auto;
+}
 .main{
+    display: flex;
+	flex-direction: column;
     padding-top: 110px !important;
 }
 .main{
     background-color: #eef5ff;
     height: 100%;
-    padding: 30px;
+    padding: 30px 0px 0px;
     min-height: 100vh;
     margin-bottom: 0px;
 }

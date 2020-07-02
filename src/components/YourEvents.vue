@@ -1,26 +1,31 @@
 <template>
-    <div class="main main container" id="main">
-        <div v-if="data.length == 0"><h3>Возможно, Вы еще не добавили ни одного мероприятия, посмотрите страницу всех мероприятий</h3></div>
-        <div class="card" v-for="item in data" :key="item.value">
-            <div class="card-header">{{item.date}}</div>
-            <div class="card-body">
-                <div class="row">
-                    <h5 class="card-title col-11">{{item.name}}</h5>
-                    <h5><button class="btn btn-danger" @click="deleteEvent(item)"> <i class="fas fa-trash-alt"></i> </button></h5>
+    <div class="main" id="main">
+        <div class="container warp">
+            <div v-if="data.length == 0"><h3>Возможно, Вы еще не добавили ни одного мероприятия, посмотрите страницу всех мероприятий</h3></div>
+            <div class="card" v-for="item in data" :key="item.value">
+                <div class="card-header">{{item.date}}</div>
+                <div class="card-body">
+                    <div class="row">
+                        <h5 class="card-title col-11">{{item.name}}</h5>
+                        <h5><button class="btn btn-danger" @click="deleteEvent(item)"> <i class="fas fa-trash-alt"></i> </button></h5>
+                    </div>
+                    <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
+                    <p class="card-text">Тип: {{item.type}}</p>
+                    <a :href="item.link" class="btn btn-primary">Перейти к мероприятию</a>
                 </div>
-                <p class="card-text"><i class="far fa-clock"></i> {{item.time}}</p>
-                <p class="card-text">Тип: {{item.type}}</p>
-                <a :href="item.link" class="btn btn-primary">Перейти к мероприятию</a>
             </div>
         </div>
+        <div class="footer"><Footer></Footer></div> 
     </div>
 </template>
 
 <script>
 import needle from 'needle'
 import Vue from 'vue';
+import Footer from './footer.vue'
 export default {
     name: 'YourEvents',
+    components: { Footer },
     data(){
         return{
             data: []
@@ -90,16 +95,25 @@ export default {
 </script>
 
 <style scoped>
+.warp{
+    flex: 1 0 auto;
+}
+.footer{
+    flex: 0 0 auto;
+}
 .main{
+    display: flex;
+	flex-direction: column;
     padding-top: 110px !important;
 }
 .main{
     background-color: #eef5ff;
     height: 100%;
-    padding: 30px;
-    min-height: 1018px;
+    padding: 30px 0px 0px;
+    min-height: 100vh;
     margin-bottom: 0px;
 }
+
 .card{ 
     margin-top: 10px !important;
 }

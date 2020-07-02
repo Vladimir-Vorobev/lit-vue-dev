@@ -1,5 +1,6 @@
 <template>
-    <div class="main container">
+    <div class="main">
+      <div class="container warp">
         <form class="formbox">
             <h2>Регистрация</h2>
             <div class="form-group row">
@@ -34,13 +35,17 @@
               <button class="btn btn-primary btn-lg" @click="addUser()">Зарегистрироваться</button>
             </div>
         </form>
+      </div>
+      <div class="footer"><Footer></Footer></div> 
     </div>
 </template>
 
 <script>
 import needle from "needle"
+import Footer from './footer.vue'
 export default {
     name: 'Registration',
+    components: { Footer },
     data(){
       return{
         passwordText: ""
@@ -206,13 +211,22 @@ export default {
 </script>
 
 <style scoped>
-.main{
+.warp{
+    flex: 1 0 auto;
     padding-top: 110px !important;
+    background-color: #fff;
+    padding: 0px 30px;
+}
+.footer{
+    flex: 0 0 auto;
 }
 .main{
-    background-color: #fff;
+    display: flex;
+	flex-direction: column;
+}
+.main{
     height: 100%;
-    padding: 30px;
+    padding: 0px;
     min-height: 100vh;
     margin-bottom: 0px;
 }
