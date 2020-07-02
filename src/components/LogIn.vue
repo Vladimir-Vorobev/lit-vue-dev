@@ -1,6 +1,7 @@
 <template>
-    <div class="main container">
-        <form class="formbox">
+  <div class="main">
+    <div class="container warp">
+      <form class="formbox">
             <h2>Войти</h2>
             <div class="form-group row">
               <label for="exampleInputEmail1">Email адресс</label>
@@ -13,16 +14,19 @@
             <div class="form-group row"> 
               <button class="btn btn-primary btn-lg" @click="loginUser()">Войти</button>
             </div>
-        </form>
-        <p><router-link to="/registration" class="link">Еще нет аккаунта? Зарегистрируйтесь</router-link></p>
+      </form>
+      <p><router-link to="/registration" class="link">Еще нет аккаунта? Зарегистрируйтесь</router-link></p>
     </div>
+    <div class="footer"><Footer></Footer></div> 
+  </div>
 </template>
 
 <script>
 import needle from "needle"
-
+import Footer from './footer.vue'
 export default {
     name: 'Login',
+    components: { Footer },
     beforeMount(){
       if(this.$store.getters.email != '' && this.$store.getters.SessionID != ''){
         this.$router.push("/profile")
@@ -40,7 +44,7 @@ export default {
           password: crypto.createHash('md5').update(password).digest("hex"), 
         }
         needle.post('http://78.155.219.12:3000/api/login', data, {"json": true}, function(err, res){
-            if(err) console.log(err)
+            if(err){console.log(err)} 
             if(res.body == 'Incorect password'){
               //alert('Неверный email или пароль')
               this.$swal({
@@ -69,16 +73,26 @@ export default {
 </script>
 
 <style scoped>
-.main{
+.warp{
+    flex: 1 0 auto;
     padding-top: 210px !important;
+    background-color: #fff;
+    padding: 0px 30px;
+}
+.footer{
+    flex: 0 0 auto;
 }
 .main{
-    background-color: #fff;
+    display: flex;
+	flex-direction: column;
+}
+.main{
     height: 100%;
-    padding: 30px;
+    padding: 0px;
     min-height: 100vh;
     margin-bottom: 0px;
 }
+
 .main p{
   color: #4f4f50;
   text-align: left !important;

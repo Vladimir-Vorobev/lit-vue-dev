@@ -1,25 +1,22 @@
 <template>
-    <div class='main container'>
-        <transition name="auth">
-            <div v-if="show">
-                <form class="formbox">
-                    <h2>Войти</h2>
-                    <div class="form-group row">
-                        <label for="exampleInputEmail1">Email адресс</label>
-                        <input name="email" class="form-control" placeholder="example@gmail.com">
-                    </div>
-                    <div class="form-group row">
-                        <label for="exampleInputPassword1">Пароль</label>
-                        <input type="password" class="form-control" name="password" placeholder="Пароль">
-                    </div>
-                    <div class="form-group row"> 
-                        <button class="btn btn-primary btn-lg" @click="loginUser()">Войти в админ панель</button>
-                    </div>
-                </form>
-            </div>
-            <div v-if="!show">
-                <div class="formbox">
-                    <h2>Панель администратора</h2>
+    <div class='main'>
+        <div class="container warp">
+            <transition name="auth">
+                <div v-if="show">
+                    <form class="formbox">
+                        <h2>Войти</h2>
+                        <div class="form-group row">
+                            <label for="exampleInputEmail1">Email адресс</label>
+                            <input name="email" class="form-control" placeholder="example@gmail.com">
+                        </div>
+                        <div class="form-group row">
+                            <label for="exampleInputPassword1">Пароль</label>
+                            <input type="password" class="form-control" name="password" placeholder="Пароль">
+                        </div>
+                        <div class="form-group row"> 
+                            <button class="btn btn-primary btn-lg" @click="loginUser()">Войти в админ панель</button>
+                        </div>
+                    </form>
                 </div>
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'teacher'">
                     <li class="nav-item" role="presentation">
@@ -70,88 +67,86 @@
                                                                 <h5 class="card-title col-11">{{item3.name}}</h5>
                                                                 <h5><button class="btn btn-danger" @click="deleteStudent(item.email, item.name, item.surname)"> <i class="fas fa-trash-alt"></i> </button></h5>
                                                             </div>
-                                                            <p class="card-text"><i class="far fa-clock"></i> {{item3.time}}</p>
-                                                            <p class="card-text">Тип: {{item3.type}}</p>
-                                                            <a :href="item3.link" class="btn btn-primary">Перейти к мероприятию</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </transition-group>
+                                        </a>
+                                    </div>
+                                </transition-group>
+                            </div>
+                            <div v-if="ShowTop">
+                                <transition-group name="main">
+                                    <p key="p">Рейтинг тут</p>
+                                </transition-group>
+                            </div>
+                            <div v-if="ShowAdd">
+                                <transition-group name="main">
+                                    <form key='form' id='formList'>
+                                        <input key="input" class="radio" name='list' type="radio" checked @click="changeAddInfo('list')"> <p key="p">Добавить список учеников</p>
+                                        <input key="input" class="radio" name='one' type="radio" @click="changeAddInfo('one')"> <p key="p">Добавить ученика</p>
+                                    </form>
+                                    <div key="div" v-if="ShowAddList">
+                                        <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
+                                        <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
+                                        <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить список</button>
+                                    </div>
+                                    <form key="form" id='formOne' v-if="ShowAddOne">
+                                        <p key="p">Email </p><input key="input" name="email">
+                                        <p key="p">Имя </p><input key="input" name="name">
+                                        <p key="p">Фамилия </p><input key="input" name="surname">
+                                        <button type="submit" @click="add('one')" class="btn btn-primary btn-lg" key="button">Добавить ученика</button>
+                                    </form>
+                                </transition-group>
+                            </div>
                         </div>
-                        <div v-if="ShowTop">
-                            <transition-group name="main">
-                                <p key="p">Рейтинг тут</p>
-                            </transition-group>
-                        </div>
-                        <div v-if="ShowAdd">
-                            <transition-group name="main">
-                                <form key='form' id='formList'>
-                                    <input key="input" class="radio" name='list' type="radio" checked @click="changeAddInfo('list')"> <p key="p">Добавить список учеников</p>
-                                    <input key="input" class="radio" name='one' type="radio" @click="changeAddInfo('one')"> <p key="p">Добавить ученика</p>
-                                </form>
-                                <div key="div" v-if="ShowAddList">
-                                    <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
-                                    <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
-                                    <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить список</button>
-                                </div>
-                                <form key="form" id='formOne' v-if="ShowAddOne">
-                                    <p key="p">Email </p><input key="input" name="email">
-                                    <p key="p">Имя </p><input key="input" name="name">
-                                    <p key="p">Фамилия </p><input key="input" name="surname">
-                                    <button type="submit" @click="add('one')" class="btn btn-primary btn-lg" key="button">Добавить ученика</button>
-                                </form>
-                            </transition-group>
-                        </div>
-                    </div>
 
-                    
-                    <div v-if="role == 'school-admin'">
-                        <div v-if="ShowList">
-                            <transition-group name="main">
-                                <div class="tab-pane fade show active" id="pills-list-student" v-for="item in teachers" :key="item.person">
-                                    <a class="person" href="#">
-                                        <div class="person_box" v-on:click="showTeacherInfo(item.email)">
-                                            <div class="name row">
-                                                <div class="name_group col-11">{{ item.person }}</div>
-                                                <div class="col-1 ar-collapse" :id='item.email'></div>
-                                            </div>
-                                            <div :id='item.email + "s"' style="display: none;">
-                                                <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
-                                                    <a class="person" href="#" @click="showInfo(item2.email)">
-                                                        <div class="person_box a">
-                                                            <div class="name row">
-                                                                <div class="name_group col-11 a">{{ item2.student }} </div>
-                                                                <div class="col-1 ar-collapse a" :id='item2.email'></div>
+                        
+                        <div v-if="role == 'school-admin'">
+                            <div v-if="ShowList">
+                                <transition-group name="main">
+                                    <div class="tab-pane fade show active" id="pills-list-student" v-for="item in teachers" :key="item.person">
+                                        <a class="person" href="#">
+                                            <div class="person_box" v-on:click="showTeacherInfo(item.email)">
+                                                <div class="name row">
+                                                    <div class="name_group col-11">{{ item.person }}</div>
+                                                    <div class="col-1 ar-collapse" :id='item.email'></div>
+                                                </div>
+                                                <div :id='item.email + "s"' style="display: none;">
+                                                    <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
+                                                        <a class="person" href="#" @click="showInfo(item2.email)">
+                                                            <div class="person_box a">
+                                                                <div class="name row">
+                                                                    <div class="name_group col-11 a">{{ item2.student }} </div>
+                                                                    <div class="col-1 ar-collapse a" :id='item2.email'></div>
+                                                                </div>
+                                                                <div :id="item2.email + 'n'" style="display: none;">
+                                                                    <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email + "x"' style="display: inline-block;"></i>
+                                                                    <div class="chart-container"><canvas :id="'chart' + item2.email" style="display: none;"></canvas></div>      
+                                                                </div>
                                                             </div>
-                                                            <div :id="item2.email + 'n'" style="display: none;">
-                                                                <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email + "x"' style="display: inline-block;"></i>
-                                                                <div class="chart-container"><canvas :id="'chart' + item2.email" style="display: none;"></canvas></div>      
-                                                            </div>
-                                                        </div>
-                                                    </a>    
+                                                        </a>    
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </a>
 
-                                </div>
-                            </transition-group>
-                        </div>
-                        <div v-if="ShowAdd">
-                            <transition-group name="main">
-                                <p key="p">Загрузите актуальный список Ваших учителей в excel файле</p>
-                                <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
-                                <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить</button>
-                            </transition-group>
-                        </div>
-                    </div> 
+                                    </div>
+                                </transition-group>
+                            </div>
+                            <div v-if="ShowAdd">
+                                <transition-group name="main">
+                                    <p key="p">Загрузите актуальный список Ваших учителей в excel файле</p>
+                                    <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
+                                    <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить</button>
+                                </transition-group>
+                            </div>
+                        </div> 
+                    </div>
                 </div>
-            </div>
-        </transition>
+            </transition>
+        </div>
+        <div class="footer"><Footer></Footer></div> 
     </div>
 </template>
 
@@ -159,9 +154,11 @@
 import needle from 'needle'
 import readXlsxFile from 'read-excel-file'
 import Chart from 'chart.js'
+import Footer from './footer.vue'
 import Vue from 'vue'
 export default {
     name: 'Admin',
+    components: { Footer },
     data(){
         return{
             show: true,
@@ -607,14 +604,23 @@ export default {
 </script>
 
 <style scoped>
-.main{
+.warp{
+    flex: 1 0 auto;
     padding-top: 110px !important;
+    background-color: #fff;
+    padding: 0px 30px;
+}
+.footer{
+    flex: 0 0 auto;
 }
 .main{
-    background-color: #fff;
+    display: flex;
+	flex-direction: column;
+}
+.main{
     height: 100%;
-    padding: 30px;
-    min-height: 1018px;
+    padding: 0px;
+    min-height: 100vh;
     margin-bottom: 0px;
 }
 .nav-pills{

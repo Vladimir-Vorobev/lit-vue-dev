@@ -1,5 +1,6 @@
 <template>
-        <div class="main main container">
+    <div class="main">
+        <div class="container warp">
             <div class="card">
                 <div class="card-body row">
                     <div class="col-md-5 col-12"> <p class="card-text" style="font-weight: bold; font-size: 1.3em">Сортировка мероприятий: </p> </div> 
@@ -48,13 +49,18 @@
                         <a :href="item.link" class="btn btn-primary" @click="setScroll()">Перейти к мероприятию</a>
                     </div>
                 </div>
-            </div>
+        </div>
+        <div class="footer"><Footer></Footer></div> 
+    </div>
 </template>
 
 <script>
 import needle from 'needle'
+import Vue from 'vue';
+import Footer from './footer.vue'
 export default {
     name: 'AllEvents',
+    components: { Footer },
     data(){
         return{
             data: [],
@@ -102,37 +108,60 @@ export default {
                     }
                     else{
                         //alert('Мероприятие успешно добавлено')
-                        this.$swal({
-                        icon: 'success',
-                        text: 'Мероприятие успешно добавлено',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                        Vue.swal({
+                            icon: 'success',
+                            text: 'Мероприятие успешно добавлено',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            timerProgressBar: true,
+                        });
                     }
                 })
             }
             else{
-                window.location.pathname = "/login"
+                this.$swal({
+                    icon: 'error',
+                    title: 'Вы не авторизованы!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Авторизоваться',
+                    cancelButtonText: 'Отмена'
+                }).then((result) => {
+                    if (result.value) {
+                        window.location.pathname = "/login"
+                    }
+                });
+                //window.location.pathname = "/login"
             }
         },
         setScroll(){
             document.cookie = "allEventsScroll=" + window.pageYOffset
-        }
+        },
     }
 }
 </script>
 
 <style scoped>
+.warp{
+    flex: 1 0 auto;
+}
+.footer{
+    flex: 0 0 auto;
+}
 .main{
+    display: flex;
+	flex-direction: column;
     padding-top: 110px !important;
 }
 .main{
     background-color: #eef5ff;
     height: 100%;
-    padding: 30px;
-    min-height: 1018px;
+    padding: 30px 0px 0px;
+    min-height: 100vh;
     margin-bottom: 0px;
 }
+
 .card{ 
     margin-top: 10px !important; 
 }

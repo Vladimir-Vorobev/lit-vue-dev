@@ -4,18 +4,16 @@
     <page-header></page-header>
     <router-view></router-view>
     <div class="scrollup"><i class="fa fa-chevron-up"></i></div>
-    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import PageHeader from './components/Header.vue'
-import Footer from './components/footer.vue'
 import $ from "jquery"
 export default {
   name: 'App',
-  components: { PageHeader,  Footer },
+  components: { PageHeader },
   computed: { ...mapGetters(['email', 'allEventsScroll', 'openDaysScroll']) },
   beforeCreate(){
     let dataq = document.cookie.split(";")
@@ -85,6 +83,31 @@ export default {
 </script>
 
 <style>
+
+::-webkit-scrollbar { 
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 5px;
+  /* box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset; */
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.2)
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a5a2a2;
+  border-radius: 5px;
+}
+
+html{
+    scrollbar-color: #a5a2a2 transparentf; 
+    scrollbar-width: thin;
+    scrollbar-face-color: #a5a2a2 ;
+    scrollbar-track-color: transparent;
+}
+
+
 body {
     width:100% !important; 
     height:100% !important; 
@@ -106,29 +129,30 @@ body {
 }
 @media (max-width: 992px) {  
     .scrollup{
-        font-size: 20px; /* размер шрифта (иконки) */
         right: 15px; /* расстояние от правого края */
     }
 }
 @media (min-width: 993px) {  
     .scrollup{
-        font-size: 50px; /* размер шрифта (иконки) */
         right: 60px; /* расстояние от правого края */
     }
 }
 .scrollup {
-  position: fixed; /* фиксированная позиция */
-  color: #fff; /* цвет текста */
-  background-color: #286090; /* цвет заднего фона */
-  bottom: 0px; /* расстояние от нижнего края */
-  padding: 4px 10px; /* отступы до содержимого блока */
-  border-top-left-radius: 4px; /* скругление верхнего левого угла */
-  border-top-right-radius: 4px; /* скругление верхнего правого угла */
-  cursor: pointer; /* форма курсора */
-  display: none; /* не отображать элемент */
-  text-align: center; /*выравнивание содержимого элемента по центру */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: fixed;
+    color: #ffffff;
+    bottom: 30px;
+    padding: 7px 10px;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.2);
+    background: linear-gradient(40deg, #45cafc, #303f9f);
 }
 .scrollup:hover {
-  background-color: #000; /* цвет заднего фона при наведении */
+  background-color: rgb(218, 218, 218); /* цвет заднего фона при наведении */
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.4);
+  filter: opacity(90%);
 }
 </style>
