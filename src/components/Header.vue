@@ -53,7 +53,7 @@
           </router-link>
           <div class="dropdown dropleft" style="display:none">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <a type="button" class="btn btn-primary btn-lg" ref="login">{{loginText}}</a>
+              {{loginText}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="#">Моя страница</a>
