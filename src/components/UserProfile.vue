@@ -7,7 +7,7 @@
                         <div class="avatar">
                             <img src="./../assets/test.jpeg" alt="">
                         </div>
-                        <button class="btn btn-light" style="width: 100%; margin-top: 15px;">Редактировать</button>
+                        <a href="/user-profile-edit" class="btn btn-light" style="width: 100%; margin-top: 15px;">Редактировать</a>
                     </div>
                 </div>
                 

@@ -30,6 +30,7 @@ import FriendStatistics from './components/FriendStatistics.vue'
 import Literature from './components/Literature.vue'
 import Admin from './components/Admin.vue'
 import UserProfile from './components/UserProfile.vue'
+import UserProfileEditor from './components/UserProfileEditor.vue'
 import PageNotFound from './components/PageNotFound.vue'
 
 
@@ -57,6 +58,7 @@ const routes = [
   { path: '/partners', component: Partners },
   { path: '/admin', component: Admin },
   { path: '/user-profile', component: UserProfile },
+  { path: '/user-profile-edit', component: UserProfileEditor },
   { path: '/404', component: PageNotFound }, { path: '*', redirect: '/404' }
 ]
 
