@@ -61,7 +61,7 @@
                   <a class="dropdown-item" ref="yourEvents" style="color: #16181b !important">Мои мероприятия</a>
               </router-link>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item exit" href="#">Выйти</a>
+              <button @click="exit()" class="dropdown-item exit" href="#">Выйти</button>
             </div>
           </div>
         </div>
@@ -105,6 +105,13 @@ export default {
         .catch(err => {
             console.log(err)
         })
+      }
+    },
+    methods: {
+      exit(){
+        document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        window.location.reload()
       }
     }
 
