@@ -47,7 +47,7 @@
                     сюда статистику
                 </div>
             </div>
-            <div class="person_events row" style="padding: 15px 15px">
+            <div class="person_events row" style="padding: 15px 15px 30px">
                 <div class="pblock">
                     <h4>Посещённые мероприятия:</h4>
                     <div class="row">
