@@ -29,6 +29,7 @@ import FullStatistics from './components/FullStatistics.vue'
 import FriendStatistics from './components/FriendStatistics.vue'
 import Literature from './components/Literature.vue'
 import Admin from './components/Admin.vue'
+import UserProfile from './components/UserProfile.vue'
 import PageNotFound from './components/PageNotFound.vue'
 
 
@@ -55,6 +56,7 @@ const routes = [
   { path: '/universities', component: Universities },
   { path: '/partners', component: Partners },
   { path: '/admin', component: Admin },
+  { path: '/user-profile', component: UserProfile },
   { path: '/404', component: PageNotFound }, { path: '*', redirect: '/404' }
 ]
 
