@@ -18,61 +18,54 @@
                         </div>
                     </form>
                 </div>
-                <div v-if="!show">
-                    <div class="formbox">
-                        <h2>Панель администратора</h2>
-                    </div>
-                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'teacher'">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список класса</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" @click="showTop()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Рейтинг класса</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
-                        </li>
-                    </ul>
-                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'school-admin'">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список учителей</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="pills-tabContent">
-                        <hr>
-                        <div v-if="role == 'teacher'">
-                            <div v-if="ShowList">
-                                <transition-group name="main">
-                                    <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.person">
-                                        <a class="person" href="#" @click="showInfo(item.email)">
-                                            <div class="person_box">
-                                                <div class="name row">
-                                                    <div class="name_group col-11">{{ item.person }} </div>
-                                                    <div class="col-1 ar-collapse" :id='item.email'></div>
-                                                </div>
-                                                <div :id="item.email + 'n'" style="display: none;">
-                                                    <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email + "x"' style="display: inline-block;"></i></div>
-                                                    <form :id="'form' + item.email">
-                                                        <input class="radio" :name="'donaught' + item.email" type="radio" value="donaught" checked @click="changeInfo(item.email, 'donaught')"> Кругова диаграмма
-                                                        <input class="radio" :name="'bar' + item.email" type="radio" value="bar" @click="changeInfo(item.email, 'bar')"> Столбчатая диаграмма
-                                                        <input class="radio" :name="'full' + item.email" type="radio" value="full" @click="changeInfo(item.email)"> Полная статистика
-                                                    </form>
-                                                    <div class="chart-container" :id="'chartDiv' + item.email" style="display: none;"><canvas :id="'chart' + item.email"></canvas></div>
-                                                    <div class="chart-container" :id="'chartDiv2' + item.email" style="display: none;"><canvas :id="'chart2' + item.email"></canvas></div>
-                                                    <div :id="'chartDiv3' + item.email" style="display: none;">
-                                                        <div v-if="data[item.email] != undefined && studentEvents[data.lastIndexOf(item.email)][0].length == 0"><h3>Нет мероприятий</h3></div>
-                                                        <div class="card" v-for="item3 in studentEvents[data.lastIndexOf(item.email)][0]" :key="item3.value">
-                                                            <div class="card-header">{{item3.date}}</div>
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <h5 class="card-title col-11">{{item3.name}}</h5>
-                                                                </div>
-                                                                <p class="card-text"><i class="far fa-clock"></i> {{item3.time}}</p>
-                                                                <p class="card-text">Тип: {{item3.type}}</p>
-                                                                <a :href="item3.link" class="btn btn-primary">Перейти к мероприятию</a>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'teacher'">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список класса</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" @click="showTop()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Рейтинг класса</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
+                    </li>
+                </ul>
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'school-admin'">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список учителей</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <hr>
+                    <div v-if="role == 'teacher'">
+                        <div v-if="ShowList">
+                            <transition-group name="main">
+                                <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.person">
+                                    <a class="person" href="#" @click="showInfo(item.email)">
+                                        <div class="person_box">
+                                            <div class="name row">
+                                                <div class="name_group col-11">{{ item.person }} </div>
+                                                <div class="col-1 ar-collapse" :id='item.email'></div>
+                                            </div>
+                                            <div :id="item.email + 'n'" style="display: none;">
+                                                <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email + "x"' style="display: inline-block;"></i></div>
+                                                <form :id="'form' + item.email">
+                                                    <input class="radio" :name="'donaught' + item.email" type="radio" value="donaught" checked @click="changeInfo(item.email, 'donaught')"> Кругова диаграмма
+                                                    <input class="radio" :name="'bar' + item.email" type="radio" value="bar" @click="changeInfo(item.email, 'bar')"> Столбчатая диаграмма
+                                                    <input class="radio" :name="'full' + item.email" type="radio" value="full" @click="changeInfo(item.email)"> Полная статистика
+                                                </form>
+                                                <div class="chart-container" :id="'chartDiv' + item.email" style="display: none;"><canvas :id="'chart' + item.email"></canvas></div>
+                                                <div class="chart-container" :id="'chartDiv2' + item.email" style="display: none;"><canvas :id="'chart2' + item.email"></canvas></div>
+                                                <div :id="'chartDiv3' + item.email" style="display: none;">
+                                                    <div v-if="data[item.email] != undefined && studentEvents[data.lastIndexOf(item.email)][0].length == 0"><h3>Нет мероприятий</h3></div>
+                                                    <div class="card" v-for="item3 in studentEvents[data.lastIndexOf(item.email)][0]" :key="item3.value">
+                                                        <div class="card-header">{{item3.date}}</div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <h5 class="card-title col-11">{{item3.name}}</h5>
+                                                                <h5><button class="btn btn-danger" @click="deleteStudent(item.email, item.name, item.surname)"> <i class="fas fa-trash-alt"></i> </button></h5>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -162,6 +155,7 @@ import needle from 'needle'
 import readXlsxFile from 'read-excel-file'
 import Chart from 'chart.js'
 import Footer from './footer.vue'
+import Vue from 'vue'
 export default {
     name: 'Admin',
     components: { Footer },
@@ -222,10 +216,15 @@ export default {
             .catch(err => {
                 console.log(err)
             })
+            this.getAdminList()
+            // this.students = [{person: 'Иванова Мария', email: 'v11ru'}, {person: 'Иванов Иван', email: 'v12ru'}, {person: 'Сергеев Сергей', email: 'v13ru'}]
+            // this.teachers = [{person: 'Иванова Мария', email: 'v14ru'}, {person: 'Иванов Иван', email: 'v15ru'}, {person: 'Сергеев Сергей', email: 'v16ru'}]
+        },
+        getAdminList(){
             let students = []
             fetch('http://78.155.219.12:3000/api/getAdminList', {
                 method: 'POST',
-                headers: {email: email},
+                headers: {email: this.email},
             })
             .then(response => {
                 console.log("res", response)
@@ -243,8 +242,6 @@ export default {
             .catch(err => {
                 console.log(err)
             })
-            // this.students = [{person: 'Иванова Мария', email: 'v11ru'}, {person: 'Иванов Иван', email: 'v12ru'}, {person: 'Сергеев Сергей', email: 'v13ru'}]
-            // this.teachers = [{person: 'Иванова Мария', email: 'v14ru'}, {person: 'Иванов Иван', email: 'v15ru'}, {person: 'Сергеев Сергей', email: 'v16ru'}]
         },
         showInfo(email){
             if(this.role == 'teacher'){
@@ -480,40 +477,32 @@ export default {
                     });
                 }
                 else{
-                    needle.post('http://78.155.219.12:3000/api/uploadTable', {data: [{email: form['email'].value, name: form['name'].value, surname: form['surname'].value}], email: this.email}, {"json": true}, function(err, res){
-                        if(err) throw err
-                        if(res.body == 'OK'){
-                            //alert('Файл успешно добавлен')
-                            this.$swal({
-                                icon: 'success',
-                                text: 'Файл успешно добавлен'
-                            });
-                        }
-                        else{
-                            //alert(res.body)
-                            this.$swal(res.body);
-                        }
-                    })
+                    send([{email: form['email'].value, name: form['name'].value, surname: form['surname'].value}], this.email, 'uploadOne')
                 }
             }
             else{
                 if(this.classData.length != 0){
-                    needle.post('http://78.155.219.12:3000/api/uploadTable', {data: this.classData, email: this.email}, {"json": true}, function(err, res){
-                        if(err) throw err
-                        if(res.body == 'OK'){
-                            //alert('Файл успешно добавлен')
-                            this.$swal({
-                                icon: 'success',
-                                text: 'Файл успешно добавлен'
-                            });
-                        }
-                        else{
-                            //alert(res.body)
-                            this.$swal(res.body);
-                        }
-                    })
+                    send(this.classData, this.email, 'uploadTable')
                 }
                 else this.$swal('Файл не выбран');   //alert('Файл не выбран')
+            }
+            function send(data, email, url){
+                needle.post('http://78.155.219.12:3000/api/' + url, {data: data, email: email, type: 'update'}, {"json": true}, function(err, res){
+                    if(err) throw err
+                    if(res.body == 'OK'){
+                        //alert('Файл успешно добавлен')
+                        Vue.swal({
+                            icon: 'success',
+                            text: 'Файл успешно добавлен'
+                        });
+                    }
+                    else{
+                        //alert(res.body)
+                        Vue.swal(res.body);
+                    }
+                }).then(() => {
+                    this.getAdminList()
+                })
             }
         },
         showList(){
@@ -570,6 +559,45 @@ export default {
                 this.ShowAddList = false
                 this.ShowAddOne = true
             }
+        },
+        deleteStudent(email, name, surname){
+            event.preventDefault()
+            let data = {
+                email: email,
+                name: name,
+                surname: surname,
+            }
+            this.$swal({
+                icon: 'warning',
+                title: 'Вы уверены что хотите удалить?',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Да',
+                cancelButtonText: 'Отмена'
+            }).then((result) => {
+                 if (result.value) {
+                     needle.post('http://78.155.219.12:3000/api/uploadOne', {data: data, email: email, type: 'delete'}, {"json": true}, function(err, res){
+                        if(err) throw err
+                        if(res.body == 'OK'){
+                            //alert('Файл успешно добавлен')
+                            Vue.swal({
+                                icon: 'success',
+                                text: 'Ученик успешно удален'
+                            });
+                            window.location.reload
+                        }
+                        else{
+                            //alert(res.body)
+                            Vue.swal(res.body);
+                        }
+                    })
+                }
+            }).then((result) => {
+                 if (result.value) {
+                     this.getAdminList()
+                 }
+            })
         },
     },
 }
