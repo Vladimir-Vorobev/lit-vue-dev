@@ -2,7 +2,7 @@
     <div class="main">
         <div class="container warp">
             <div class="person_info row" >
-                <div class="col-12 col-md-4">
+                <div class="col-12 col-md-4" style="padding: 30px 15px 15px">
                     <div class="photo pblock">
                         <div class="avatar">
                             <img src="./../assets/test.jpeg" alt="">
@@ -11,11 +11,11 @@
                     </div>
                 </div>
                 
-                <div class="col-12 col-md-8">
-                    <div class="pblock" style="padding-bottom: 0px">
+                <div class="col-12 col-md-8" style="padding: 30px 15px 15px">
+                    <div class="pblock">
                         <div class="row">
-                            <div class="col-10"><h4 style="margin-bottom: 0px;">Иванов Иван</h4></div>
-                            <div class="col-2">
+                            <div class="col-9"><h4 style="margin-bottom: 0px;">Иванов Иван</h4></div>
+                            <div class="col-3">
                                 <small class="text-muted" style="vertical-align: bottom;">online</small>
                             </div>
                         </div>
@@ -26,8 +26,8 @@
                                 <div class="col-6">1 января 2004</div>
                             </div>
                         </div>
-                        <div style="border-top: 1px solid lightgray; margin-top: 150px; margin-right: -20px; margin-left: -20px">
-                            <div class="row container" style="padding: 0px 20px;">
+                        <div style="border-top: 1px solid lightgray; margin-top: 200px; margin-right: -20px; margin-left: -20px">
+                            <div class="row container align-items-end" style="padding: 0px 20px;">
                                 <div class="col-6" style="height: 100%; padding: 15px 0px;">
                                     <div style="font-size: 22px; color: #2a5885; padding-bottom: 3px; line-height: 21px; cursor: pointer;">22</div>
                                     <div style="line-height: 15px; color: #828282;">друга</div>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="person_statistic row" style="padding: 30px 15px 15px">
+            <div class="person_statistic row" style="padding: 15px 15px">
                 <div class="pblock">
                     <h4>Статистика:</h4>
                     сюда статистику
