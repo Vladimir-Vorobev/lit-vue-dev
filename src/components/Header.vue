@@ -48,12 +48,12 @@
               </div>
             </li>
           </ul>
-          <!-- <router-link to='/login' class="router-link login">
+          <router-link to='/login' class="router-link login" style="display:block">
               <a type="button" class="btn btn-primary btn-lg" ref="login">{{loginText}}</a>
-          </router-link> -->
-          <div class="dropdown dropleft">
+          </router-link>
+          <div class="dropdown dropleft" style="display:none">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Иванов Иван
+              <a type="button" class="btn btn-primary btn-lg" ref="login">{{loginText}}</a>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" href="#">Моя страница</a>
@@ -99,6 +99,8 @@ export default {
               window.location.reload()
             }
             this.loginText = data.name + ' ' + data.surname
+            document.querySelector('.login').style.display = 'none'
+            document.querySelector('.dropleft').style.display = 'block'
         })
         .catch(err => {
             console.log(err)
