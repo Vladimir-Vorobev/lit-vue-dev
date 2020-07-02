@@ -71,78 +71,77 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </a>
-                                    </div>
-                                </transition-group>
-                            </div>
-                            <div v-if="ShowTop">
-                                <transition-group name="main">
-                                    <p key="p">Рейтинг тут</p>
-                                </transition-group>
-                            </div>
-                            <div v-if="ShowAdd">
-                                <transition-group name="main">
-                                    <form key='form' id='formList'>
-                                        <input key="input" class="radio" name='list' type="radio" checked @click="changeAddInfo('list')"> <p key="p">Добавить список учеников</p>
-                                        <input key="input" class="radio" name='one' type="radio" @click="changeAddInfo('one')"> <p key="p">Добавить ученика</p>
-                                    </form>
-                                    <div key="div" v-if="ShowAddList">
-                                        <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
-                                        <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
-                                        <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить список</button>
-                                    </div>
-                                    <form key="form" id='formOne' v-if="ShowAddOne">
-                                        <p key="p">Email </p><input key="input" name="email">
-                                        <p key="p">Имя </p><input key="input" name="name">
-                                        <p key="p">Фамилия </p><input key="input" name="surname">
-                                        <button type="submit" @click="add('one')" class="btn btn-primary btn-lg" key="button">Добавить ученика</button>
-                                    </form>
-                                </transition-group>
-                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </transition-group>
                         </div>
+                        <div v-if="ShowTop">
+                            <transition-group name="main">
+                                <p key="p">Рейтинг тут</p>
+                            </transition-group>
+                        </div>
+                        <div v-if="ShowAdd">
+                            <transition-group name="main">
+                                <form key='form' id='formList'>
+                                    <input key="input" class="radio" name='list' type="radio" checked @click="changeAddInfo('list')"> <p key="p">Добавить список учеников</p>
+                                    <input key="input" class="radio" name='one' type="radio" @click="changeAddInfo('one')"> <p key="p">Добавить ученика</p>
+                                </form>
+                                <div key="div" v-if="ShowAddList">
+                                    <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
+                                    <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
+                                    <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить список</button>
+                                </div>
+                                <form key="form" id='formOne' v-if="ShowAddOne">
+                                    <p key="p">Email </p><input key="input" name="email">
+                                    <p key="p">Имя </p><input key="input" name="name">
+                                    <p key="p">Фамилия </p><input key="input" name="surname">
+                                    <button type="submit" @click="add('one')" class="btn btn-primary btn-lg" key="button">Добавить ученика</button>
+                                </form>
+                            </transition-group>
+                        </div>
+                    </div>
 
                         
-                        <div v-if="role == 'school-admin'">
-                            <div v-if="ShowList">
-                                <transition-group name="main">
-                                    <div class="tab-pane fade show active" id="pills-list-student" v-for="item in teachers" :key="item.person">
-                                        <a class="person" href="#">
-                                            <div class="person_box" v-on:click="showTeacherInfo(item.email)">
-                                                <div class="name row">
-                                                    <div class="name_group col-11">{{ item.person }}</div>
-                                                    <div class="col-1 ar-collapse" :id='item.email'></div>
-                                                </div>
-                                                <div :id='item.email + "s"' style="display: none;">
-                                                    <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
-                                                        <a class="person" href="#" @click="showInfo(item2.email)">
-                                                            <div class="person_box a">
-                                                                <div class="name row">
-                                                                    <div class="name_group col-11 a">{{ item2.student }} </div>
-                                                                    <div class="col-1 ar-collapse a" :id='item2.email'></div>
-                                                                </div>
-                                                                <div :id="item2.email + 'n'" style="display: none;">
-                                                                    <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email + "x"' style="display: inline-block;"></i>
-                                                                    <div class="chart-container"><canvas :id="'chart' + item2.email" style="display: none;"></canvas></div>      
-                                                                </div>
+                    <div v-if="role == 'school-admin'">
+                        <div v-if="ShowList">
+                            <transition-group name="main">
+                                <div class="tab-pane fade show active" id="pills-list-student" v-for="item in teachers" :key="item.person">
+                                    <a class="person" href="#">
+                                        <div class="person_box" v-on:click="showTeacherInfo(item.email)">
+                                            <div class="name row">
+                                                <div class="name_group col-11">{{ item.person }}</div>
+                                                <div class="col-1 ar-collapse" :id='item.email'></div>
+                                            </div>
+                                            <div :id='item.email + "s"' style="display: none;">
+                                                <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
+                                                    <a class="person" href="#" @click="showInfo(item2.email)">
+                                                        <div class="person_box a">
+                                                            <div class="name row">
+                                                                <div class="name_group col-11 a">{{ item2.student }} </div>
+                                                                <div class="col-1 ar-collapse a" :id='item2.email'></div>
                                                             </div>
-                                                        </a>    
-                                                    </div>
+                                                            <div :id="item2.email + 'n'" style="display: none;">
+                                                                <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email + "x"' style="display: inline-block;"></i>
+                                                                <div class="chart-container"><canvas :id="'chart' + item2.email" style="display: none;"></canvas></div>      
+                                                            </div>
+                                                        </div>
+                                                    </a>    
                                                 </div>
                                             </div>
-                                        </a>
-
-                                    </div>
-                                </transition-group>
-                            </div>
-                            <div v-if="ShowAdd">
-                                <transition-group name="main">
-                                    <p key="p">Загрузите актуальный список Ваших учителей в excel файле</p>
-                                    <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
-                                    <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить</button>
-                                </transition-group>
-                            </div>
-                        </div> 
-                    </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </transition-group>
+                        </div>
+                        <div v-if="ShowAdd">
+                            <transition-group name="main">
+                                <p key="p">Загрузите актуальный список Ваших учителей в excel файле</p>
+                                <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
+                                <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить</button>
+                            </transition-group>
+                        </div>
+                    </div> 
                 </div>
             </transition>
         </div>
