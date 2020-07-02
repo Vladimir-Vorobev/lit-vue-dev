@@ -20,11 +20,11 @@
                   <a class="nav-link" ref="recommendedEvents" style="color: #000 !important">Рекомендуемые мероприятия</a>
               </router-link>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link to="/your-events" class="router-link">
                   <a class="nav-link" ref="yourEvents" style="color: #000 !important">Ваши мероприятия</a>
               </router-link>
-            </li>
+            </li> -->
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: #000 !important">
                 Полезное
@@ -48,9 +48,22 @@
               </div>
             </li>
           </ul>
-          <router-link to='/login' class="router-link login">
+          <!-- <router-link to='/login' class="router-link login">
               <a type="button" class="btn btn-primary btn-lg" ref="login">{{loginText}}</a>
-          </router-link>
+          </router-link> -->
+          <div class="dropdown dropleft">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Иванов Иван
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Моя страница</a>
+              <router-link to="/your-events" class="router-link">
+                  <a class="dropdown-item" ref="yourEvents" style="color: #16181b !important">Мои мероприятия</a>
+              </router-link>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item exit" href="#">Выйти</a>
+            </div>
+          </div>
         </div>
       </nav>
     </div>
@@ -97,9 +110,14 @@ export default {
 </script>
 
 <style scoped>
-.router-link
-{
+.router-link {
   text-decoration: none; /* отменяем подчеркивание ссылки */
   color: #fff;
+}
+.exit{
+  color: red;
+}
+.exit:focus {
+  background: #f1f2f3;
 }
 </style>
