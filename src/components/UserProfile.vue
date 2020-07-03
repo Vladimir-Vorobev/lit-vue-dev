@@ -25,8 +25,16 @@
                                 <div class="col-6 text-muted">Дата рождения: </div>
                                 <div class="col-6">1 января 2004</div>
                             </div>
+                            <div class="row">
+                                <div class="col-6 text-muted">Школа: </div>
+                                <div class="col-6">ГБОУ №1111</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-muted">Класс и символ: </div>
+                                <div class="col-6">9 "Е"</div>
+                            </div>
                         </div>
-                        <div style="border-top: 1px solid lightgray; margin-top: 200px; margin-right: -20px; margin-left: -20px">
+                        <div style="border-top: 1px solid lightgray; margin-top: 150px; margin-right: -20px; margin-left: -20px">
                             <div class="row justify-content-center container" style="padding: 0px 20px;">
                                 <div class="col-4 col-md-2" style="height: 100%; padding: 15px 0px; margin: 0px 15px">
                                     <div @click="PersonFriends()" style="font-size: 22px; color: #2a5885; padding-bottom: 3px; line-height: 21px; cursor: pointer;">22</div>
@@ -136,6 +144,10 @@ export default {
     object-fit: contain;
     max-width: 100%;
     max-height: 100%;
+}
+
+.info{
+    text-align: left;
 }
 
 </style>
