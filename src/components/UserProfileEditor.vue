@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 col-md-6">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3">@</span>
@@ -41,14 +41,12 @@
                         <input type="text" class="form-control" placeholder="Короткое имя" aria-label="Короткое имя" aria-describedby="basic-addon3">
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
+                <div class="col-12 col-md-6">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon3">Школа</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Короткое имя" aria-label="Короткое имя" aria-describedby="basic-addon3">
+                        <input type="text" class="form-control" aria-describedby="basic-addon3">
                     </div>
                 </div>
             </div>
