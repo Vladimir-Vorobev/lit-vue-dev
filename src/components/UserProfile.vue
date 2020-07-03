@@ -28,11 +28,11 @@
                         </div>
                         <div style="border-top: 1px solid lightgray; margin-top: 200px; margin-right: -20px; margin-left: -20px">
                             <div class="row justify-content-center container" style="padding: 0px 20px;">
-                                <div class="col-2" style="height: 100%; padding: 15px 0px; margin: 0px 15px">
+                                <div class="col-4 col-md-2" style="height: 100%; padding: 15px 0px; margin: 0px 15px">
                                     <div @click="PersonFriends()" style="font-size: 22px; color: #2a5885; padding-bottom: 3px; line-height: 21px; cursor: pointer;">22</div>
                                     <div style="line-height: 15px; color: #828282;">друга</div>
                                 </div>
-                                <div class="col-3" style="height: 100%; padding: 15px 0px; margin: 0px 15px">
+                                <div class="col-5 col-md-3" style="height: 100%; padding: 15px 0px; margin: 0px 15px">
                                     <div @click="PersonEvents()" style="font-size: 22px; color: #2a5885; padding-bottom: 3px; line-height: 21px; cursor: pointer;">30</div>
                                     <div style="line-height: 15px; color: #828282;">мероприятий</div>
                                 </div>
