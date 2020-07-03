@@ -3,7 +3,7 @@
         <div class="container warp">
             <div class="row">
                 <div class="col-1">
-                    <button class='btn btn-light' @keyup.enter="notexit()" @click="back()"><i class="fas fa-arrow-left"></i></button>
+                    <button class='btn btn-light' @click="backinprofile()"><i class="fas fa-arrow-left"></i></button>
                 </div>
                 <div class="col-11">
                     <h3>Редактирование профиля:</h3>
@@ -75,9 +75,23 @@
 
 <script>
 import Footer from './footer.vue'
+import Vue from 'vue';
 export default {
     name: 'UserProfileEditor',
     components: { Footer },
+
+    methods: {
+        backinprofile(){
+            //надо сделать переход назад к профилю пользователя, пока тут alert
+            Vue.swal({
+                icon: 'error',
+                text: 'Функция временно не доступна!',
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+            });
+        },
+    }
 }
 </script>
 
