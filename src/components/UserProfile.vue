@@ -81,7 +81,7 @@
 <script>
 import Footer from './footer.vue'
 import Vue from 'vue';
-// import needle from 'needle'
+
 export default {
     name: 'UserProfile',
     components: { Footer },
@@ -98,31 +98,6 @@ export default {
     },
     beforeMount(){
         if(this.email == '') window.location.pathname = "/login"
-        // needle.post('http://78.155.219.12:3000/api/getIdInformation', {id: this.id, email: this.email, sessionid: this.SessionID}, {"json": true}, function(err, res, data) {
-        //     if (err) throw err
-        //     if(res.body == '310'){
-        //         document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-        //         document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-        //         window.location.reload()
-        //     }
-        //     this.person_name = data.name + ' ' + data.surname
-        //     // this.person_date = res.age
-        //     // if(res.class_number != undefined || res.simvol != undefined){
-        //     //     this.person_grade = res.class_number + ' ' + res.simvol
-        //     // }
-        //     // else{
-        //     //     this.person_grade = 'Не указаны'
-        //     // }
-        //     // if(res.body.school != undefined){
-        //     //     this.person_school = res.school
-        //     // }
-        //     // else{
-        //     //     this.person_school = 'Не указана'
-        //     // }
-        //     // console.log(this.id)
-        //     console.log(data)
-        // })
-
         fetch('http://78.155.219.12:3000/api/getIdInformation', {
             method: 'POST',
             headers: {id: this.id, email: this.email, sessionid: this.SessionID},
