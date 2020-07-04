@@ -81,7 +81,7 @@
 <script>
 import Footer from './footer.vue'
 import Vue from 'vue';
-import needle from 'needle'
+// import needle from 'needle'
 export default {
     name: 'UserProfile',
     components: { Footer },
@@ -90,70 +90,71 @@ export default {
         id: this.$route.params.id,
         email: this.$store.getters.email,
         SessionID: this.$store.getters.SessionID,
-        person_name: '',
-        person_date: '',
-        person_grade: '',
-        person_school: '',
+        person_name: ' ',
+        person_date: ' ',
+        person_grade: ' ',
+        person_school: ' ',
       }
     },
     beforeMount(){
         if(this.email == '') window.location.pathname = "/login"
-        needle.post('http://78.155.219.12:3000/api/getIdInformation', {id: this.id, email: this.email, sessionid: this.SessionID}, {"json": true}, function(err, res) {
-            if (err) throw err
-            if(res.body == '310'){
-                document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-                document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-                window.location.reload()
-            }
-            this.person_name = res.body.name + ' ' + res.body.surname
-            this.person_date = res.body.age
-            if(res.body.class_number != undefined || res.body.simvol != undefined){
-                this.person_grade = res.body.class_number + ' ' + res.body.simvol
+        // needle.post('http://78.155.219.12:3000/api/getIdInformation', {id: this.id, email: this.email, sessionid: this.SessionID}, {"json": true}, function(err, res, data) {
+        //     if (err) throw err
+        //     if(res.body == '310'){
+        //         document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        //         document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        //         window.location.reload()
+        //     }
+        //     this.person_name = data.name + ' ' + data.surname
+        //     // this.person_date = res.age
+        //     // if(res.class_number != undefined || res.simvol != undefined){
+        //     //     this.person_grade = res.class_number + ' ' + res.simvol
+        //     // }
+        //     // else{
+        //     //     this.person_grade = 'Не указаны'
+        //     // }
+        //     // if(res.body.school != undefined){
+        //     //     this.person_school = res.school
+        //     // }
+        //     // else{
+        //     //     this.person_school = 'Не указана'
+        //     // }
+        //     // console.log(this.id)
+        //     console.log(data)
+        // })
+        
+      fetch('http://78.155.219.12:3000/api/getIdInformation', {
+          method: 'POST',
+          headers: {id: this.id, email: this.email, sessionid: this.SessionID},
+      })
+      .then(response => {
+          console.log("res", response)
+          return response.json()
+      })
+    .then(data => {
+        if(data == '310'){
+            document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            window.location.reload()
+        }
+            this.person_name = data.name + ' ' + data.surname
+            this.person_date = data.age
+            if(data.class_number != undefined || data.simvol != undefined){
+                this.person_grade = data.class_number + ' ' + data.simvol
             }
             else{
                 this.person_grade = 'Не указаны'
             }
-            if(res.body.school != undefined){
-                this.person_school = res.body.school
+            if(data.school != undefined){
+                this.person_school = data.school
             }
             else{
                 this.person_school = 'Не указана'
             }
-            console.log(this.id)
         })
-    //   fetch('http://78.155.219.12:3000/api/getInformation', {
-    //       method: 'POST',
-    //       headers: {email: this.email, sessionid: this.SessionID},
-    //   })
-    //   .then(response => {
-    //       console.log("res", response)
-    //       return response.json()
-    //   })
-    // .then(data => {
-    //     if(data == '310'){
-    //         document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-    //         document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-    //         window.location.reload()
-    //     }
-    //         this.person_name = data.name + ' ' + data.surname
-    //         this.person_date = data.age
-    //         if(data.class_number != undefined || data.simvol != undefined){
-    //             this.person_grade = data.class_number + ' ' + data.simvol
-    //         }
-    //         else{
-    //             this.person_grade = 'Не указаны'
-    //         }
-    //         if(data.school != undefined){
-    //             this.person_school = data.school
-    //         }
-    //         else{
-    //             this.person_school = 'Не указана'
-    //         }
-    //         console.log(this.id)
-    //     })
-    //   .catch(err => {
-    //       console.log(err)
-    // })
+      .catch(err => {
+          console.log(err)
+    })
     },
     methods: {
         PersonEvents(){

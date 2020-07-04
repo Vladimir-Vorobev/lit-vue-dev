@@ -56,7 +56,7 @@
               {{loginText}}
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Моя страница</a>
+              <a @click="person_profile()" class="dropdown-item" href="">Моя страница</a>
               <router-link to="/your-events" class="router-link">
                   <a class="dropdown-item" ref="yourEvents" style="color: #16181b !important">Мои мероприятия</a>
               </router-link>
@@ -78,6 +78,7 @@ export default {
     data(){
         return {
             loginText: 'Войти',
+            userId: 0,
         }
     },
     beforeMount(){
@@ -99,6 +100,7 @@ export default {
               window.location.reload()
             }
             this.loginText = data.name + ' ' + data.surname
+            this.userId = data._id
             document.querySelector('.login').style.display = 'none'
             document.querySelector('.dropleft').style.display = 'block'
         })
@@ -112,6 +114,10 @@ export default {
         document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
         document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
         window.location.reload()
+      },
+      person_profile(){
+        let userId = this.userId
+        this.$router.push({ path: `/user-profile/${userId}` })
       }
     }
 
