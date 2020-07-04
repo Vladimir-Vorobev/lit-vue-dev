@@ -122,21 +122,21 @@ export default {
         //     // console.log(this.id)
         //     console.log(data)
         // })
-        
-      fetch('http://78.155.219.12:3000/api/getIdInformation', {
-          method: 'POST',
-          headers: {id: this.id, email: this.email, sessionid: this.SessionID},
-      })
-      .then(response => {
-          console.log("res", response)
-          return response.json()
-      })
-    .then(data => {
-        if(data == '310'){
-            document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-            document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-            window.location.reload()
-        }
+
+        fetch('http://78.155.219.12:3000/api/getIdInformation', {
+            method: 'POST',
+            headers: {id: this.id, email: this.email, sessionid: this.SessionID},
+        })
+        .then(response => {
+            console.log("res", response)
+            return response.json()
+        })
+        .then(data => {
+            if(data == '310'){
+                document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                window.location.reload()
+            }
             this.person_name = data.name + ' ' + data.surname
             this.person_date = data.age
             if(data.class_number != undefined || data.simvol != undefined){
@@ -152,9 +152,9 @@ export default {
                 this.person_school = 'Не указана'
             }
         })
-      .catch(err => {
-          console.log(err)
-    })
+        .catch(err => {
+            console.log(err)
+        })
     },
     methods: {
         PersonEvents(){
