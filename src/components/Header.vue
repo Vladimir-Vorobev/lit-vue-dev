@@ -113,12 +113,13 @@ export default {
       exit(){
         document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
         document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        this.$router.push({ path: `/login` })
         window.location.reload()
       },
       person_profile(){
         //let userId = this.userId
         //this.$router.push({ path: `/user-profile/${userId}` })
-        window.location.pathname = "/profile"
+        this.$router.push({ path: `/profile` })
       }
     }
 
