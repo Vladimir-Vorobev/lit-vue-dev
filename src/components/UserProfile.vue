@@ -133,9 +133,10 @@ export default {
         })
         .then(data => {
             if(data == '310'){
-                document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-                document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-                window.location.reload()
+                // document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                // document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+                // window.location.reload()
+                console.log("err 310")
             }
             this.person_name = data.name + ' ' + data.surname
             this.person_date = data.age

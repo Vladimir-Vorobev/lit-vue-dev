@@ -116,8 +116,9 @@ export default {
         window.location.reload()
       },
       person_profile(){
-        let userId = this.userId
-        this.$router.push({ path: `/user-profile/${userId}` })
+        //let userId = this.userId
+        //this.$router.push({ path: `/user-profile/${userId}` })
+        window.location.pathname = "/profile"
       }
     }
 
