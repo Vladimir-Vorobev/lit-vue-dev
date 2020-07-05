@@ -187,8 +187,17 @@ export default {
     min-height: 300px;
     padding: 15px 20px;
 }
+.avatar{
+    min-width: 310px;
+    min-height: 310px;
+    max-width: 310px;
+    max-height: 310px;
+}
 .avatar img{
-    object-fit: fill; /*fill or contain*/
+    /* object-fit: fill; fill or contain */
+    /* max-width: 310px;
+    max-height: 310px; */
+    display: block;
     max-width: 100%;
     max-height: 100%;
     min-width: 310px;
