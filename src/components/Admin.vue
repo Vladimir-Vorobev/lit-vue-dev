@@ -84,32 +84,36 @@
                         </div>
                         <div v-if="ShowAdd">
                             <transition-group name="main">
-                                <form key='form' id='formList'>
+                                <form key='form' id='formList' style="text-align: left; font-size: 1.2em">
                                     <!-- <input key="input" class="radio" name='list' type="radio" checked @click="changeAddInfo('list')"> <p key="p">Добавить список учеников</p> -->
                                     <!-- <input key="input" class="radio" name='one' type="radio" @click="changeAddInfo('one')"> <p key="p">Добавить ученика</p> -->
-                                    <div class="form-check">
-                                        <input key="input" name='list' class="form-check-input radio" type="radio" @click="changeAddInfo('list')" id="exampleRadios1" value="option1" checked>
-                                        <label key="p" class="form-check-label" for="exampleRadios1">
-                                            Добавить список учеников
-                                        </label>
+                                    <div class="form-check row">
+                                        <div class="col-12">
+                                            <input key="input" name='list' class="form-check-input radio" type="radio" @click="changeAddInfo('list')" id="exampleRadios1" value="option1" checked>
+                                            <label key="p" class="form-check-label" for="exampleRadios1">
+                                                Добавить список учеников
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="form-check">
-                                        <input  key="input" name='one' class="form-check-input radio" @click="changeAddInfo('one')" type="radio" id="exampleRadios2" value="option2">
-                                        <label key="p" class="form-check-label" for="exampleRadios2">
-                                            Добавить ученика
-                                        </label>
+                                    <div class="form-check row">
+                                        <div class="col-12">
+                                            <input  key="input" name='one' class="form-check-input radio" @click="changeAddInfo('one')" type="radio" id="exampleRadios2" value="option2">
+                                            <label key="p" class="form-check-label" for="exampleRadios2">
+                                                Добавить ученика
+                                            </label>
+                                        </div>
                                     </div>
-                                </form>
-                                <div key="div" v-if="ShowAddList">
+                                </form> <br>
+                                <div key="div" v-if="ShowAddList" style="text-align: left">
                                     <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
                                     <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
                                     <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить список</button>
                                 </div>
-                                <form key="form" id='formOne' v-if="ShowAddOne">
+                                <form key="form" id='formOne' v-if="ShowAddOne" style="text-align: left">
                                     <p key="p">Email </p><input key="input" name="email">
                                     <p key="p">Имя </p><input key="input" name="name">
-                                    <p key="p">Фамилия </p><input key="input" name="surname">
-                                    <button type="submit" @click="add('one')" class="btn btn-primary btn-lg" key="button">Добавить ученика</button>
+                                    <p key="p">Фамилия </p><input key="input" name="surname" style="margin-bottom: 0.7em">
+                                    <p><button type="submit" @click="add('one')" class="btn btn-primary btn-lg" key="button">Добавить ученика</button></p>
                                 </form>
                             </transition-group>
                         </div>
