@@ -84,8 +84,20 @@
                         <div v-if="ShowAdd">
                             <transition-group name="main">
                                 <form key='form' id='formList'>
-                                    <input key="input" class="radio" name='list' type="radio" checked @click="changeAddInfo('list')"> <p key="p">Добавить список учеников</p>
-                                    <input key="input" class="radio" name='one' type="radio" @click="changeAddInfo('one')"> <p key="p">Добавить ученика</p>
+                                    <!-- <input key="input" class="radio" name='list' type="radio" checked @click="changeAddInfo('list')"> <p key="p">Добавить список учеников</p> -->
+                                    <!-- <input key="input" class="radio" name='one' type="radio" @click="changeAddInfo('one')"> <p key="p">Добавить ученика</p> -->
+                                    <div class="form-check">
+                                        <input key="input" name='list' class="form-check-input radio" type="radio" @click="changeAddInfo('list')" id="exampleRadios1" value="option1" checked>
+                                        <label key="p" class="form-check-label" for="exampleRadios1">
+                                            Добавить список учеников
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input  key="input" name='one' class="form-check-input radio" @click="changeAddInfo('one')" type="radio" id="exampleRadios2" value="option2">
+                                        <label key="p" class="form-check-label" for="exampleRadios2">
+                                            Добавить ученика
+                                        </label>
+                                    </div>
                                 </form>
                                 <div key="div" v-if="ShowAddList">
                                     <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
