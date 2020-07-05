@@ -51,11 +51,11 @@
           <router-link to='/login' class="router-link login" style="display:block">
               <a type="button" class="btn btn-primary btn-lg" ref="login">{{loginText}}</a>
           </router-link>
-          <div class="dropdown dropleft" style="display:none">
+          <div class="dropdown person_menu" style="display:none">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{loginText}}
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
               <a @click="person_profile()" class="dropdown-item" href="">Моя страница</a>
               <router-link to="/your-events" class="router-link">
                   <a class="dropdown-item" ref="yourEvents" style="color: #16181b !important">Мои мероприятия</a>
@@ -102,7 +102,7 @@ export default {
             this.loginText = data.name + ' ' + data.surname
             this.userId = data._id
             document.querySelector('.login').style.display = 'none'
-            document.querySelector('.dropleft').style.display = 'block'
+            document.querySelector('.person_menu').style.display = 'block'
         })
         .catch(err => {
             console.log(err)
