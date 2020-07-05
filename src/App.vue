@@ -84,26 +84,39 @@ export default {
 
 <style>
 
-::-webkit-scrollbar { 
+/* ::-webkit-scrollbar { 
     width: 10px;
-}
+} */
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
   background: transparent;
   border-radius: 5px;
-  /* box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset; */
   box-shadow: inset 0 0 6px rgba(0,0,0,0.2)
 }
 
 ::-webkit-scrollbar-thumb {
   background: #a5a2a2;
   border-radius: 5px;
+} */
+
+::-webkit-scrollbar {
+    width: 0.5em;
+    height: 0.4em;
+    background: transparent;
+}
+::-webkit-scrollbar-corner {
+    display: none;
+}
+::-webkit-scrollbar-thumb {
+    background: #afafaf;
+    border-radius: 0.2em;
 }
 
+
 html{
-    scrollbar-color: #a5a2a2 transparentf; 
+    scrollbar-color: #afafaf transparent; 
     scrollbar-width: thin;
-    scrollbar-face-color: #a5a2a2 ;
+    scrollbar-face-color: #afafaf ;
     scrollbar-track-color: transparent;
 }
 

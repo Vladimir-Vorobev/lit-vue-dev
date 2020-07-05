@@ -51,12 +51,12 @@
           <router-link to='/login' class="router-link login" style="display:block">
               <a type="button" class="btn btn-primary btn-lg" ref="login">{{loginText}}</a>
           </router-link>
-          <div class="dropdown dropleft" style="display:none">
+          <div class="dropdown person_menu" style="display:none">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{loginText}}
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Моя страница</a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+              <a @click="person_profile()" class="dropdown-item" href="">Моя страница</a>
               <router-link to="/your-events" class="router-link">
                   <a class="dropdown-item" ref="yourEvents" style="color: #16181b !important">Мои мероприятия</a>
               </router-link>
@@ -78,6 +78,7 @@ export default {
     data(){
         return {
             loginText: 'Войти',
+            userId: 0,
         }
     },
     beforeMount(){
@@ -99,8 +100,9 @@ export default {
               window.location.reload()
             }
             this.loginText = data.name + ' ' + data.surname
+            this.userId = data._id
             document.querySelector('.login').style.display = 'none'
-            document.querySelector('.dropleft').style.display = 'block'
+            document.querySelector('.person_menu').style.display = 'block'
         })
         .catch(err => {
             console.log(err)
@@ -111,7 +113,13 @@ export default {
       exit(){
         document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
         document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        this.$router.push({ path: `/login` })
         window.location.reload()
+      },
+      person_profile(){
+        let userId = this.userId
+        this.$router.push({ path: `/user-profile/${userId}` })
+        //this.$router.push({ path: `/profile` })
       }
     }
 

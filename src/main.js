@@ -57,7 +57,7 @@ const routes = [
   { path: '/universities', component: Universities },
   { path: '/partners', component: Partners },
   { path: '/admin', component: Admin },
-  { path: '/user-profile', component: UserProfile },
+  { path: '/user-profile/:id', component: UserProfile },
   { path: '/user-profile-edit', component: UserProfileEditor },
   { path: '/404', component: PageNotFound }, { path: '*', redirect: '/404' }
 ]
