@@ -1,8 +1,8 @@
 <template>
     <div class='main'>
         <div class="container warp">
-            <transition name="auth">
-                <div v-if="show">
+            <transition-group name="auth">
+                <div v-if="show" key="div">
                     <form class="formbox">
                         <h2>Войти</h2>
                         <div class="form-group row">
@@ -18,7 +18,7 @@
                         </div>
                     </form>
                 </div>
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'teacher'">
+                <ul key="ul" class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'teacher'">
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список класса</a>
                     </li>
@@ -29,7 +29,7 @@
                         <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
                     </li>
                 </ul>
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'school-admin'">
+                <ul key="ul" class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'school-admin'">
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список учителей</a>
                     </li>
@@ -37,7 +37,7 @@
                         <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
                     </li>
                 </ul>
-                <div class="tab-content" id="pills-tabContent">
+                <div key="div" class="tab-content" id="pills-tabContent">
                     <hr>
                     <div v-if="role == 'teacher'">
                         <div v-if="ShowList">
@@ -101,8 +101,7 @@
                             </transition-group>
                         </div>
                     </div>
-
-                        
+             
                     <div v-if="role == 'school-admin'">
                         <div v-if="ShowList">
                             <transition-group name="main">
@@ -143,7 +142,7 @@
                         </div>
                     </div> 
                 </div>
-            </transition>
+            </transition-group>
         </div>
         <div class="footer"><Footer></Footer></div> 
     </div>
@@ -499,8 +498,6 @@ export default {
                         //alert(res.body)
                         Vue.swal(res.body);
                     }
-                }).then(() => {
-                    this.getAdminList()
                 })
             }
         },

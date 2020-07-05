@@ -42,6 +42,7 @@
 
 <script>
 import needle from "needle"
+import Vue from 'vue'
 import Footer from './footer.vue'
 export default {
     name: 'Registration',
@@ -168,7 +169,7 @@ export default {
             }
             needle.post('http://78.155.219.12:3000/api/registration', data, {"json": true}, function(err, res, body){
               if(body == "Reg succsesful"){
-                this.$swal({
+                Vue.$swal({
                     icon: 'success',
                     title: 'Вы успешно зарегистрированы!',
                     showConfirmButton: false,
@@ -181,14 +182,14 @@ export default {
               }
               else if(body == "Reg Fail"){
                 //alert('Пользователь с таким email существует')
-                this.$swal({
+                Vue.$swal({
                     icon: 'error',
                     text: 'Пользователь с таким email существует'
                 });
               }
               else{
                 //alert("Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы")
-                this.$swal({
+                Vue.$swal({
                     icon: 'error',
                     text: 'Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы'
                 });
