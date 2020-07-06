@@ -98,7 +98,7 @@ export default {
     },
     beforeMount(){
         if(this.email == '') window.location.pathname = "/login"
-        fetch('http://78.155.219.12:3000/api/getIdInformation', {
+        fetch(this.$store.state.serverIp+'/api/getIdInformation', {
             method: 'POST',
             headers: {id: this.id, email: this.email, sessionid: this.SessionID},
         })

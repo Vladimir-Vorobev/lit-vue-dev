@@ -34,7 +34,7 @@ export default {
      beforeMount(){
         let email = this.$store.getters.email
         let SessionID = this.$store.getters.SessionID
-        fetch('http://78.155.219.12:3000/api/getCheckedEvents', {
+        fetch(this.$store.state.serverIp+'/api/getCheckedEvents', {
             method: 'get',
             headers: {email: email, sessionid: SessionID},
 		})
@@ -70,7 +70,7 @@ export default {
                     event.preventDefault()
                     let email = this.$store.getters.email
                     let SessionID = this.$store.getters.SessionID
-                    needle.post('http://78.155.219.12:3000/api/deleteEvent', {email: email, event: events, sessionid: SessionID}, {"json": true}, function(err, res){
+                    needle.post(this.$store.state.serverIp+'/api/deleteEvent', {email: email, event: events, sessionid: SessionID}, {"json": true}, function(err, res){
                         if(err) console.log(err)
                         if(res.body == '310'){
                             document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"

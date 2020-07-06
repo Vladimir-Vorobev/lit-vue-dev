@@ -67,7 +67,7 @@ export default {
         }
     },
     beforeMount(){
-        fetch('http://78.155.219.12:3000/api/getAllEvents', {
+        fetch(this.$store.state.serverIp+'/api/getAllEvents', {
             method: 'get',
         })
         .then(response => {
@@ -99,7 +99,7 @@ export default {
                 else if(this.$route.path == '/service-events') event.mainType = 'service'
                 else event.mainType = 'engeniring'
                 console.log(event)
-                needle.post('http://78.155.219.12:3000/api/checkedEventsUpdate', {email: email, events: event, sessionid: SessionID}, {"json": true}, function(err, res){
+                needle.post(this.$store.state.serverIp+'/api/checkedEventsUpdate', {email: email, events: event, sessionid: SessionID}, {"json": true}, function(err, res){
                     if (err) throw err
                     if(res.body == '310'){
                         document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"

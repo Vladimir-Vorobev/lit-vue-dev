@@ -152,7 +152,7 @@ export default {
           }
           if(document.querySelector('.code').style.visibility == 'hidden'){
             document.querySelector('.code').style.visibility = 'visible'
-            needle.post('http://78.155.219.12:3000/api/mailCheck', {email: email}, {"json": true}, function(err, res){
+            needle.post(this.$store.state.serverIp+'/api/mailCheck', {email: email}, {"json": true}, function(err, res){
               if (err) throw err
               alert(res.body)
               document.cookie = "_relx=" + res.body
@@ -167,7 +167,7 @@ export default {
               age: age,
               password: crypto.createHash('md5').update(password).digest("hex"),
             }
-            needle.post('http://78.155.219.12:3000/api/registration', data, {"json": true}, function(err, res, body){
+            needle.post(this.$store.state.serverIp+'/api/registration', data, {"json": true}, function(err, res, body){
               if(body == "Reg succsesful"){
                 Vue.$swal({
                     icon: 'success',

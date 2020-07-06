@@ -229,7 +229,7 @@ export default {
             let email = form.elements.email.value
             let password = form.elements.password.value
             let crypto = require('crypto')
-            fetch('http://78.155.219.12:3000/api/adminLogin', {
+            fetch(this.$store.state.serverIp+'/api/adminLogin', {
                 method: 'POST',
                 headers: {email: email, password: crypto.createHash('md5').update(password).digest("hex")},
             })
@@ -267,7 +267,7 @@ export default {
         },
         getAdminList(){
             let students = []
-            fetch('http://78.155.219.12:3000/api/getAdminList', {
+            fetch(this.$store.state.serverIp+'/api/getAdminList', {
                 method: 'POST',
                 headers: {email: this.email},
             })
@@ -308,7 +308,7 @@ export default {
                         if(document.getElementById(email + "x").style.display == 'inline-block'){
                             let SessionID = this.$store.getters.SessionID
                             let teacherEmail = this.$store.getters.email
-                            fetch('http://78.155.219.12:3000/api/getCheckedEvents', {
+                            fetch(this.$store.state.serverIp+'/api/getCheckedEvents', {
                                 method: 'get',
                                 headers: {email: teacherEmail, studEmail: email, sessionid: SessionID},
                             })
@@ -532,7 +532,7 @@ export default {
                 else this.$swal('Файл не выбран');   //alert('Файл не выбран')
             }
             function send(data, email, url){
-                needle.post('http://78.155.219.12:3000/api/' + url, {data: data, email: email, type: 'update'}, {"json": true}, function(err, res){
+                needle.post(this.$store.state.serverIp+'/api/' + url, {data: data, email: email, type: 'update'}, {"json": true}, function(err, res){
                     if(err) throw err
                     if(res.body == 'OK'){
                         //alert('Файл успешно добавлен')
@@ -622,7 +622,7 @@ export default {
                 cancelButtonText: 'Отмена'
             }).then((result) => {
                  if (result.value) {
-                     needle.post('http://78.155.219.12:3000/api/uploadOne', {data: data, email: email, type: 'delete'}, {"json": true}, function(err, res){
+                     needle.post(this.$store.state.serverIp+'/api/uploadOne', {data: data, email: email, type: 'delete'}, {"json": true}, function(err, res){
                         if(err) throw err
                         if(res.body == 'OK'){
                             //alert('Файл успешно добавлен')

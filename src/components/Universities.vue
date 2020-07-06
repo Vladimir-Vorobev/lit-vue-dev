@@ -25,7 +25,7 @@ export default {
         }
     },
     beforeMount(){
-        fetch('http://78.155.219.12:3000/api/getAllEvents', {
+        fetch(this.$store.state.serverIp+'/api/getAllEvents', {
             method: 'get',
         })
         .then(response => {

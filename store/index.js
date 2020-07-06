@@ -4,6 +4,7 @@ export const APP_STORE = {
 		allEventsScroll: 0,
 		openDaysScroll: 0,
 		SessionID: 0,
+		serverIp: 'http://78.155.219.12:3000'
 	},
 	mutations: {
 		GET_USER_EMAIL(state, value) {

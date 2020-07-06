@@ -51,7 +51,7 @@ export default {
         }
         let email = this.$store.getters.email
         let SessionID = this.$store.getters.SessionID
-        fetch('http://78.155.219.12:3000/api/getOtherInformation', {
+        fetch(this.$store.state.serverIp+'/api/getOtherInformation', {
         method: 'get',
         headers: {email: email, sessionid: SessionID},
         })

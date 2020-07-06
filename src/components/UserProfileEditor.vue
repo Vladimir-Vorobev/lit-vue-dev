@@ -128,7 +128,7 @@ export default {
     },
     beforeMount(){
         if(this.email == '') window.location.pathname = "/login"
-        fetch('http://78.155.219.12:3000/api/getInformation', {
+        fetch(this.$store.state.serverIp+'/api/getInformation', {
             method: 'POST',
             headers: {email: this.email, sessionid: this.SessionID},
         })
@@ -235,7 +235,7 @@ export default {
                 if(schoolType.trim() != '' && schoolType != "Тип учебного заведения") dataq.schoolType = schoolType
                 if(class_number.trim() != '') dataq.class_number = class_number
                 if(simvol.trim() != '') dataq.simvol = simvol
-                needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: dataq}, {"json": true}, function(err){
+                needle.post(this.$store.state.serverIp+'/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: dataq}, {"json": true}, function(err){
                     if (err) console.log(err)
                     window.location.reload()
                 })
