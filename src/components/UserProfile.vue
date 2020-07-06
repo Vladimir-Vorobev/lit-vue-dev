@@ -5,7 +5,7 @@
                 <div class="col-12 col-md-4" style="padding: 30px 15px 15px">
                     <div class="photo pblock">
                         <div class="avatar">
-                            <img src="./../assets/test.jpeg" alt="">
+                            <img src="./../assets/noavatar.jpg" alt="">
                         </div>
                         <button @click="GoToEditor()" class="btn btn-light" style="width: 100%; margin-top: 15px;">Редактировать</button>
                     </div>
