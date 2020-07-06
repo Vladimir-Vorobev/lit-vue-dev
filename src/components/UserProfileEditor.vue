@@ -3,7 +3,7 @@
         <div class="container warp">
             <div class="row">
                 <div class="col-1">
-                    <button class='btn btn-light' @click="backinprofile()"><i class="fas fa-arrow-left"></i></button>
+                    <button class='btn btn-light' @click="backInProfile()"><i class="fas fa-arrow-left"></i></button>
                 </div>
                 <div class="col-11">
                     <h3>Редактирование профиля:</h3>
@@ -47,7 +47,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon4">@</span>
                             </div>
-                            <input type="text" class="form-control" placeholder="Короткое имя" aria-label="Короткое имя" aria-describedby="basic-addon4">
+                            <input type="text" class="form-control" placeholder="Ник пользователя" aria-label="Короткое имя" aria-describedby="basic-addon4">
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
@@ -239,7 +239,7 @@ export default {
                 })
             }
         },
-        backinprofile(){
+        backInProfile(){
             //надо сделать переход назад к профилю пользователя, пока тут alert
             Vue.swal({
                 icon: 'error',
