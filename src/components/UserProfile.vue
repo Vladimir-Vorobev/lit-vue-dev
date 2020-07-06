@@ -7,7 +7,7 @@
                         <div class="avatar">
                             <img src="./../assets/test.jpeg" alt="">
                         </div>
-                        <a href="/user-profile-edit" class="btn btn-light" style="width: 100%; margin-top: 15px;">Редактировать</a>
+                        <button @click="GoToEditor()" class="btn btn-light" style="width: 100%; margin-top: 15px;">Редактировать</button>
                     </div>
                 </div>
                 
@@ -153,6 +153,9 @@ export default {
                 timerProgressBar: true,
             });
         },
+        GoToEditor(){
+            this.$router.push({ path: `/user-profile-edit` })
+        }
     },
 }
 </script>
