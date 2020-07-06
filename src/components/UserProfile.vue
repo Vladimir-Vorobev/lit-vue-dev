@@ -114,7 +114,15 @@ export default {
                 console.log("err 310")
             }
             this.person_name = data.name + ' ' + data.surname
-            this.person_date = data.age
+            let personDate = data.age
+            personDate = personDate.split('-')
+            personDate = new Date(personDate[0], personDate[1]-1, personDate[2]);
+            var options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            };
+            this.person_date = personDate.toLocaleString("ru", options)
             if(data.class_number != undefined || data.simvol != undefined){
                 this.person_grade = data.class_number + ' ' + data.simvol
             }
