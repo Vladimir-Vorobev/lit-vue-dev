@@ -106,14 +106,42 @@
                                         </div>
                                     </form> <br>
                                     <div key="div" v-if="ShowAddList" style="text-align: left">
-                                        <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
-                                        <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
-                                        <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить список</button>
+                                        <p key="p" style="font-size:1.3em; text-align: center"> Загрузите актуальный список Вашего класса в excel файле </p>
+                                        <p><input type="file" ref="file" class="form-control-file" @change="file()" key="input"></p>
+                                        <p><button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить список</button></p>
                                     </div>
                                     <form key="form" id='formOne' v-if="ShowAddOne" style="text-align: left">
-                                        <p key="p">Email </p><input key="input" name="email">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">Имя</span>
+                                                    </div>
+                                                    <input type="text" key="input" name="name" class="form-control name" aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon2">Фамилия</span>
+                                                    </div>
+                                                    <input type="text" key="input" name="surname" class="form-control surname" aria-describedby="basic-addon2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon4">email</span>
+                                                    </div>
+                                                    <input class="form-control email" key="input" name="email" placeholder="example@gmail.com" aria-describedby="basic-addon4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <p key="p">Email </p><input key="input" name="email">
                                         <p key="p">Имя </p><input key="input" name="name">
-                                        <p key="p">Фамилия </p><input key="input" name="surname" style="margin-bottom: 0.7em">
+                                        <p key="p">Фамилия </p><input key="input" name="surname" style="margin-bottom: 0.7em"> -->
                                         <p><button type="submit" @click="add('one')" class="btn btn-primary btn-lg" key="button">Добавить ученика</button></p>
                                     </form>
                                 </transition-group>
