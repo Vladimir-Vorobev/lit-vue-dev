@@ -33,6 +33,8 @@
                     <ul key="ul" class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'school-admin'">
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список учителей</a>
+                        </li><li class="nav-item" role="presentation">
+                            <a class="nav-link" @click="showTop()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Рейтинг школы</a>
                         </li>
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
@@ -49,7 +51,7 @@
                                                 <div class="name row">
                                                     <div class="name_group col-10">{{ item.person }} </div>
                                                     <div class="col-1 ar-collapse" :id='item.email'></div>
-                                                    <div class="col-1" ><button class="btn btn-danger" @click="deleteStudent(item.email, item.name, item.surname)"><i class="fas fa-trash-alt"></i></button></div>
+                                                    <div class="col-1" @click="deleteStudent(item.email, item.name, item.surname)"><i class="fas fa-trash-alt"></i></div>
                                                 </div>
                                                 <div :id="item.email + 'n'" style="display: none;">
                                                     <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email + "x"' style="display: inline-block;"></i></div>
@@ -104,7 +106,7 @@
                                                 </label>
                                             </div>
                                         </div>
-                                    </form> <br>
+                                    </form> <br key='br'>
                                     <div key="div" v-if="ShowAddList" style="text-align: left">
                                         <p key="p" style="font-size:1.3em; text-align: center"> Загрузите актуальный список Вашего класса в excel файле </p>
                                         <p><input type="file" ref="file" class="form-control-file" @change="file()" key="input"></p>
@@ -159,7 +161,39 @@
                                                     <div class="col-1 ar-collapse" :id='item.email'></div>
                                                 </div>
                                                 <div :id='item.email + "s"' style="display: none;">
-                                                    <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
+                                                    <div class="tab-pane fade show active" id="pills-list-student" v-for="item2 in students" :key="item2.person">
+                                                        <a class="person" href="#" @click="showInfo(item2.email)">
+                                                            <div class="person_box a">
+                                                                <div class="name row">
+                                                                    <div class="name_group col-10 a">{{ item2.person }} </div>
+                                                                    <div class="col-1 ar-collapse a" :id='item2.email'></div>
+                                                                </div>
+                                                                <div :id="item2.email + 'n'" style="display: none;">
+                                                                    <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email + "x"' style="display: inline-block;"></i></div>
+                                                                    <form :id="'form' + item.email">
+                                                                        <input class="radio" :name="'donaught' + item2.email" type="radio" value="donaught" checked @click="changeInfo(item2.email, 'donaught')"> Кругова диаграмма
+                                                                        <input class="radio" :name="'bar' + item2.email" type="radio" value="bar" @click="changeInfo(item2.email, 'bar')"> Столбчатая диаграмма
+                                                                        <input class="radio" :name="'full' + item2.email" type="radio" value="full" @click="changeInfo(item2.email)"> Полная статистика
+                                                                    </form>
+                                                                    <div class="chart-container" :id="'chartDiv' + item2.email" style="display: none;"><canvas :id="'chart' + item2.email"></canvas></div>
+                                                                    <div class="chart-container" :id="'chartDiv2' + item2.email" style="display: none;"><canvas :id="'chart2' + item2.email"></canvas></div>
+                                                                    <div :id="'chartDiv3' + item.email" style="display: none;">
+                                                                        <div v-if="data[item2.email] != undefined && studentEvents[data.lastIndexOf(item2.email)][0].length == 0"><h3>Нет мероприятий</h3></div>
+                                                                        <div class="card" v-for="item3 in studentEvents[data.lastIndexOf(item2.email)][0]" :key="item3.value">
+                                                                            <div class="card-header">{{item3.date}}</div>
+                                                                            <div class="card-body">
+                                                                                <div class="row">
+                                                                                    <h5 class="card-title col-11">{{item3.name}}</h5>
+                                                                                    <h5><button class="btn btn-danger" @click="deleteStudent(item.email, item.name, item.surname)"> <i class="fas fa-trash-alt"></i> </button></h5>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <!-- <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
                                                         <a class="person" href="#" @click="showInfo(item2.email)">
                                                             <div class="person_box a">
                                                                 <div class="name row">
@@ -172,18 +206,79 @@
                                                                 </div>
                                                             </div>
                                                         </a>    
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                         </a>
                                     </div>
                                 </transition-group>
                             </div>
-                            <div v-if="ShowAdd">
+                            <div v-if="ShowTop">
                                 <transition-group name="main">
-                                    <p key="p">Загрузите актуальный список Ваших учителей в excel файле</p>
-                                    <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
-                                    <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить</button>
+                                    <p key="p">Рейтинг тут</p>
+                                </transition-group>
+                            </div>
+                            <div v-if="ShowAdd">
+                               <transition-group name="main">
+                                    <form key='form' id='formList' style="text-align: left; font-size: 1.2em">
+                                        <!-- <input key="input" class="radio" name='list' type="radio" checked @click="changeAddInfo('list')"> <p key="p">Добавить список учеников</p> -->
+                                        <!-- <input key="input" class="radio" name='one' type="radio" @click="changeAddInfo('one')"> <p key="p">Добавить ученика</p> -->
+                                        <div class="form-check row">
+                                            <div class="col-12">
+                                                <input key="input" name='list' class="form-check-input radio" type="radio" @click="changeAddInfo('list')" id="exampleRadios1" value="option1" checked>
+                                                <label key="p" class="form-check-label" for="exampleRadios1">
+                                                    Добавить список учителей
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-check row">
+                                            <div class="col-12">
+                                                <input  key="input" name='one' class="form-check-input radio" @click="changeAddInfo('one')" type="radio" id="exampleRadios2" value="option2">
+                                                <label key="p" class="form-check-label" for="exampleRadios2">
+                                                    Добавить учителя
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </form> <br key='br'>
+                                    <div key="div" v-if="ShowAddList" style="text-align: left">
+                                        <p key="p" style="font-size:1.3em; text-align: center"> Загрузите актуальный список Ваших учителей в excel файле </p>
+                                        <p><input type="file" ref="file" class="form-control-file" @change="file()" key="input"></p>
+                                        <p><button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить список</button></p>
+                                    </div>
+                                    <form key="form" id='formOne' v-if="ShowAddOne" style="text-align: left">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">Имя</span>
+                                                    </div>
+                                                    <input type="text" key="input" name="name" class="form-control name" aria-describedby="basic-addon1">
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon2">Фамилия</span>
+                                                    </div>
+                                                    <input type="text" key="input" name="surname" class="form-control surname" aria-describedby="basic-addon2">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon4">email</span>
+                                                    </div>
+                                                    <input class="form-control email" key="input" name="email" placeholder="example@gmail.com" aria-describedby="basic-addon4">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <p key="p">Email </p><input key="input" name="email">
+                                        <p key="p">Имя </p><input key="input" name="name">
+                                        <p key="p">Фамилия </p><input key="input" name="surname" style="margin-bottom: 0.7em"> -->
+                                        <p><button type="submit" @click="add('one')" class="btn btn-primary btn-lg" key="button">Добавить учителя</button></p>
+                                    </form>
                                 </transition-group>
                             </div>
                         </div> 
@@ -229,7 +324,7 @@ export default {
             let email = form.elements.email.value
             let password = form.elements.password.value
             let crypto = require('crypto')
-            fetch(this.$store.state.serverIp+'/api/adminLogin', {
+            fetch('http://78.155.219.12:3000/api/adminLogin', {
                 method: 'POST',
                 headers: {email: email, password: crypto.createHash('md5').update(password).digest("hex")},
             })
@@ -253,7 +348,7 @@ export default {
                     //alert("Неверный email или пароль")
                     this.$swal({
                         icon: 'error',
-                        text: 'Неверный email или пароль'
+                        text: 'Неверный email или пароль или у Вас нет доступа к административной панели'
                     });
                 }
                 console.log(data)
@@ -266,8 +361,8 @@ export default {
             // this.teachers = [{person: 'Иванова Мария', email: 'v14ru'}, {person: 'Иванов Иван', email: 'v15ru'}, {person: 'Сергеев Сергей', email: 'v16ru'}]
         },
         getAdminList(){
-            let students = []
-            fetch(this.$store.state.serverIp+'/api/getAdminList', {
+            let people = []
+            fetch('http://78.155.219.12:3000/api/getAdminList', {
                 method: 'POST',
                 headers: {email: this.email},
             })
@@ -276,13 +371,23 @@ export default {
                 return response.json()
             })
             .then(data => {
-                for(let i = 0; i < data.length; i++){
-                    students.push({person: data[i].name + ' ' + data[i].surname, email: data[i].email})
-                    this.data.push(data[i].email)
-                    this.studentEvents.push([])
+                console.log(data)
+                if(this.role == 'teacher'){
+                    for(let i = 0; i < data.length; i++){
+                        people.push({person: data[i].name + ' ' + data[i].surname, email: data[i].email})
+                        this.data.push(data[i].email)
+                        this.studentEvents.push([])
+                    }
+                    this.students = people
                 }
-                if(this.role == 'teacher') this.students = students
-                else if(this.role == 'school-admin') this.teachers = students
+                else if(this.role == 'school-admin'){
+                    for(let i = 0; i < data.length; i++){
+                        people.push({person: data[i].name + ' ' + data[i].surname, email: data[i].email})
+                        this.data.push(data[i].email)
+                        //this.studentEvents.push([])
+                    }
+                    this.teachers = people
+                }
             })
             .catch(err => {
                 console.log(err)
@@ -308,7 +413,7 @@ export default {
                         if(document.getElementById(email + "x").style.display == 'inline-block'){
                             let SessionID = this.$store.getters.SessionID
                             let teacherEmail = this.$store.getters.email
-                            fetch(this.$store.state.serverIp+'/api/getCheckedEvents', {
+                            fetch('http://78.155.219.12:3000/api/getCheckedEvents', {
                                 method: 'get',
                                 headers: {email: teacherEmail, studEmail: email, sessionid: SessionID},
                             })
@@ -479,11 +584,11 @@ export default {
                     document.getElementById(email).classList.add('ar-show');
                     if(document.getElementById(email + 's').style.display == 'none'){
                         // запрос
-                            this.students2 = []
+                            this.students = []
                             //document.getElementById(email).style.display = 'none'
                             let students = [{student: 'Петя', email: 'v11ru'}, {student: 'Вася', email: 'v12ru'}, {student: 'Дима', email: 'v13ru'}]
                             for(let i = 0; i < 3; i++){
-                                this.students2.push(students[i])
+                                this.students.push(students[i])
                             }
                             document.getElementById(email + 's').style.display = 'block'
                     } 
@@ -532,7 +637,7 @@ export default {
                 else this.$swal('Файл не выбран');   //alert('Файл не выбран')
             }
             function send(data, email, url){
-                needle.post(this.$store.state.serverIp+'/api/' + url, {data: data, email: email, type: 'update'}, {"json": true}, function(err, res){
+                needle.post('http://78.155.219.12:3000/api/' + url, {data: data, email: email, type: 'update'}, {"json": true}, function(err, res){
                     if(err) throw err
                     if(res.body == 'OK'){
                         //alert('Файл успешно добавлен')
@@ -545,8 +650,6 @@ export default {
                         //alert(res.body)
                         Vue.swal(res.body);
                     }
-                }).then(() => {
-                    this.getAdminList()
                 })
             }
         },
@@ -622,7 +725,7 @@ export default {
                 cancelButtonText: 'Отмена'
             }).then((result) => {
                  if (result.value) {
-                     needle.post(this.$store.state.serverIp+'/api/uploadOne', {data: data, email: email, type: 'delete'}, {"json": true}, function(err, res){
+                     needle.post('http://78.155.219.12:3000/api/uploadOne', {data: data, email: email, type: 'delete'}, {"json": true}, function(err, res){
                         if(err) throw err
                         if(res.body == 'OK'){
                             //alert('Файл успешно добавлен')

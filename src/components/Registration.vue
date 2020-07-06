@@ -169,7 +169,7 @@ export default {
             }
             needle.post(this.$store.state.serverIp+'/api/registration', data, {"json": true}, function(err, res, body){
               if(body == "Reg succsesful"){
-                Vue.$swal({
+                Vue.swal({
                     icon: 'success',
                     title: 'Вы успешно зарегистрированы!',
                     showConfirmButton: false,
@@ -182,14 +182,14 @@ export default {
               }
               else if(body == "Reg Fail"){
                 //alert('Пользователь с таким email существует')
-                Vue.$swal({
+                Vue.swal({
                     icon: 'error',
                     text: 'Пользователь с таким email существует'
                 });
               }
               else{
                 //alert("Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы")
-                Vue.$swal({
+                Vue.swal({
                     icon: 'error',
                     text: 'Регистрация не удалась. Возможно, у Вас проблема с интернетом, или на нашем сервере ведутся технические работы'
                 });
@@ -198,7 +198,7 @@ export default {
           }
           else{
             //alert('Проверьте Вашу почту, на нее был выслан код подтверждения')
-            this.$swal({
+            Vue.swal({
                     icon: 'info',
                     text: 'Проверьте Вашу почту, на нее был выслан код подтверждения'
                 });

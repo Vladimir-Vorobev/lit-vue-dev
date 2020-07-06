@@ -89,7 +89,7 @@ export default {
     },
     beforeMount(){
       if(this.email == '') window.location.pathname = "/login"
-      fetch(this.$store.state.serverIp+'/api/getInformation', {
+      fetch('http://78.155.219.12:3000/api/getInformation', {
           method: 'POST',
           headers: {email: this.email, sessionid: this.SessionID},
       })
@@ -195,7 +195,7 @@ export default {
             if(schoolType.trim() != '' && schoolType != "Тип учебного заведения") dataq.schoolType = schoolType
             if(class_number.trim() != '') dataq.class_number = class_number
             if(simvol.trim() != '') dataq.simvol = simvol
-            needle.post(this.$store.state.serverIp+'/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: dataq}, {"json": true}, function(err){
+            needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: dataq}, {"json": true}, function(err){
                 if (err) console.log(err)
                 window.location.reload()
             })
@@ -204,7 +204,7 @@ export default {
       addNumber(){
         event.preventDefault()
         let statNumber = {statNumber: Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000}
-        needle.post(this.$store.state.serverIp+'/api/updateInformation', {email: this.email, update: statNumber, sessionid: this.SessionID}, {"json": true}, function(err){
+        needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, update: statNumber, sessionid: this.SessionID}, {"json": true}, function(err){
           if(err) console.log(err)
           window.location.reload()
         })

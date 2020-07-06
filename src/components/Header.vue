@@ -51,12 +51,12 @@
           <router-link to='/login' class="router-link login" style="display:block">
               <a type="button" class="btn btn-primary btn-lg" ref="login">{{loginText}}</a>
           </router-link>
-          <div class="dropdown person_menu" style="display:none">
+          <div class="dropdown dropleft" style="display:none">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{loginText}}
+              <a type="button" class="btn btn-primary btn-lg" ref="login">{{loginText}}</a>
             </button>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-              <a @click="person_profile()" class="dropdown-item" href="">Моя страница</a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Моя страница</a>
               <router-link to="/your-events" class="router-link">
                   <a class="dropdown-item" ref="yourEvents" style="color: #16181b !important">Мои мероприятия</a>
               </router-link>
@@ -69,7 +69,7 @@
                 </router-link>
               </div>
               <div class="dropdown-divider"></div>
-              <button @click="exit()" class="dropdown-item exit" href="#">Выйти</button>
+              <a class="dropdown-item exit" href="#">Выйти</a>
             </div>
           </div>
         </div>
@@ -104,6 +104,7 @@ export default {
         })
         .then(data => {
             if(data == '310'){
+              //alert('header')
               document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
               document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
               window.location.reload()
@@ -112,7 +113,7 @@ export default {
             this.userId = data._id
             this.role = data.role
             document.querySelector('.login').style.display = 'none'
-            document.querySelector('.person_menu').style.display = 'block'
+            document.querySelector('.dropleft').style.display = 'block'
         })
         .catch(err => {
             console.log(err)
