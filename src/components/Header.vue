@@ -60,6 +60,11 @@
               <router-link to="/your-events" class="router-link">
                   <a class="dropdown-item" ref="yourEvents" style="color: #16181b !important">Мои мероприятия</a>
               </router-link>
+              <div v-if="role != 'user' && role != 'student'">
+                <router-link to="/admin" class="router-link">
+                  <a class="dropdown-item" ref="Admin" style="color: #16181b !important">Админ панель</a>
+                </router-link>
+              </div>
               <div class="dropdown-divider"></div>
               <button @click="exit()" class="dropdown-item exit" href="#">Выйти</button>
             </div>
@@ -79,6 +84,7 @@ export default {
         return {
             loginText: 'Войти',
             userId: 0,
+            role: '',
         }
     },
     beforeMount(){
@@ -101,6 +107,7 @@ export default {
             }
             this.loginText = data.name + ' ' + data.surname
             this.userId = data._id
+            this.role = data.role
             document.querySelector('.login').style.display = 'none'
             document.querySelector('.person_menu').style.display = 'block'
         })
@@ -109,7 +116,7 @@ export default {
         })
       }
     },
-    
+
     methods: {
       exit(){
         document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
