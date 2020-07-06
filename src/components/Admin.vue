@@ -51,7 +51,7 @@
                                                 <div class="name row">
                                                     <div class="name_group col-10">{{ item.person }} </div>
                                                     <div class="col-1 ar-collapse" :id='item.email'></div>
-                                                    <div class="col-1" @click="deleteStudent(item.email, item.name, item.surname)"><i class="fas fa-trash-alt"></i></div>
+                                                    <div class="col-1" ><button class="btn btn-danger" @click="deleteStudent(item.email, item.name, item.surname)"><i class="fas fa-trash-alt"></i></button></div>
                                                 </div>
                                                 <div :id="item.email + 'n'" style="display: none;">
                                                     <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email + "x"' style="display: inline-block;"></i></div>
