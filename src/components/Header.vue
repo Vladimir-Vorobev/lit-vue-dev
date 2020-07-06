@@ -60,6 +60,11 @@
               <router-link to="/your-events" class="router-link">
                   <a class="dropdown-item" ref="yourEvents" style="color: #16181b !important">Мои мероприятия</a>
               </router-link>
+              <div v-if="role != 'user' && role != 'student'">
+                <router-link to="/admin" class="router-link">
+                  <a class="dropdown-item" ref="Admin" style="color: #16181b !important">Админ панель</a>
+                </router-link>
+              </div>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item exit" href="#">Выйти</a>
             </div>
@@ -78,15 +83,17 @@ export default {
     data(){
         return {
             loginText: 'Войти',
-            email: this.$store.getters.email,
-            SessionID: this.$store.getters.SessionID,
+            userId: 0,
+            role: '',
         }
     },
     beforeMount(){
-      if(this.email != ''){
-        fetch('http://78.155.219.12:3000/api/getInformation', {
-            method: 'POST',
-            headers: {email: this.email, sessionid: this.SessionID},
+      let email = this.$store.getters.email
+      let SessionID = this.$store.getters.SessionID
+      if(email != ''){
+        fetch(this.$store.state.serverIp+'/api/getInformation', {
+          method: 'POST',
+          headers: {email: email, sessionid: SessionID},
         })
         .then(response => {
             console.log("res", response)
@@ -100,12 +107,29 @@ export default {
               window.location.reload()
             }
             this.loginText = data.name + ' ' + data.surname
+            this.userId = data._id
+            this.role = data.role
             document.querySelector('.login').style.display = 'none'
             document.querySelector('.dropleft').style.display = 'block'
         })
         .catch(err => {
             console.log(err)
         })
+      }
+    },
+
+    methods: {
+      exit(){
+        document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+        // this.$router.push({ path: `/login` })
+        window.location.reload()
+        document.location.href = "/login"
+      },
+      person_profile(){
+        let userId = this.userId
+        this.$router.push({ path: `/user-profile/${userId}` })
+        //this.$router.push({ path: `/profile` })
       }
     }
 

@@ -89,35 +89,44 @@ export default {
     },
     beforeMount(){
       if(this.email == '') window.location.pathname = "/login"
-      else{
-        fetch('http://78.155.219.12:3000/api/getInformation', {
-            method: 'POST',
-            headers: {email: this.email, sessionid: this.SessionID},
-        })
-        .then(response => {
-            console.log("res", response)
-            return response.json()
-        })
-        .then(data => {
-          if(data == '310'){
-              document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-              document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-              window.location.reload()
-            }
-            if(data.city != undefined){
-              document.querySelector(".city").value = data.city;
-            }
-            if(data.school != undefined){
-              document.querySelector(".school").value = data.school;
-            }
-            if(data.schoolType != undefined){
-              document.querySelector(".schoolType").value = data.schoolType;
-            }
-            // if(data.role != 'user' && data.role != 'student') {
-            //   this.role = true
-            // }
-            if(data.class_number != undefined){
-              document.querySelector(".class_number").value = data.class_number;
+      fetch(this.$store.state.serverIp+'/api/getInformation', {
+          method: 'POST',
+          headers: {email: this.email, sessionid: this.SessionID},
+      })
+      .then(response => {
+          console.log("res", response)
+          return response.json()
+      })
+      .then(data => {
+        if(data == '310'){
+            document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+            window.location.reload()
+          }
+          if(data.city != undefined){
+            document.querySelector(".city").value = data.city;
+          }
+          if(data.school != undefined){
+            document.querySelector(".school").value = data.school;
+          }
+          if(data.schoolType != undefined){
+            document.querySelector(".schoolType").value = data.schoolType;
+          }
+          // if(data.role != 'user' && data.role != 'student') {
+          //   this.role = true
+          // }
+          if(data.class_number != undefined){
+            document.querySelector(".class_number").value = data.class_number;
+          }
+          if(data.simvol != undefined){
+            document.querySelector(".simvol").value = data.simvol;
+          }
+          if(data.statNumber != undefined){
+            var span = document.querySelector(".statNumber");
+            if ('textContent' in span) {
+              span.textContent = data.statNumber;
+            } else {
+              span.innerText = data.statNumber;
             }
             if(data.simvol != undefined){
               document.querySelector(".simvol").value = data.simvol;
@@ -197,7 +206,7 @@ export default {
             if(schoolType.trim() != '' && schoolType != "Тип учебного заведения") dataq.schoolType = schoolType
             if(class_number.trim() != '') dataq.class_number = class_number
             if(simvol.trim() != '') dataq.simvol = simvol
-            needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: dataq}, {"json": true}, function(err){
+            needle.post(this.$store.state.serverIp+'/api/updateInformation', {email: this.email, sessionid: this.SessionID, update: dataq}, {"json": true}, function(err){
                 if (err) console.log(err)
                 window.location.reload()
             })
@@ -206,7 +215,7 @@ export default {
       addNumber(){
         event.preventDefault()
         let statNumber = {statNumber: Math.floor(Math.random() * (999999999999 - 100000000000 + 1)) + 100000000000}
-        needle.post('http://78.155.219.12:3000/api/updateInformation', {email: this.email, update: statNumber, sessionid: this.SessionID}, {"json": true}, function(err){
+        needle.post(this.$store.state.serverIp+'/api/updateInformation', {email: this.email, update: statNumber, sessionid: this.SessionID}, {"json": true}, function(err){
           if(err) console.log(err)
           window.location.reload()
         })

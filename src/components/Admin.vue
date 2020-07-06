@@ -584,11 +584,11 @@ export default {
                     document.getElementById(email).classList.add('ar-show');
                     if(document.getElementById(email + 's').style.display == 'none'){
                         // запрос
-                            this.students2 = []
+                            this.students = []
                             //document.getElementById(email).style.display = 'none'
                             let students = [{student: 'Петя', email: 'v11ru'}, {student: 'Вася', email: 'v12ru'}, {student: 'Дима', email: 'v13ru'}]
                             for(let i = 0; i < 3; i++){
-                                this.students2.push(students[i])
+                                this.students.push(students[i])
                             }
                             document.getElementById(email + 's').style.display = 'block'
                     } 

@@ -5,7 +5,7 @@
                 <div class="col-12 col-md-4" style="padding: 30px 15px 15px">
                     <div class="photo pblock">
                         <div class="avatar">
-                            <img src="./../assets/test.jpeg" alt="">
+                            <img src="./../assets/noavatar.jpg" alt="">
                         </div>
                         <button @click="GoToEditor()" class="btn btn-light" style="width: 100%; margin-top: 15px;">Редактировать</button>
                     </div>
@@ -98,7 +98,7 @@ export default {
     },
     beforeMount(){
         if(this.email == '') window.location.pathname = "/login"
-        fetch('http://78.155.219.12:3000/api/getIdInformation', {
+        fetch(this.$store.state.serverIp+'/api/getIdInformation', {
             method: 'POST',
             headers: {id: this.id, email: this.email, sessionid: this.SessionID},
         })
@@ -114,7 +114,15 @@ export default {
                 console.log("err 310")
             }
             this.person_name = data.name + ' ' + data.surname
-            this.person_date = data.age
+            let personDate = data.age
+            personDate = personDate.split('-')
+            personDate = new Date(personDate[0], personDate[1]-1, personDate[2]);
+            var options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            };
+            this.person_date = personDate.toLocaleString("ru", options)
             if(data.class_number != undefined || data.simvol != undefined){
                 this.person_grade = data.class_number + ' ' + data.simvol
             }

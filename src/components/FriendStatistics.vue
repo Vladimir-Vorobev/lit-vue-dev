@@ -51,7 +51,7 @@ export default {
         }
         let email = this.$store.getters.email
         let SessionID = this.$store.getters.SessionID
-        fetch('http://78.155.219.12:3000/api/getCodeInformation', {
+        fetch(this.$store.state.serverIp+'/api/getCodeInformation', {
             method: 'get',
             headers: {email: email, sessionid: SessionID},
         })
@@ -89,7 +89,7 @@ export default {
             } 
             else{
                 let email = this.$store.getters.email
-                needle.post('http://78.155.219.12:3000/api/addFriendCode', {email: email, sessionid: SessionID, statNumber: document.querySelector('.name').value}, {"json": true}, function(err, res){
+                needle.post(this.$store.state.serverIp+'/api/addFriendCode', {email: email, sessionid: SessionID, statNumber: document.querySelector('.name').value}, {"json": true}, function(err, res){
                 if (err) console.log(err)
                 if(res.body == '310'){
                     document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
