@@ -89,54 +89,56 @@ export default {
     },
     beforeMount(){
       if(this.email == '') window.location.pathname = "/login"
-      fetch('http://78.155.219.12:3000/api/getInformation', {
-          method: 'POST',
-          headers: {email: this.email, sessionid: this.SessionID},
-      })
-      .then(response => {
-          console.log("res", response)
-          return response.json()
-      })
-      .then(data => {
-        if(data == '310'){
-            document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-            document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
-            window.location.reload()
-          }
-          if(data.city != undefined){
-            document.querySelector(".city").value = data.city;
-          }
-          if(data.school != undefined){
-            document.querySelector(".school").value = data.school;
-          }
-          if(data.schoolType != undefined){
-            document.querySelector(".schoolType").value = data.schoolType;
-          }
-          // if(data.role != 'user' && data.role != 'student') {
-          //   this.role = true
-          // }
-          if(data.class_number != undefined){
-            document.querySelector(".class_number").value = data.class_number;
-          }
-          if(data.simvol != undefined){
-            document.querySelector(".simvol").value = data.simvol;
-          }
-          if(data.statNumber != undefined){
-            var span = document.querySelector(".statNumber");
-            if ('textContent' in span) {
-              span.textContent = data.statNumber;
-            } else {
-              span.innerText = data.statNumber;
+      else{
+        fetch('http://78.155.219.12:3000/api/getInformation', {
+            method: 'POST',
+            headers: {email: this.email, sessionid: this.SessionID},
+        })
+        .then(response => {
+            console.log("res", response)
+            return response.json()
+        })
+        .then(data => {
+          if(data == '310'){
+              document.cookie = "email=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+              document.cookie = "SessionID=" + ";expires=Thu, 01 Jan 1970 00:00:01 GMT"
+              window.location.reload()
             }
-          }
-          document.querySelector(".name").value = data.name;
-          document.querySelector(".surname").value = data.surname;
-          document.querySelector(".email").value = data.email;
-          document.querySelector(".age").value = data.age;
-      })
-      .catch(err => {
-          console.log(err)
-      })
+            if(data.city != undefined){
+              document.querySelector(".city").value = data.city;
+            }
+            if(data.school != undefined){
+              document.querySelector(".school").value = data.school;
+            }
+            if(data.schoolType != undefined){
+              document.querySelector(".schoolType").value = data.schoolType;
+            }
+            // if(data.role != 'user' && data.role != 'student') {
+            //   this.role = true
+            // }
+            if(data.class_number != undefined){
+              document.querySelector(".class_number").value = data.class_number;
+            }
+            if(data.simvol != undefined){
+              document.querySelector(".simvol").value = data.simvol;
+            }
+            if(data.statNumber != undefined){
+              var span = document.querySelector(".statNumber");
+              if ('textContent' in span) {
+                span.textContent = data.statNumber;
+              } else {
+                span.innerText = data.statNumber;
+              }
+            }
+            document.querySelector(".name").value = data.name;
+            document.querySelector(".surname").value = data.surname;
+            document.querySelector(".email").value = data.email;
+            document.querySelector(".age").value = data.age;
+        })
+        .catch(err => {
+            console.log(err)
+        })
+      }
     },
     methods: {
       updateUser(){
