@@ -114,7 +114,7 @@
 
 <script>
 import Footer from './footer.vue'
-import Vue from 'vue';
+// import Vue from 'vue';
 import needle from 'needle'
 export default {
     name: 'UserProfileEditor',
@@ -123,6 +123,7 @@ export default {
       return{
         email: this.$store.getters.email,
         SessionID: this.$store.getters.SessionID,
+        userId: 0,
       }
     },
     beforeMount(){
@@ -167,6 +168,7 @@ export default {
             //     span.innerText = data.statNumber;
             //     }
             // }
+            this.userId = data._id
             document.querySelector(".name").value = data.name;
             document.querySelector(".surname").value = data.surname;
             document.querySelector(".email").value = data.email;
@@ -241,13 +243,15 @@ export default {
         },
         backInProfile(){
             //надо сделать переход назад к профилю пользователя, пока тут alert
-            Vue.swal({
-                icon: 'error',
-                text: 'Функция временно не доступна!',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-            });
+            // Vue.swal({
+            //     icon: 'error',
+            //     text: 'Функция временно не доступна!',
+            //     showConfirmButton: false,
+            //     timer: 1500,
+            //     timerProgressBar: true,
+            // });
+            let userId = this.userId
+            this.$router.push({ path: `/user-profile/${userId}` })
         },
     }
 }
