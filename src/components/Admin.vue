@@ -18,146 +18,148 @@
                         </div>
                     </form>
                 </div>
-                <ul key="ul" class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'teacher'">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список класса</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" @click="showTop()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Рейтинг класса</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
-                    </li>
-                </ul>
-                <ul key="ul" class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'school-admin'">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список учителей</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
-                    </li>
-                </ul>
-                <div key="div" class="tab-content" id="pills-tabContent">
-                    <hr>
-                    <div v-if="role == 'teacher'">
-                        <div v-if="ShowList">
-                            <transition-group name="main">
-                                <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.person">
-                                    <a class="person" href="#" @click="showInfo(item.email)">
-                                        <div class="person_box">
-                                            <div class="name row">
-                                                <div class="name_group col-10">{{ item.person }} </div>
-                                                <div class="col-1 ar-collapse" :id='item.email'></div>
-                                                <div class="col-1" @click="deleteStudent(item.email, item.name, item.surname)"><i class="fas fa-trash-alt"></i></div>
-                                            </div>
-                                            <div :id="item.email + 'n'" style="display: none;">
-                                                <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email + "x"' style="display: inline-block;"></i></div>
-                                                <form :id="'form' + item.email">
-                                                    <input class="radio" :name="'donaught' + item.email" type="radio" value="donaught" checked @click="changeInfo(item.email, 'donaught')"> Кругова диаграмма
-                                                    <input class="radio" :name="'bar' + item.email" type="radio" value="bar" @click="changeInfo(item.email, 'bar')"> Столбчатая диаграмма
-                                                    <input class="radio" :name="'full' + item.email" type="radio" value="full" @click="changeInfo(item.email)"> Полная статистика
-                                                </form>
-                                                <div class="chart-container" :id="'chartDiv' + item.email" style="display: none;"><canvas :id="'chart' + item.email"></canvas></div>
-                                                <div class="chart-container" :id="'chartDiv2' + item.email" style="display: none;"><canvas :id="'chart2' + item.email"></canvas></div>
-                                                <div :id="'chartDiv3' + item.email" style="display: none;">
-                                                    <div v-if="data[item.email] != undefined && studentEvents[data.lastIndexOf(item.email)][0].length == 0"><h3>Нет мероприятий</h3></div>
-                                                    <div class="card" v-for="item3 in studentEvents[data.lastIndexOf(item.email)][0]" :key="item3.value">
-                                                        <div class="card-header">{{item3.date}}</div>
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <h5 class="card-title col-11">{{item3.name}}</h5>
-                                                                <h5><button class="btn btn-danger" @click="deleteStudent(item.email, item.name, item.surname)"> <i class="fas fa-trash-alt"></i> </button></h5>
+                <div v-if="!show" key="div">
+                    <ul key="ul" class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'teacher'">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список класса</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" @click="showTop()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Рейтинг класса</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
+                        </li>
+                    </ul>
+                    <ul key="ul" class="nav nav-pills mb-3" id="pills-tab" role="tablist" v-if="role == 'school-admin'">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" @click="showList()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="true">Список учителей</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" @click="showAdd()" id="pills-home-tab" data-toggle="pill" role="tab" aria-selected="false">Обновить список</a>
+                        </li>
+                    </ul>
+                    <div key="div" class="tab-content" id="pills-tabContent">
+                        <hr>
+                        <div v-if="role == 'teacher'">
+                            <div v-if="ShowList">
+                                <transition-group name="main">
+                                    <div class="tab-pane fade show active" id="pills-list-student" v-for="item in students" :key="item.person">
+                                        <a class="person" href="#" @click="showInfo(item.email)">
+                                            <div class="person_box">
+                                                <div class="name row">
+                                                    <div class="name_group col-10">{{ item.person }} </div>
+                                                    <div class="col-1 ar-collapse" :id='item.email'></div>
+                                                    <div class="col-1" @click="deleteStudent(item.email, item.name, item.surname)"><i class="fas fa-trash-alt"></i></div>
+                                                </div>
+                                                <div :id="item.email + 'n'" style="display: none;">
+                                                    <div style="text-align: center;"><i class='fa fa-spinner fa-pulse fa-3x' :id='item.email + "x"' style="display: inline-block;"></i></div>
+                                                    <form :id="'form' + item.email">
+                                                        <input class="radio" :name="'donaught' + item.email" type="radio" value="donaught" checked @click="changeInfo(item.email, 'donaught')"> Кругова диаграмма
+                                                        <input class="radio" :name="'bar' + item.email" type="radio" value="bar" @click="changeInfo(item.email, 'bar')"> Столбчатая диаграмма
+                                                        <input class="radio" :name="'full' + item.email" type="radio" value="full" @click="changeInfo(item.email)"> Полная статистика
+                                                    </form>
+                                                    <div class="chart-container" :id="'chartDiv' + item.email" style="display: none;"><canvas :id="'chart' + item.email"></canvas></div>
+                                                    <div class="chart-container" :id="'chartDiv2' + item.email" style="display: none;"><canvas :id="'chart2' + item.email"></canvas></div>
+                                                    <div :id="'chartDiv3' + item.email" style="display: none;">
+                                                        <div v-if="data[item.email] != undefined && studentEvents[data.lastIndexOf(item.email)][0].length == 0"><h3>Нет мероприятий</h3></div>
+                                                        <div class="card" v-for="item3 in studentEvents[data.lastIndexOf(item.email)][0]" :key="item3.value">
+                                                            <div class="card-header">{{item3.date}}</div>
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <h5 class="card-title col-11">{{item3.name}}</h5>
+                                                                    <h5><button class="btn btn-danger" @click="deleteStudent(item.email, item.name, item.surname)"> <i class="fas fa-trash-alt"></i> </button></h5>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </transition-group>
-                        </div>
-                        <div v-if="ShowTop">
-                            <transition-group name="main">
-                                <p key="p">Рейтинг тут</p>
-                            </transition-group>
-                        </div>
-                        <div v-if="ShowAdd">
-                            <transition-group name="main">
-                                <form key='form' id='formList' style="text-align: left; font-size: 1.2em">
-                                    <!-- <input key="input" class="radio" name='list' type="radio" checked @click="changeAddInfo('list')"> <p key="p">Добавить список учеников</p> -->
-                                    <!-- <input key="input" class="radio" name='one' type="radio" @click="changeAddInfo('one')"> <p key="p">Добавить ученика</p> -->
-                                    <div class="form-check row">
-                                        <div class="col-12">
-                                            <input key="input" name='list' class="form-check-input radio" type="radio" @click="changeAddInfo('list')" id="exampleRadios1" value="option1" checked>
-                                            <label key="p" class="form-check-label" for="exampleRadios1">
-                                                Добавить список учеников
-                                            </label>
-                                        </div>
+                                        </a>
                                     </div>
-                                    <div class="form-check row">
-                                        <div class="col-12">
-                                            <input  key="input" name='one' class="form-check-input radio" @click="changeAddInfo('one')" type="radio" id="exampleRadios2" value="option2">
-                                            <label key="p" class="form-check-label" for="exampleRadios2">
-                                                Добавить ученика
-                                            </label>
-                                        </div>
-                                    </div>
-                                </form> <br>
-                                <div key="div" v-if="ShowAddList" style="text-align: left">
-                                    <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
-                                    <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
-                                    <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить список</button>
-                                </div>
-                                <form key="form" id='formOne' v-if="ShowAddOne" style="text-align: left">
-                                    <p key="p">Email </p><input key="input" name="email">
-                                    <p key="p">Имя </p><input key="input" name="name">
-                                    <p key="p">Фамилия </p><input key="input" name="surname" style="margin-bottom: 0.7em">
-                                    <p><button type="submit" @click="add('one')" class="btn btn-primary btn-lg" key="button">Добавить ученика</button></p>
-                                </form>
-                            </transition-group>
-                        </div>
-                    </div>
-             
-                    <div v-if="role == 'school-admin'">
-                        <div v-if="ShowList">
-                            <transition-group name="main">
-                                <div class="tab-pane fade show active" id="pills-list-student" v-for="item in teachers" :key="item.person">
-                                    <a class="person" href="#">
-                                        <div class="person_box" v-on:click="showTeacherInfo(item.email)">
-                                            <div class="name row">
-                                                <div class="name_group col-11">{{ item.person }}</div>
-                                                <div class="col-1 ar-collapse" :id='item.email'></div>
+                                </transition-group>
+                            </div>
+                            <div v-if="ShowTop">
+                                <transition-group name="main">
+                                    <p key="p">Рейтинг тут</p>
+                                </transition-group>
+                            </div>
+                            <div v-if="ShowAdd">
+                                <transition-group name="main">
+                                    <form key='form' id='formList' style="text-align: left; font-size: 1.2em">
+                                        <!-- <input key="input" class="radio" name='list' type="radio" checked @click="changeAddInfo('list')"> <p key="p">Добавить список учеников</p> -->
+                                        <!-- <input key="input" class="radio" name='one' type="radio" @click="changeAddInfo('one')"> <p key="p">Добавить ученика</p> -->
+                                        <div class="form-check row">
+                                            <div class="col-12">
+                                                <input key="input" name='list' class="form-check-input radio" type="radio" @click="changeAddInfo('list')" id="exampleRadios1" value="option1" checked>
+                                                <label key="p" class="form-check-label" for="exampleRadios1">
+                                                    Добавить список учеников
+                                                </label>
                                             </div>
-                                            <div :id='item.email + "s"' style="display: none;">
-                                                <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
-                                                    <a class="person" href="#" @click="showInfo(item2.email)">
-                                                        <div class="person_box a">
-                                                            <div class="name row">
-                                                                <div class="name_group col-11 a">{{ item2.student }} </div>
-                                                                <div class="col-1 ar-collapse a" :id='item2.email'></div>
+                                        </div>
+                                        <div class="form-check row">
+                                            <div class="col-12">
+                                                <input  key="input" name='one' class="form-check-input radio" @click="changeAddInfo('one')" type="radio" id="exampleRadios2" value="option2">
+                                                <label key="p" class="form-check-label" for="exampleRadios2">
+                                                    Добавить ученика
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </form> <br>
+                                    <div key="div" v-if="ShowAddList" style="text-align: left">
+                                        <p key="p">Загрузите актуальный список Вашего класса в excel файле</p>
+                                        <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
+                                        <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить список</button>
+                                    </div>
+                                    <form key="form" id='formOne' v-if="ShowAddOne" style="text-align: left">
+                                        <p key="p">Email </p><input key="input" name="email">
+                                        <p key="p">Имя </p><input key="input" name="name">
+                                        <p key="p">Фамилия </p><input key="input" name="surname" style="margin-bottom: 0.7em">
+                                        <p><button type="submit" @click="add('one')" class="btn btn-primary btn-lg" key="button">Добавить ученика</button></p>
+                                    </form>
+                                </transition-group>
+                            </div>
+                        </div>
+                
+                        <div v-if="role == 'school-admin'">
+                            <div v-if="ShowList">
+                                <transition-group name="main">
+                                    <div class="tab-pane fade show active" id="pills-list-student" v-for="item in teachers" :key="item.person">
+                                        <a class="person" href="#">
+                                            <div class="person_box" v-on:click="showTeacherInfo(item.email)">
+                                                <div class="name row">
+                                                    <div class="name_group col-11">{{ item.person }}</div>
+                                                    <div class="col-1 ar-collapse" :id='item.email'></div>
+                                                </div>
+                                                <div :id='item.email + "s"' style="display: none;">
+                                                    <div v-for="item2 in students2" :key="item2.student" :class="item2.email">
+                                                        <a class="person" href="#" @click="showInfo(item2.email)">
+                                                            <div class="person_box a">
+                                                                <div class="name row">
+                                                                    <div class="name_group col-11 a">{{ item2.student }} </div>
+                                                                    <div class="col-1 ar-collapse a" :id='item2.email'></div>
+                                                                </div>
+                                                                <div :id="item2.email + 'n'" style="display: none;">
+                                                                    <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email + "x"' style="display: inline-block;"></i>
+                                                                    <div class="chart-container"><canvas :id="'chart' + item2.email" style="display: none;"></canvas></div>      
+                                                                </div>
                                                             </div>
-                                                            <div :id="item2.email + 'n'" style="display: none;">
-                                                                <i class='fa fa-spinner fa-pulse fa-3x' :id='item2.email + "x"' style="display: inline-block;"></i>
-                                                                <div class="chart-container"><canvas :id="'chart' + item2.email" style="display: none;"></canvas></div>      
-                                                            </div>
-                                                        </div>
-                                                    </a>    
+                                                        </a>    
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </transition-group>
-                        </div>
-                        <div v-if="ShowAdd">
-                            <transition-group name="main">
-                                <p key="p">Загрузите актуальный список Ваших учителей в excel файле</p>
-                                <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
-                                <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить</button>
-                            </transition-group>
-                        </div>
-                    </div> 
+                                        </a>
+                                    </div>
+                                </transition-group>
+                            </div>
+                            <div v-if="ShowAdd">
+                                <transition-group name="main">
+                                    <p key="p">Загрузите актуальный список Ваших учителей в excel файле</p>
+                                    <input type="file" ref="file" class="form-control-file" @change="file()" key="input">
+                                    <button type="submit" @click="add()" class="btn btn-primary btn-lg" key="button">Обновить</button>
+                                </transition-group>
+                            </div>
+                        </div> 
+                    </div>
                 </div>
             </transition-group>
         </div>
