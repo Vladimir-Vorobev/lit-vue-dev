@@ -60,6 +60,9 @@
               <router-link to="/your-events" class="router-link">
                   <a class="dropdown-item" ref="yourEvents" style="color: #16181b !important">Мои мероприятия</a>
               </router-link>
+              <router-link to="#" class="router-link">
+                  <a class="dropdown-item" ref="" style="color: #16181b !important">Портфолио</a>
+              </router-link>
               <div v-if="role != 'user' && role != 'student'">
                 <router-link to="/admin" class="router-link">
                   <a class="dropdown-item" ref="Admin" style="color: #16181b !important">Админ панель</a>
